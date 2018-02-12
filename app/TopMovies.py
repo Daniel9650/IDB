@@ -5,16 +5,34 @@ Gets top 3 most popular movies and prints the info we want from them
 import requests
 
 
+class Movie:
+    def __init__(self):
+        self.title = ""
+        self.overview = ""
+        self.release = ""
+        self.poster_url = ""
+        self.topics = []
+
+    def __str__(self):
+        ret = ""
+        ret += "Movie title: " + self.title + "\n"
+        ret += "Overview: " + self.overview + "\n"
+        ret += "Release date: " + self.release + "\n"
+        ret += "Poster url: " + self.poster_url + "\n"
+        ret += "Topics: " + str(self.topics) + "\n"
+        return ret
+
+
 # read genres
 genres = requests.get(
     "https://api.themoviedb.org/3/genre/movie/list?api_key=21fed2c614e1de3b61f64b89beb692a5&language=en-US").json()
 
 # convert genres to a dictionary with key genre_id and value of the string
 # name of the genre
-genres_dic = {}
+genres_dict = {}
 genres = genres["genres"]
 for gen in genres:
-    genres_dic[gen["id"]] = gen["name"]
+    genres_dict[gen["id"]] = gen["name"]
 
 # read first page of popular movies
 movies = requests.get(
@@ -23,21 +41,17 @@ movies = movies["results"]
 
 print()
 for i in range(3):
-    movie = movies[i]
-    print ((i + 1), "Movie name:", movie["original_title"])
-    print ("Overview:", movie["overview"])
-    print ("Release date:", movie["release_date"])
-    print (
-        "Poster path: http://image.tmdb.org/t/p/w185" +
-        movie["poster_path"])
-    topics = movie["genre_ids"]
-    print ("Topics:", end=' ')
+    movie_dict = movies[i]
 
-    for e in range(len(topics)):
-        t = topics[e]
-        first = False
-        if e < len(topics) - 1:
-            print (str(genres_dic[t]) + ",", end=' ')
-        else:
-            print (genres_dic[t])
-    print()
+    movie = Movie()
+    movie.title = movie_dict["original_title"]
+    movie.overview = movie_dict["overview"]
+    movie.release = movie_dict["release_date"]
+    movie.poster_url = "http://image.tmdb.org/t/p/w185" + \
+        movie_dict["poster_path"]
+
+    topic_ids = movie_dict["genre_ids"]
+    for topic_id in topic_ids:
+        movie.topics.append(genres_dict[topic_id])
+
+    print(movie)
