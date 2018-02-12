@@ -1,5 +1,67 @@
 @import url(https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css);
 
+.navbar {
+   height: 80px;
+   padding: 13px;
+   background-color: white;
+   font-size: 20px;
+   margin-bottom: 0;
+   border-bottom: none;
+}
+
+.navbar-default .navbar-nav > li > a {
+   color: black;
+}
+
+.navbar-default .navbar-brand {
+   font-size: 30px;
+   color: black;
+}
+
+.trending-topics-title {
+   font-weight: bold;
+}
+
+.trending-topics-list-num {
+   font-weight: bold;
+   font-size: 40px;
+   padding-right: 5px;
+}
+
+.list-group {
+
+   text-align: center;
+}
+
+.list-group-item {
+   border: none;
+   font-size: 25px;
+}
+
+.carousel {
+   margin: auto;
+   background-size:cover;
+   height: 20%;
+   width: 100%;
+}
+
+.carousel-item {
+   background-size: cover;
+   width: 100%;
+}
+
+.carousel-img {
+   background-size: cover;
+
+}
+.carousel-caption {
+   vertical-align: middle;
+   font-size: 10vw;
+   font-weight: bold;
+   text-align:center;
+   margin-top: -200px;
+}
+
 .App {
   text-align: center;
 }
