@@ -1,9 +1,9 @@
 """
-Gets top 3 most popular movies and prints the info we want from them
+Gets top 3 most popular movies, books, and songs. Prints the info we want from them.
 """
 
 import requests
-
+import base64
 
 class Movie:
     def __init__(self):
@@ -12,6 +12,8 @@ class Movie:
         self.release = ""
         self.poster_url = ""
         self.topics = []
+        self.similar_books = []
+        self.similar_songs = []
 
     def __str__(self):
         ret = ""
@@ -20,6 +22,8 @@ class Movie:
         ret += "Release date: " + self.release + "\n"
         ret += "Poster url: " + self.poster_url + "\n"
         ret += "Topics: " + str(self.topics) + "\n"
+        ret += "Similar books: " + str(self.similar_books) + "\n"
+        ret += "Similar songs: " + str(self.similar_songs) + "\n"
         return ret
 
 
@@ -31,6 +35,8 @@ class Book:
         self.release = ""
         # self.poster_url = ""
         self.topics = []
+        self.similar_movies = []
+        self.similar_songs = []
 
     def __str__(self):
         ret = ""
@@ -39,7 +45,54 @@ class Book:
         ret += "Release date: " + self.release + "\n"
         # ret += "Poster url: " + self.poster_url + "\n"
         ret += "Topics: " + str(self.topics) + "\n"
+        ret += "Similar movies: " + str(self.similar_movies) + "\n"
+        ret += "Similar songs: " + str(self.similar_songs) + "\n"
+
         return ret
+
+
+class Song:
+    def __init__(self):
+        self.name = ""
+        self.artists = []
+        self.album = ""
+        self.release = ""
+        self.topics = []
+        self.similar_movies = []
+        self.similar_books = []
+
+    def __str__(self):
+        ret = ""
+        ret += "Song name: " + self.name + "\n"
+        ret += "Artists: " + str(self.artists) + "\n"
+        ret += "Album: " + self.album + "\n"
+        ret += "Release date: " + self.release + "\n"
+        ret += "Topics: " + str(self.topics) + "\n"
+        ret += "Similar movies: " + str(self.similar_movies) + "\n"
+        ret += "Similar books: " + str(self.similar_books) + "\n"
+
+        return ret
+
+
+class SpotifyRequest:
+    def __init__(self):
+        client_id = "5042834a412b457496b39d4dd0990d22"
+        client_secret = "5441093c1a5d4c40ac324f34a76c6273"
+        
+        total = client_id + ":" + client_secret
+        total64 = base64.b64encode(total.encode())
+        total64 = str(total64)
+        total64 = total64[2:-1]
+
+        payload = {"grant_type": "client_credentials"}
+        head = {"Authorization": "Basic " + total64}
+
+        r = requests.post("https://accounts.spotify.com/api/token", data = payload, headers =  head).json()
+        self.token = r["access_token"]
+
+    def query(self, q):
+        head = {"Authorization": "Bearer " + self.token}
+        return requests.get(q, headers =  head).json()
 
 
 def getTopMovies():
@@ -80,6 +133,7 @@ def getTopMovies():
     
     return ret_movies
 
+
 def getTopBook(topic):
     topic = topic.replace(" ", "+")
     response = requests.get("https://www.googleapis.com/books/v1/volumes?q=subject:" + topic + "&langRestrict=en&key=AIzaSyDsZoCLSczdtuT0Y5mGCdR2BhT4kpQ_kXA").json() 
@@ -95,15 +149,61 @@ def getTopBook(topic):
     
     return book
 
+
+def getTopSong(topic, spotify_api):
+    topic = topic.replace(" ", "+")
+    response = spotify_api.query("https://api.spotify.com/v1/search?q=" + topic + "&type=playlist&market=US")
+    response = response["playlists"]["items"]
+    playlist_href = response[0]["href"]
+
+    track_dict = spotify_api.query(playlist_href)["tracks"]["items"][0]["track"]
+    
+    song = Song()
+    song.name = track_dict["name"]
+    for artist in track_dict["artists"]:
+        song.artists.append(artist["name"])
+    
+    album_href = track_dict["album"]["href"]
+
+    album_dict = spotify_api.query(album_href)
+   
+    song.album = album_dict["name"] 
+    song.release = album_dict["release_date"]
+    song.topics.append(topic)
+
+    return song
+
 if __name__ == "__main__" :
-    movies = getTopMovies()
+    top_movies = getTopMovies()
     
+    top_books = []
+    for m in top_movies:
+        top_books.append(getTopBook(m.topics[0]))
+
+    spotify_api = SpotifyRequest()
+    top_songs = []
+    for m in top_movies:
+        top_songs.append(getTopSong(m.topics[0], spotify_api))
+
+    for i in range(len(top_movies)):
+        top_movies[i].similar_books.append(top_books[i].name)
+        top_movies[i].similar_songs.append(top_songs[i].name)
+    for i in range(len(top_books)):
+        top_books[i].similar_movies.append(top_movies[i].name)
+        top_books[i].similar_songs.append(top_songs[i].name)
+    for i in range(len(top_songs)):
+        top_songs[i].similar_books.append(top_books[i].name)
+        top_songs[i].similar_movies.append(top_movies[i].name)
+
+
     print("***** MOVIES *****\n")
-    for m in movies:
+    for m in top_movies:
         print(m)
-    
 
     print("***** BOOKS *****\n") 
-    for m in movies:
-        book = getTopBook(m.topics[0])
-        print(book)
+    for b in top_books:
+        print(b)
+
+    print("***** SONGS *****\n")
+    for s in top_songs:
+        print(s)
