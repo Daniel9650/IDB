@@ -1,23 +1,23 @@
 import os
-from flask import Flask, request, redirect, url_for, send_from_directory
+from flask import Flask, request, send_from_directory
 
 # the all-important app variable:
 app = Flask(__name__, static_folder='build')
 
-# Routes
-@app.route('/')
-def root():
-  return app.send_static_file('build/'+'index.html')
-
+@app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
-def static_proxy(path):
-  # send_static_file will guess the correct MIME type
-  return app.send_static_file('build/'+ path)
+def hello(path):
+    if(path == ""):
+        return send_from_directory('build', 'index.html')
+    else:
+        if(os.path.exists("build/" + path)):
+            return send_from_directory('build/', path)
+        else:
+            return send_from_directory('build', 'index.html')
 
-  @app.route('/static/js/<path:path>')
-def static_js(path):
-  # send_static_file will guess the correct MIME type
-  return app.send_static_file('build/static/js'+ path)
+@app.route('/static/css/<path:path>')
+def send_js(path):
+    return send_from_directory('static/css', path)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True, port=80, use_reloader=True, threaded=True)
