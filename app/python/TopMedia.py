@@ -3,9 +3,10 @@ Gets top 3 most popular movies, books, and songs. Prints the info we want from t
 """
 
 import requests
-import base64
+
 
 class Movie:
+
     def __init__(self):
         self.name = ""
         self.description = ""
@@ -28,6 +29,7 @@ class Movie:
 
 
 class Book:
+
     def __init__(self):
         self.name = ""
         self.description = ""
@@ -52,6 +54,7 @@ class Book:
 
 
 class Song:
+
     def __init__(self):
         self.name = ""
         self.artists = []
@@ -75,24 +78,21 @@ class Song:
 
 
 class SpotifyRequest:
+
     def __init__(self):
-        client_id = "5042834a412b457496b39d4dd0990d22"
-        client_secret = "5441093c1a5d4c40ac324f34a76c6273"
-        
-        total = client_id + ":" + client_secret
-        total64 = base64.b64encode(total.encode())
-        total64 = str(total64)
-        total64 = total64[2:-1]
-
         payload = {"grant_type": "client_credentials"}
-        head = {"Authorization": "Basic " + total64}
+        head = {"Authorization":
+                "Basic NTA0MjgzNGE0MTJiNDU3NDk2YjM5ZDRkZDA5OTBkMjI6NTQ0MTA5M2MxYTVkNGM0MGFjMzI0ZjM0YTc2YzYyNzM="}
 
-        r = requests.post("https://accounts.spotify.com/api/token", data = payload, headers =  head).json()
+        r = requests.post(
+            "https://accounts.spotify.com/api/token",
+            data=payload,
+            headers=head).json()
         self.token = r["access_token"]
 
     def query(self, q):
         head = {"Authorization": "Bearer " + self.token}
-        return requests.get(q, headers =  head).json()
+        return requests.get(q, headers=head).json()
 
 
 def getTopMovies():
@@ -114,8 +114,7 @@ def getTopMovies():
         "https://api.themoviedb.org/3/discover/movie?api_key=21fed2c614e1de3b61f64b89beb692a5&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1").json()
     movies_dict = movies["results"]
 
-    print()
-    for i in range(3): # currently we only get the top 3 for phase 1
+    for i in range(3):  # currently we only get the top 3 for phase 1
         movie_dict = movies_dict[i]
 
         movie = Movie()
@@ -130,14 +129,18 @@ def getTopMovies():
             movie.topics.append(genres_dict[topic_id])
 
         ret_movies.append(movie)
-    
+
     return ret_movies
 
 
 def getTopBook(topic):
     topic = topic.replace(" ", "+")
-    response = requests.get("https://www.googleapis.com/books/v1/volumes?q=subject:" + topic + "&langRestrict=en&key=AIzaSyDsZoCLSczdtuT0Y5mGCdR2BhT4kpQ_kXA").json() 
-    
+    response = requests.get(
+        "https://www.googleapis.com/books/v1/volumes?q=subject:" +
+        topic +
+     "&langRestrict=en&key=AIzaSyDsZoCLSczdtuT0Y5mGCdR2BhT4kpQ_kXA").json(
+    )
+
     book_dict = response["items"][0]["volumeInfo"]
 
     book = Book()
@@ -148,36 +151,40 @@ def getTopBook(topic):
     for category in book_dict["categories"]:
         if category not in book.topics:
             book.topics.append(category)
-    
+
     return book
 
 
 def getTopSong(topic, spotify_api):
     topic = topic.replace(" ", "+")
-    response = spotify_api.query("https://api.spotify.com/v1/search?q=" + topic + "&type=playlist&market=US")
+    response = spotify_api.query(
+        "https://api.spotify.com/v1/search?q=" +
+        topic +
+     "&type=playlist&market=US")
     response = response["playlists"]["items"]
     playlist_href = response[0]["href"]
 
-    track_dict = spotify_api.query(playlist_href)["tracks"]["items"][0]["track"]
-    
+    track_dict = spotify_api.query(
+        playlist_href)["tracks"]["items"][0]["track"]
+
     song = Song()
     song.name = track_dict["name"]
     for artist in track_dict["artists"]:
         song.artists.append(artist["name"])
-    
+
     album_href = track_dict["album"]["href"]
 
     album_dict = spotify_api.query(album_href)
-   
-    song.album = album_dict["name"] 
+
+    song.album = album_dict["name"]
     song.release = album_dict["release_date"]
     song.topics.append(topic)
 
     return song
 
-if __name__ == "__main__" :
+if __name__ == "__main__":
     top_movies = getTopMovies()
-    
+
     top_books = []
     used_topics = []
     for m in top_movies:
@@ -202,12 +209,11 @@ if __name__ == "__main__" :
         top_songs[i].similar_books.append(top_books[i].name)
         top_songs[i].similar_movies.append(top_movies[i].name)
 
-
     print("***** MOVIES *****\n")
     for m in top_movies:
         print(m)
 
-    print("***** BOOKS *****\n") 
+    print("***** BOOKS *****\n")
     for b in top_books:
         print(b)
 
