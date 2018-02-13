@@ -16,8 +16,8 @@ def hello(path):
             return send_from_directory('build', 'index.html')
 
 @app.route('/static/css/<path:path>')
-def send_js(path):
-    return send_from_directory('static/css', path)
+def css_serve(path):
+    return send_from_directory('build/static/css', path)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True, port=80, use_reloader=True, threaded=True)
