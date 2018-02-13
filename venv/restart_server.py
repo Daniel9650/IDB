@@ -1,15 +1,14 @@
 from subprocess import Popen
 
-Popen(["sudo", "docker", "build", "-t", "poptopic_app"])
-Popen(["sudo","docker", "ps", ">>", "temp.txt"])
+Popen(["sudo", "touch", "temp"])
+Popen(["sudo", "docker", "build", "-t", "poptopic_app","."])
+Popen(["sudo","docker", "ps", ">>", "temp"])
 
 # Find last line of file
-file = open("temp.txt")
-file_line_list = file.readlines()
-file.close()
-name = file_line_list[-1]
+with open("temp", "r") as file:
+name = file.readlines()[-1]
 
-Popen(["rm", "temp.txt"])
+Popen(["rm", "temp"])
 Popen(["sudo", "docker", "kill ", name])
 Popen(["sudo", "docker", "run", "-d", "--restart=always", "-p80:80", "-t", "poptopic_app"])
 
