@@ -18,21 +18,21 @@ def hello(path):
 @app.route('/static/css/<path:path>')
 def static_css(path):
     if(os.path.exists("build/static/css/" + path)):
-        return send_from_directory('build/static/css', path)
+        return send_from_directory(os.path.join('build', 'static', 'css'), path)
     else:
         return send_from_directory('build', 'index.html')
 
 @app.route('/static/js/<path:path>')
 def static_js(path):
     if(os.path.exists("build/static/js/" + path)):
-        return send_from_directory('build/static/js', path)
+        return send_from_directory(os.path.join('build', 'static', 'js'), path)
     else:
         return send_from_directory('build', 'index.html')
 
 @app.route('/static/media/<path:path>')
 def static_media(path):
     if(os.path.exists("build/static/media/" + path)):
-        return send_from_directory('build/static/media', path)
+        return send_from_directory(os.path.join('build', 'static', 'media'), path)
     else:
         return send_from_directory('build', 'index.html')
 
