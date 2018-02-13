@@ -1,6 +1,5 @@
 from subprocess import Popen
 
-Popen(["source","venv","/bin/activate"])
 Popen(["sudo", "docker", "build", "-t", "poptopic_app"])
 Popen(["sudo","docker", "ps", ">>", "temp.txt"])
 
