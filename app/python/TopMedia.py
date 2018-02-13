@@ -145,7 +145,9 @@ def getTopBook(topic):
     book.description = book_dict["description"]
     book.release = book_dict["publishedDate"]
     book.topics.append(topic)
-    book.topics += book_dict["categories"]
+    for category in book_dict["categories"]:
+        if category not in book.topics:
+            book.topics.append(category)
     
     return book
 
@@ -177,13 +179,18 @@ if __name__ == "__main__" :
     top_movies = getTopMovies()
     
     top_books = []
+    used_topics = []
     for m in top_movies:
-        top_books.append(getTopBook(m.topics[0]))
+        for t in m.topics:
+            if t not in used_topics:
+                used_topics.append(t)
+                break
+        top_books.append(getTopBook(used_topics[-1]))
 
     spotify_api = SpotifyRequest()
     top_songs = []
-    for m in top_movies:
-        top_songs.append(getTopSong(m.topics[0], spotify_api))
+    for t in used_topics:
+        top_songs.append(getTopSong(t, spotify_api))
 
     for i in range(len(top_movies)):
         top_movies[i].similar_books.append(top_books[i].name)
