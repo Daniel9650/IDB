@@ -16,6 +16,17 @@ import DriveMyCar from './components/music/DriveMyCar.js';
 import PenguinsCrimeWave from './components/books/PenguinsCrimeWave.js';
 import IOnlySayThis from './components/books/IOnlySayThis.js';
 import MayhemAtMagicSchool from './components/books/MayhemAtMagicSchool.js';
+import Action from './components/topics/Action.js';
+import Mystery from './components/topics/Mystery.js';
+import ScienceFiction from './components/topics/ScienceFiction.js';
+import Thriller from './components/topics/Thriller.js';
+import Family from './components/topics/Family.js';
+import FamilyAndRelationships from './components/topics/FamilyAndRelationships.js';
+import Animation from './components/topics/Animation.js';
+import Adventure from './components/topics/Adventure.js';
+import Comedy from './components/topics/Comedy.js';
+import Fantasy from './components/topics/Fantasy.js';
+import JuvenileFiction from './components/topics/JuvenileFiction.js';
 
 
 
@@ -27,6 +38,17 @@ class App extends Component {
       <div className="App">
        <Navigation/>
        <Switch>
+         <Route path="/topics/action" component ={Action} />
+         <Route path="/topics/mystery" component ={Mystery} />
+         <Route path="/topics/science-fiction" component ={ScienceFiction} />
+         <Route path="/topics/thriller" component ={Thriller} />
+         <Route path="/topics/family" component ={Family} />
+         <Route path="/topics/family-and-relationships" component ={FamilyAndRelationships} />
+         <Route path="/topics/animation" component ={Animation} />
+         <Route path="/topics/adventure" component ={Adventure} />
+         <Route path="/topics/comedy" component ={Comedy} />
+         <Route path="/topics/fantasy" component ={Fantasy} />
+         <Route path="/topics/juvenile-fiction" component ={JuvenileFiction} />
          <Route path="/topics" component ={Topics} />
          <Route path="/movies/minions" component={Minions} />
          <Route path="/movies/maze-runner" component={MazeRunner} />
