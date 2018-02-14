@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Navbar, NavItem, Nav } from 'react-bootstrap';
-import books from '../graphics/books.jpg';
+
 
 
 class Navigation extends Component {
