@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Grid, Row, Col, Thumbnail } from 'react';
 
 class Topics extends Component {
    render () {
       return (
-         <h1>Hello this is the topics page</h1>
+         <h1>hello</h1>
       );
    }
 }

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Carousel, ListGroup, ListGroupItem } from 'react-bootstrap';
-import books from '../graphics/books.jpg';
-import movies from '../graphics/movies.jpg';
-import music from '../graphics/music.jpeg';
+import books from '../graphics/books.png';
+import movies from '../graphics/movies.png';
+import music from '../graphics/music.png';
 
 class Home extends Component {
    render () {
@@ -12,23 +12,46 @@ class Home extends Component {
                <Carousel.Item>
                   <img className="carousel-img" alt="library" src={books} />
                   <Carousel.Caption>
-                     View our categorized books
+                     View Categorized Books
                   </Carousel.Caption>
                </Carousel.Item>
                <Carousel.Item>
                   <img className= "carousel-img" alt="movie theatre" src={movies} />
                   <Carousel.Caption>
-                     View our categorized movies
+                     View Categorized Movies
                   </Carousel.Caption>
                </Carousel.Item>
                <Carousel.Item>
                   <img className="carousel-img" alt="recording studio sound board" src={music} />
                   <Carousel.Caption>
-                  View our categorized music
+                     View Categorized Music
                   </Carousel.Caption>
                </Carousel.Item>
             </Carousel>
-
+            <br></br>
+            <h1 className="trending-topics-title">Trending Topics</h1>
+            <ListGroup>
+               <ListGroupItem>
+                  <span className="trending-topics-list-num">1 </span>
+                  <span>Topic Name</span>
+               </ListGroupItem>
+               <ListGroupItem>
+                  <span className="trending-topics-list-num">2 </span>
+                  <span>Topic Name</span>
+               </ListGroupItem>
+               <ListGroupItem>
+                  <span className="trending-topics-list-num">3 </span>
+                  <span>Topic Name</span>
+               </ListGroupItem>
+               <ListGroupItem>
+                  <span className="trending-topics-list-num">4 </span>
+                  <span>Topic Name</span>
+               </ListGroupItem>
+               <ListGroupItem>
+                  <span className="trending-topics-list-num">5 </span>
+                  <span>Topic Name</span>
+               </ListGroupItem>
+            </ListGroup>
          </div>
       );
    }
