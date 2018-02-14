@@ -13,6 +13,11 @@ import Jumanji from './components/movies/Jumanji.js';
 import Synergy from './components/music/Synergy.js';
 import BabyBlue from './components/music/BabyBlue.js';
 import DriveMyCar from './components/music/DriveMyCar.js';
+import PenguinsCrimeWave from './components/books/PenguinsCrimeWave.js';
+import IOnlySayThis from './components/books/IOnlySayThis.js';
+import MayhemAtMagicSchool from './components/books/MayhemAtMagicSchool.js';
+
+
 
 import './App.css';
 
@@ -31,6 +36,9 @@ class App extends Component {
          <Route path="/music/drive-my-car" component ={DriveMyCar} />
          <Route path="/music/synergy" component ={Synergy} />
          <Route path="/music" component ={Music} />
+         <Route path="/books/penguins-crime-wave" component ={PenguinsCrimeWave} />
+         <Route path="/books/i-only-say-this" component ={IOnlySayThis} />
+         <Route path="/books/mayhem-at-magic-school" component ={MayhemAtMagicSchool} />
          <Route path="/books" component ={Books} />
          <Route path="/about" component ={About} />
          <Route path="/" component ={Home} />
