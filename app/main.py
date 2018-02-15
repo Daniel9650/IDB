@@ -1,18 +1,23 @@
 import os
 from flask import Flask, request, send_from_directory, render_template, url_for
-import sys
-
-from GitInfo
 
 # the all-important app variable:
 app = Flask(__name__)
 
 # EVERY page needs to have the Navbar on top
+from GitInfo import get_commits_count, get_issues_count
 
 # Splash page
 @app.route('/')
-def index():
+def index(): 
     return render_template("index.html")
+
+# About Page
+@app.route('/about')
+def about():
+    commits_count = get_commits_count()
+    issues_count = get_issues_count()
+    return render_template("about.html", commits_count=commits_count, issues_count=issues_count)
 
 #Page for browsing models (must include a grid, links to individual instances)
 
