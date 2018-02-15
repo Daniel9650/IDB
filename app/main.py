@@ -55,6 +55,23 @@ def movie(movie_name):
 def topic(topic_name):
     return render_template("model_topic.html", name=topic_name);
 
+# Movie instances
+
+@app.route('/movies/TheMazeRunner')
+def theMazeRunner():
+    return render_template("model_movie.html", name="The Maze Runner", release_date= "2014-09-10", poster_url= "http://image.tmdb.org/t/p/w185/coss7RgL0NH6g4fC2s5atvf3dFO.jpg",video_url="4-BTxXm8KSg", desc="Set in a post-apocalyptic world, young Thomas is deposited in a community of boys after his memory is erased, soon learning they're all trapped in a maze that will require him to join forces with fellow “runners” for a shot at escape.")
+
+@app.route('/movies/Minions')
+def Minions():
+    return render_template("model_movie.html", name="Minions", release_date= "2015-06-17", poster_url= "http://image.tmdb.org/t/p/w185/q0R4crx2SehcEEQEkYObktdeFy.jpg", video_url= "eisKxhjBnZ0", desc= "Minions Stuart, Kevin and Bob are recruited by Scarlet Overkill, a super-villain who, alongside her inventor husband Herb, hatches a plot to take over the world.")
+
+@app.route('/movies/Jumanji')
+def Jumaji:
+    return render_template("model_movie.html", name="Jumaji", release_date= "1995-12-15" , poster_url= "http://image.tmdb.org/t/p/w185/8wBKXZNod4frLZjAKSDuAcQ2dEU.jpg",video_url= "gN9-SnFB_Jw", desc= "When siblings Judy and Peter discover an enchanted board game that opens the door to a magical world, they unwittingly invite Alan -- an adult who's been trapped inside the game for 26 years -- into their living room. Alan's only hope for freedom is to finish the game, which proves risky as all three find themselves running from giant rhinoceroses, evil monkeys and other terrifying creatures.")
+
+# Song instances
+
+
 if __name__ == "__main__":
     app.run()
 
