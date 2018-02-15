@@ -33,7 +33,7 @@ def movie_catalog():
 
 @app.route('/topics')
 def topic_catalog():
-    return render_template("model.html", name="Topics")
+    return render_template("topics.html", name="Topics")
 
 #Pages for individual data points (must include embedded images, data, links)
 
