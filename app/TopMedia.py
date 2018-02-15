@@ -43,6 +43,7 @@ class Book:
     def __str__(self):
         ret = ""
         ret += "Book name: " + self.name + "\n"
+        ret += "Authors: " + str(self.authors) + "\n"
         ret += "Description: " + self.description + "\n"
         ret += "Release date: " + self.release + "\n"
         # ret += "Poster url: " + self.poster_url + "\n"
@@ -145,6 +146,7 @@ def getTopBook(topic):
 
     book = Book()
     book.name = book_dict["title"]
+    book.authors = book_dict["authors"]
     book.description = book_dict["description"]
     book.release = book_dict["publishedDate"]
     book.topics.append(topic)
