@@ -2,10 +2,13 @@ import requests
 
 def get_commits_count():
     r = requests.get(
-        "https://api.github.com/repos/Daniel9650/idb/stats/contributors"
-    ).json()
+        "https://api.github.com/repos/Daniel9650/idb/stats/contributors")
 
     commits_count = get_default_count()
+    if r.status_code != requests.codes.ok:
+        return commits_count
+
+    r = r.json()
     for contributor in r:
         login_name = contributor["author"]["login"]
         commits_count[login_name] = contributor["total"]
@@ -15,10 +18,13 @@ def get_commits_count():
 
 def get_issues_count():
     r = requests.get(
-        "https://api.github.com/repos/Daniel9650/idb/issues?state=all").json()
+        "https://api.github.com/repos/Daniel9650/idb/issues?state=all")
 
     issues_count = get_default_count()
+    if r.status_code != requests.codes.ok:
+        return issues_count
 
+    r = r.json()
     for issue in r:
         user = issue["user"]["login"]
         if user in issues_count:
