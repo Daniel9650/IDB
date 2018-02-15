@@ -11,6 +11,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="{{url_for('static', filename='/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='/css/album.css')}}" rel="stylesheet">
 
   </head>
   <body>
@@ -24,7 +25,7 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a class="nav-link" href="#">Home </a>
+              <a class="nav-link" href="/">Home </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/topics">Topics</a>
@@ -47,13 +48,13 @@
     </header>
 
     <main role="main">
-      <section class="jumbotron">
+      <section class="jumbotron" style="padding-top:  32px;padding-bottom: 32px;">
         <div class="container">
           <h1> {{ name }} </h1>
           <div class="row">
             <div class="col-sm text-right">
               <div style="position:relative;width:100%;height:0;padding-bottom:56.25%;">
-                <iframe id="ytplayer" type="text/html" width="100%" height="auto" src="https://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&amp;origin=http://example.com" frameborder="0" style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+                <iframe id="ytplayer" type="text/html" width="100%" height="auto" src="https://www.youtube.com/embed/{{ video_url }}?origin=http://poptopic.org" frameborder="0" style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
               </div>
             </div>
             <div class="col-sm text-left">
@@ -63,8 +64,100 @@
               <p>Month 00, 0000</p>
             </div>
           </div>
+          <hr class="my-4">
+          <h6>Topics: <small class="text-muted"><a href="#">Topic 1</a>, <a href="#">Topic 2</a></small></h6>
         </div>
       </section>
+
+      <div class="album py-5 bg-light">
+        <div class="container">
+          <h4>Related Music</h4>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="card mb-4 box-shadow">
+                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text">Description for {{ name }} 1</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card mb-4 box-shadow">
+                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text">Description for {{ name }} 2</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card mb-4 box-shadow">
+                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text">Description for {{ name }} 3</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <h4>Related Books</h4>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="card mb-4 box-shadow">
+                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text">Description for {{ name }} 1</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card mb-4 box-shadow">
+                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text">Description for {{ name }} 2</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card mb-4 box-shadow">
+                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text">Description for {{ name }} 3</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- FOOTER -->
       <footer class="container">
         <p class="float-right"><a href="#">Back to top</a></p>
