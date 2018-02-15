@@ -14,7 +14,6 @@
 
     <!-- Custom styles for this template -->
     <link href="{{url_for('static', filename='/css/album.css')}}" rel="stylesheet">
-    <link href="{{url_for('static', filename='/css/topic-header.css')}}" rel="stylesheet">
   </head>
 
   <body>
@@ -52,10 +51,9 @@
 
     <main role="main">
 
-      <section class="jumbotron text-center">
-        <img src="{{url_for('static', filename='/graphics/action.jpg')}}">
+      <section class="jumbotron text-center" style="background-image: url({{url_for('static', filename='/graphics/mazerunner.jpg')}}); background-size: cover;">
         <div class="container">
-          <h1 class="jumbotron-heading">Action</h1>
+          <h1 class="jumbotron-heading" style="color:white;">Action</h1>
           <form style="display: inline-block; margin-top: 1em;">
             <div class="form-row align-items-center">
               <div class="col-auto">
@@ -108,7 +106,7 @@
           <div class="row">
             <div class="col-md-4">
               <div class="card mb-4 box-shadow">
-                <img class="card-img-top" src="{{ url_for('static', filename='/graphics/penguin.jpg') }}" alt="Card image cap">
+                <img class="card-img-top" data-src="{{url_for('static', filename='/graphics/penguin.jpg')}}" alt="Card image cap">
                 <div class="card-body">
                   <p class="card-text">The Penguin's Crime Wave</p>
                   <div class="d-flex justify-content-between align-items-center">
