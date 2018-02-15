@@ -94,6 +94,51 @@ def youchoose2():
 def loveyou():
     return render_template("ionlysaythisbecauseiloveyou.html")
 
+# Topic instances
+@app.route('/topics/action')
+def action():
+    return render_template("action.html")
+
+@app.route('/topics/mystery')
+def mystery():
+    return render_template("mystery.html")
+
+@app.route('/topics/sciencefiction')
+def sciencefiction():
+    return render_template("sciencefiction.html")
+
+@app.route('/topics/thriller')
+def thriller():
+    return render_template("thriller.html")
+
+@app.route('/topics/adventure')
+def adventure():
+    return render_template("adventure.html")
+
+@app.route('/topics/fantasy')
+def fantasy():
+    return render_template("fantasy.html")
+
+@app.route('/topics/family')
+def family():
+    return render_template("family.html")
+
+@app.route('/topics/animation')
+def animation():
+    return render_template("animation.html")
+
+@app.route('/topics/comedy')
+def comedy():
+    return render_template("comedy.html")
+
+@app.route('/topics/juvenilefiction')
+def juvenile():
+    return render_template("juvenilefiction.html")
+
+@app.route('/topics/familyandrelationships')
+def relationships():
+    return render_template("familyandrelationships.html")
+
 if __name__ == "__main__":
     app.run()
 
