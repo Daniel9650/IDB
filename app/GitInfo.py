@@ -1,14 +1,49 @@
 import requests
+import shelve
+
+
+def update_and_close(shelve_dict, r):
+    save = r.json()
+    shelve_dict["etag"] = r.headers["etag"]
+    shelve_dict["response"] = save
+    shelve_dict.close()
+    return save
+
+
+def get_cached(url, name):
+    d = shelve.open(name)
+    if "etag" not in d:
+        r = requests.get(url)
+        if r.status_code != 200:
+            return []
+        return update_and_close(d, r)
+
+    etag = d["etag"]
+    head = {"If-None-Match": etag}
+    r = requests.get(url, headers=head)
+
+    if r.status_code == 304:
+        # we can use cached version
+        response = d["response"]
+        d.close()
+        return response
+
+    if r.status_code != 200:
+        return []
+
+    return update_and_close(d, r)
+
 
 def get_commits_count():
-    r = requests.get(
-        "https://api.github.com/repos/Daniel9650/idb/stats/contributors")
+
+    # r = requests.get(
+    #    "https://api.github.com/repos/Daniel9650/idb/stats/contributors", headers=head)
+    r = get_cached(
+        "https://api.github.com/repos/Daniel9650/idb/stats/contributors",
+        "commits-cache")
 
     commits_count = get_default_count()
-    if r.status_code != requests.codes.ok:
-        return commits_count
 
-    r = r.json()
     for contributor in r:
         login_name = contributor["author"]["login"]
         commits_count[login_name] = contributor["total"]
@@ -17,14 +52,12 @@ def get_commits_count():
 
 
 def get_issues_count():
-    r = requests.get(
-        "https://api.github.com/repos/Daniel9650/idb/issues?state=all")
+    r = get_cached(
+        "https://api.github.com/repos/Daniel9650/idb/issues?state=all",
+        "issues-cache")
 
     issues_count = get_default_count()
-    if r.status_code != requests.codes.ok:
-        return issues_count
 
-    r = r.json()
     for issue in r:
         user = issue["user"]["login"]
         if user in issues_count:
