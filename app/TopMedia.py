@@ -98,7 +98,7 @@ class SpotifyRequest:
 def getTopMovies():
     ret_movies = []
 
-    # read genres of moviedb
+    # read the genres of moviedb
     genres = requests.get(
         "https://api.themoviedb.org/3/genre/movie/list?api_key=21fed2c614e1de3b61f64b89beb692a5&language=en-US").json()
 
