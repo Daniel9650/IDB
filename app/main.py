@@ -1,6 +1,6 @@
 import os
 from flask import Flask, request, send_from_directory, render_template, url_for
-import requests
+from GitInfo import get_commits_count, get_issues_count
 
 # the all-important app variable:
 app = Flask(__name__)
@@ -13,7 +13,9 @@ def index():
 # About Page
 @app.route('/about')
 def about():
-    return render_template("about.html")
+    commits_count = get_commits_count();
+    issues_count = get_issues_count();
+    return render_template("about.html", commits=commits_count, issues=issues_count)
 
 #Page for browsing models (must include a grid, links to individual instances)
 
