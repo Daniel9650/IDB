@@ -59,7 +59,7 @@
         </ol>
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img class="first-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="First slide">
+            <img class="first-slide" src="{{ url_for('static', filename='/graphics/topics.png') }}" alt="First slide">
             <div class="container">
               <div class="carousel-caption text-left">
                 <h1>Discover the latest trending topics!</h1>
@@ -69,7 +69,7 @@
             </div>
           </div>
           <div class="carousel-item">
-            <img class="second-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Second slide">
+            <img class="second-slide" src="{{ url_for('static', filename='/graphics/movies.png') }}" alt="Second slide">
             <div class="container">
               <div class="carousel-caption">
                 <h1>Target Movie-lovers.</h1>
@@ -79,7 +79,7 @@
             </div>
           </div>
           <div class="carousel-item">
-            <img class="third-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Third slide">
+            <img class="third-slide" src="{{ url_for('static', filename='/graphics/music.png') }}" alt="Third slide">
             <div class="container">
               <div class="carousel-caption text-right">
                 <h1>Call out to the Audiophiles.</h1>
@@ -89,7 +89,7 @@
             </div>
           </div>
           <div class="carousel-item">
-            <img class="fourth-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Fourth slide">
+            <img class="fourth-slide" src="{{ url_for('static', filename='/graphics/books.png') }}" alt="Fourth slide">
             <div class="container">
               <div class="carousel-caption">
                 <h1>Books are still relevant.</h1>
@@ -119,22 +119,22 @@
         <!-- Three columns of text below the carousel -->
         <div class="row">
           <div class="col-lg-4">
-            <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-            <h2>Trending Topic 1</h2>
-            <p>Topic Description</p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+            <img class="rounded-circle" style="object-fit: cover" src="{{ url_for('static', filename='/graphics/adventure.jpg') }}" alt="Generic placeholder image" width="140" height="140">
+            <h2>Adventure</h2>
+            <p>Most Trending Topic!</p>
+            <p><a class="btn btn-secondary" href="/topics/adventure" role="button">View topic &raquo;</a></p>
           </div><!-- /.col-lg-4 -->
           <div class="col-lg-4">
-            <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-            <h2>Trending Topic 2</h2>
-            <p>Topic Description</p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+            <img class="rounded-circle" style="object-fit: cover" src="{{ url_for('static', filename='/graphics/family.jpg') }}" alt="Generic placeholder image" width="140" height="140">
+            <h2>Family</h2>
+            <p>A worthy opponent!</p>
+            <p><a class="btn btn-secondary" href="/topics/family" role="button">View topic &raquo;</a></p>
           </div><!-- /.col-lg-4 -->
           <div class="col-lg-4">
-            <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-            <h2>Trending Topic 3</h2>
-            <p>Topic Description</p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+            <img class="rounded-circle" style="object-fit: cover" src="{{ url_for('static', filename='/graphics/action.jpg') }}" alt="Generic placeholder image" width="140" height="140">
+            <h2>Action</h2>
+            <p>Topic on the rise!</p>
+            <p><a class="btn btn-secondary" href="/topics/action" role="button">View topic &raquo;</a></p>
           </div><!-- /.col-lg-4 -->
         </div><!-- /.row -->
 
@@ -145,11 +145,13 @@
 
         <div class="row featurette">
           <div class="col-md-7">
-            <h2 class="featurette-heading">This Week's Top Movie. <span class="text-muted">Movie Name.</span></h2>
-            <p class="lead">Movie Desciption</p>
+            <h2 class="featurette-heading">This Week's Top Movie. <span class="text-muted">The Maze Runner.</span></h2>
+            <p class="lead">Set in a post-apocalyptic world, young Thomas is deposited in a community of boys after his memory is erased, soon learning they're all trapped in a maze that will require him to join forces with fellow “runners” for a shot at escape.</p>
           </div>
           <div class="col-md-5">
-            <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+          	<a href="/movies/themazerunner">
+            	<img class="featurette-image img-fluid mx-auto" src="{{ url_for('static', filename='/graphics/mazerunner.jpg') }}" alt="The Maze Runner">
+        	</a>
           </div>
         </div>
 
@@ -157,11 +159,13 @@
 
         <div class="row featurette">
           <div class="col-md-7 order-md-2">
-            <h2 class="featurette-heading">This Week's Top Song. <span class="text-muted">Song Name.</span></h2>
-            <p class="lead">Song/Artist Description</p>
+            <h2 class="featurette-heading">This Week's Top Song. <span class="text-muted">Baby Blue (feat. Chance the Rapper).</span></h2>
+            <p class="lead">on Action Bronson's Mr. Wonderful</p>
           </div>
           <div class="col-md-5 order-md-1">
-            <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+            <a href="/music/babyblue">
+            	<img class="featurette-image img-fluid mx-auto" src="{{ url_for('static', filename='/graphics/babyblue.jpg') }}" alt="Baby Blue (feat. Chance the Rapper)">
+        	</a>
           </div>
         </div>
 
@@ -169,11 +173,13 @@
 
         <div class="row featurette">
           <div class="col-md-7">
-            <h2 class="featurette-heading">This Week's Bestseller. <span class="text-muted">Book Title.</span></h2>
-            <p class="lead">Book Synopsis</p>
+            <h2 class="featurette-heading">This Week's Bestseller. <span class="text-muted">You Choose 2: Mayhem at Magic School.</span></h2>
+            <p class="lead">Abrand-new series of interactive novels for the highly adventurous. Read if you dare! Mistakes will cost you dearly! YOU CHOOSE...Supreme ruler of the world or misfortune for life! You are an ordinary kid... or so you think. Strange things start to happen. You make a rabbit appear from underneath your teacher's hat. Then you dream about a mystical diamond and a mysterious old woman with long white hair... It turns out you have magical powers. Do you try to keep your talents hidden or do you go off to Magic School?</p>
           </div>
           <div class="col-md-5">
-            <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+            <a href="/books/youchoose2">
+            	<img class="featurette-image img-fluid mx-auto" src="{{ url_for('static', filename='/graphics/youchoose.jpg') }}" alt="You Choose 2: Mayhem at Magic School">
+            </a>
           </div>
         </div>
 

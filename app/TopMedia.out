@@ -1,0 +1,75 @@
+***** MOVIES *****
+
+Movie name: Minions
+Description: Minions Stuart, Kevin and Bob are recruited by Scarlet Overkill, a super-villain who, alongside her inventor husband Herb, hatches a plot to take over the world.
+Release date: 2015-06-17
+Poster url: http://image.tmdb.org/t/p/w185/q0R4crx2SehcEEQEkYObktdeFy.jpg
+Topics: ['Family', 'Animation', 'Adventure', 'Comedy']
+Similar books: ['I Only Say This Because I Love You']
+Similar songs: ['Drive My Car - Remastered']
+
+Movie name: The Maze Runner
+Description: Set in a post-apocalyptic world, young Thomas is deposited in a community of boys after his memory is erased, soon learning they're all trapped in a maze that will require him to join forces with fellow “runners” for a shot at escape.
+Release date: 2014-09-10
+Poster url: http://image.tmdb.org/t/p/w185/coss7RgL0NH6g4fC2s5atvf3dFO.jpg
+Topics: ['Action', 'Mystery', 'Science Fiction', 'Thriller']
+Similar books: ["The Penguin's Crime Wave"]
+Similar songs: ['Baby Blue (feat. Chance the Rapper)']
+
+Movie name: San Andreas
+Description: In the aftermath of a massive earthquake in California, a rescue-chopper pilot makes a dangerous journey across the state in order to rescue his estranged daughter.
+Release date: 2015-05-27
+Poster url: http://image.tmdb.org/t/p/w185/qey0tdcOp9kCDdEZuJ87yE3crSe.jpg
+Topics: ['Action', 'Drama', 'Thriller']
+Similar books: ['Aristophanes Thesmophoriazusae']
+Similar songs: ['River']
+
+***** BOOKS *****
+
+Book name: I Only Say This Because I Love You
+Description: A guide to communicating better within families explains how to untie the knots that often hamper important discussions and how to enhance personal relationships among family members by understanding the art of conversation and listening.
+Release date: 2002
+Topics: ['Family', 'Family & Relationships']
+Similar movies: ['Minions']
+Similar songs: ['Drive My Car - Remastered']
+
+Book name: The Penguin's Crime Wave
+Description: The Penguin hijacks a luxury yacht with his penguin-shaped submarine and it is up to Batman to stop him and rescue the passengers and crew.
+Release date: 2013-01-01
+Topics: ['Action', 'Juvenile Fiction']
+Similar movies: ['The Maze Runner']
+Similar songs: ['Baby Blue (feat. Chance the Rapper)']
+
+Book name: Aristophanes Thesmophoriazusae
+Description: Aristophanes' Thesmophoriazusae is the story of a quarrel between the tragic playwright Euripides and Athens' women, who accuse him of slandering them in his plays. Austin and Olson offer a fresh text of the play; an extensive introduction; and a detailed commentary; most Greek cited in the introduction and commentary is translated, and much of the edition is accessible to non-specialists.
+Release date: 2004-09-30
+Topics: ['Drama']
+Similar movies: ['San Andreas']
+Similar songs: ['River']
+
+***** SONGS *****
+
+Song name: Drive My Car - Remastered
+Artists: ['The Beatles']
+Album: Rubber Soul (Remastered)
+Release date: 1965-12-03
+Topics: ['Family']
+Similar movies: ['Minions']
+Similar books: ['I Only Say This Because I Love You']
+
+Song name: Baby Blue (feat. Chance the Rapper)
+Artists: ['Action Bronson', 'Chance The Rapper']
+Album: Mr. Wonderful
+Release date: 2015-03-23
+Topics: ['Action']
+Similar movies: ['The Maze Runner']
+Similar books: ["The Penguin's Crime Wave"]
+
+Song name: River
+Artists: ['Bishop Briggs']
+Album: River
+Release date: 2016-01-22
+Topics: ['Drama']
+Similar movies: ['San Andreas']
+Similar books: ['Aristophanes Thesmophoriazusae']
+

@@ -23,6 +23,11 @@
   font-weight: 300;
 }
 
+.card-img-top {
+  object-fit: cover;
+  max-height: 250px;
+}
+
 footer {
   padding-top: 3rem;
   padding-bottom: 3rem;

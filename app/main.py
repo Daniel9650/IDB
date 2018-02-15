@@ -1,11 +1,9 @@
 import os
 from flask import Flask, request, send_from_directory, render_template, url_for
+import requests
 
 # the all-important app variable:
 app = Flask(__name__)
-
-# EVERY page needs to have the Navbar on top
-from GitInfo import get_commits_count, get_issues_count
 
 # Splash page
 @app.route('/')
@@ -15,23 +13,21 @@ def index():
 # About Page
 @app.route('/about')
 def about():
-    commits_count = get_commits_count()
-    issues_count = get_issues_count()
-    return render_template("about.html", commits_count=commits_count, issues_count=issues_count)
+    return render_template("about.html")
 
 #Page for browsing models (must include a grid, links to individual instances)
 
 @app.route('/music')
 def song_catalog():
-    return render_template("model.html", name="Music")
+    return render_template("music.html", name="Music")
 
 @app.route('/books')
 def book_catalog():
-    return render_template("model.html", name="Books")
+    return render_template("books.html", name="Books")
 
 @app.route('/movies')
 def movie_catalog():
-    return render_template("model.html", name="Movies")
+    return render_template("movies.html", name="Movies")
 
 @app.route('/topics')
 def topic_catalog():
@@ -57,20 +53,44 @@ def topic(topic_name):
 
 # Movie instances
 
-@app.route('/movies/TheMazeRunner')
+@app.route('/movies/themazerunner')
 def theMazeRunner():
-    return render_template("model_movie.html", name="The Maze Runner", release_date= "2014-09-10", poster_url= "http://image.tmdb.org/t/p/w185/coss7RgL0NH6g4fC2s5atvf3dFO.jpg",video_url="4-BTxXm8KSg", desc="Set in a post-apocalyptic world, young Thomas is deposited in a community of boys after his memory is erased, soon learning they're all trapped in a maze that will require him to join forces with fellow “runners” for a shot at escape.")
+    return render_template("themazerunner.html")
 
-@app.route('/movies/Minions')
+@app.route('/movies/minions')
 def Minions():
-    return render_template("model_movie.html", name="Minions", release_date= "2015-06-17", poster_url= "http://image.tmdb.org/t/p/w185/q0R4crx2SehcEEQEkYObktdeFy.jpg", video_url= "eisKxhjBnZ0", desc= "Minions Stuart, Kevin and Bob are recruited by Scarlet Overkill, a super-villain who, alongside her inventor husband Herb, hatches a plot to take over the world.")
+    return render_template("minions.html")
 
-@app.route('/movies/Jumanji')
-def Jumaji:
-    return render_template("model_movie.html", name="Jumaji", release_date= "1995-12-15" , poster_url= "http://image.tmdb.org/t/p/w185/8wBKXZNod4frLZjAKSDuAcQ2dEU.jpg",video_url= "gN9-SnFB_Jw", desc= "When siblings Judy and Peter discover an enchanted board game that opens the door to a magical world, they unwittingly invite Alan -- an adult who's been trapped inside the game for 26 years -- into their living room. Alan's only hope for freedom is to finish the game, which proves risky as all three find themselves running from giant rhinoceroses, evil monkeys and other terrifying creatures.")
+@app.route('/movies/jumanji')
+def Jumanji():
+    return render_template("jumanji.html")
 
-# Song instances
+# Music instances
 
+@app.route('/music/synergy')
+def synergy():
+    return render_template("synergy.html")
+
+@app.route('/music/drivemycar')
+def drivemycar():
+    return render_template("drivemycar.html")
+
+@app.route('/music/babyblue')
+def babyblue():
+    return render_template("babyblue.html")
+
+# Book instances
+@app.route('/books/thepenguinscrimewave')
+def penguin():
+    return render_template("thepenguinscrimewave.html")
+
+@app.route('/books/youchoose2')
+def youchoose2():
+    return render_template("youchoose2.html")
+
+@app.route('/books/ionlysaythisbecauseiloveyou')
+def loveyou():
+    return render_template("ionlysaythisbecauseiloveyou.html")
 
 if __name__ == "__main__":
     app.run()

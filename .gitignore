@@ -9,6 +9,9 @@ app/coverage
 # production
 app/build
 
+#venv
+venv
+
 # misc
 API_keys
 .DS_Store
