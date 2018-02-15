@@ -14,6 +14,7 @@
 
     <!-- Custom styles for this template -->
     <link href="{{url_for('static', filename='/css/album.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='/css/topic-header.css')}}" rel="stylesheet">
   </head>
 
   <body>
@@ -51,7 +52,8 @@
 
     <main role="main">
 
-      <section class="jumbotron text-center" style="background-image: url({{url_for('static', filename='/graphics/action.jpg')}}); background-size: cover;">
+      <section class="jumbotron text-center">
+        <img src="{{url_for('static', filename='/graphics/action.jpg')}}">
         <div class="container">
           <h1 class="jumbotron-heading">Action</h1>
           <form style="display: inline-block; margin-top: 1em;">
