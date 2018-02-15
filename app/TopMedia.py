@@ -109,7 +109,7 @@ def getTopMovies():
     for gen in genres:
         genres_dict[gen["id"]] = gen["name"]
 
-    # read first page of popular movies
+    # read the first page of popular movies
     movies = requests.get(
         "https://api.themoviedb.org/3/discover/movie?api_key=21fed2c614e1de3b61f64b89beb692a5&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1").json()
     movies_dict = movies["results"]
