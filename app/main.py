@@ -1,5 +1,8 @@
 import os
 from flask import Flask, request, send_from_directory, render_template, url_for
+import sys
+
+from GitInfo
 
 # the all-important app variable:
 app = Flask(__name__)
