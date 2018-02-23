@@ -1,16 +1,23 @@
 import React, { Component } from 'react';
-import { Button } from 'reactstrap';
+import { Jumbotron, Button } from 'reactstrap';
 
 
 class Home extends Component {
    render () {
       return (
-         <div>
-            <p>Hello there</p>
-            <Button>Sup</Button>
-         </div>
-      );
-   }
+          <div>
+            <Jumbotron className="jumbo">
+              <h1 >Write the Next Bestselled!</h1>
+              <p >This is a simple hero unit, a simple Jumbotron-style component for calling extra attention to featured content or information.</p>
+              <hr />
+              <p>It uses utility classes for typgraphy and spacing to space content out within the larger container.</p>
+              <p>
+                <Button color="primary">Learn More</Button>
+              </p>
+            </Jumbotron>
+          </div>
+        );
+         }
 
 }
 

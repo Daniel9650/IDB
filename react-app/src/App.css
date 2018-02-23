@@ -1,3 +1,75 @@
+.jumbo {
+
+   color: white;
+   height: 500px;
+   text-align: center;
+
+}
+
+.about-logo {
+   height: 100px;
+
+   object-fit: cover;
+   justify-content: center;
+   margin: 10px;
+}
+
+.about-text {
+   margin-left: 20%;
+   margin-right: 20%;
+   font-size: 18px;
+}
+
+.general-title {
+   font-size: 100px;
+   font-weight: bold;
+}
+
+.headshot {
+   height: 250px;
+   width: 250px;
+   object-fit: cover;
+   border-radius: 50%;
+   justify-content: center;
+   margin: 10px;
+
+}
+
+.divider {
+   border-width: 3px;
+   border-color: black;
+   width: 60%;
+   margin-left: 20%;
+   margin-right: 20%;
+}
+
+.about-title {
+   margin-left: 20%;
+   font-weight: bold;
+   font-size: 50px;
+}
+
+.col-center {
+   margin: auto;
+   display: block;
+   text-align: center
+}
+
+.about-name {
+   font-weight: bold;
+
+}
+
+.about-sub {
+   font-weight: bold;
+   font-size: 30px;
+}
+
+
+.about-page {
+   margin-top: 100px;
+}
+
 .App {
   text-align: center;
 }
