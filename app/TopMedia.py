@@ -37,7 +37,7 @@ class Book:
         self.description = ""
         self.authors = []
         self.release = ""
-        # self.poster_url = ""
+        self.poster_url = ""
         self.topics = []
         self.similar_movies = []
         self.similar_songs = []
@@ -48,7 +48,7 @@ class Book:
         ret += "Authors: " + str(self.authors) + "\n"
         ret += "Description: " + self.description + "\n"
         ret += "Release date: " + self.release + "\n"
-        # ret += "Poster url: " + self.poster_url + "\n"
+        ret += "Poster url: " + self.poster_url + "\n"
         ret += "Topics: " + str(self.topics) + "\n"
         ret += "Similar movies: " + str(self.similar_movies) + "\n"
         ret += "Similar songs: " + str(self.similar_songs) + "\n"
@@ -62,6 +62,7 @@ class Song:
         self.name = ""
         self.artists = []
         self.album = ""
+        self.poster_url = ""
         self.release = ""
         self.topics = []
         self.similar_movies = []
@@ -72,6 +73,7 @@ class Song:
         ret += "Song name: " + self.name + "\n"
         ret += "Artists: " + str(self.artists) + "\n"
         ret += "Album: " + self.album + "\n"
+        ret += "Album cover url: " + self.poster_url + "\n"
         ret += "Release date: " + self.release + "\n"
         ret += "Topics: " + str(self.topics) + "\n"
         ret += "Similar movies: " + str(self.similar_movies) + "\n"
@@ -158,6 +160,7 @@ def getTopBook(topic):
     book.authors = book_dict["authors"]
     book.description = book_dict["description"]
     book.release = book_dict["publishedDate"]
+    book.poster_url = book_dict["imageLinks"]["thumbnail"]
     book.topics.append(topic)
     for category in book_dict["categories"]:
         if category not in book.topics:
@@ -190,6 +193,7 @@ def getTopSong(topic, spotify_api):
     song.album = album_dict["name"]
     song.release = album_dict["release_date"]
     song.topics.append(topic)
+    song.poster_url = album_dict["images"][0]["url"]
 
     return song
 
