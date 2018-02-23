@@ -12,6 +12,7 @@ class Movie:
         self.description = ""
         self.release = ""
         self.poster_url = ""
+        self.trailer_url = ""
         self.topics = []
         self.similar_books = []
         self.similar_songs = []
@@ -21,6 +22,7 @@ class Movie:
         ret += "Movie name: " + self.name + "\n"
         ret += "Description: " + self.description + "\n"
         ret += "Release date: " + self.release + "\n"
+        ret += "Trailer url: " + self.trailer_url + "\n"
         ret += "Poster url: " + self.poster_url + "\n"
         ret += "Topics: " + str(self.topics) + "\n"
         ret += "Similar books: " + str(self.similar_books) + "\n"
@@ -128,6 +130,13 @@ def getTopMovies():
         topic_ids = movie_dict["genre_ids"]
         for topic_id in topic_ids:
             movie.topics.append(genres_dict[topic_id])
+
+        # find the trailer in youtube api
+        query_text = movie.name + " trailer";
+        query_text = query_text.replace(" ", "+")
+        videos = requests.get("https://www.googleapis.com/youtube/v3/search?q=" + query_text + "&part=snippet&type=video&key=AIzaSyA_kByPFNibKSvpQxR-dMILjfx2M1TEgDg").json()
+
+        movie.trailer_url = "https://www.youtube.com/watch?v=" + videos["items"][0]["id"]["videoId"]
 
         ret_movies.append(movie)
 
