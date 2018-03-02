@@ -82,16 +82,17 @@ class Song:
         ret += "Artists: " + str(self.artists) + "\n"
         ret += "Album: " + self.album + "\n"
         ret += "Album cover url: " + self.poster_url + "\n"
-        ret += "Youtube url: " + self.youtube_url + "\n" 
+        ret += "Youtube url: " + self.youtube_url + "\n"
         ret += "Release date: " + self.release + "\n"
         ret += "Topics: " + str(self.topics) + "\n"
         ret += "Similar movies: " + str(self.similar_movies) + "\n"
         ret += "Similar books: " + str(self.similar_books) + "\n"
 
         return ret
-    
+
     def __repr__(self):
         return self.__str__()
+
 
 class SpotifyRequest:
 
@@ -111,6 +112,24 @@ class SpotifyRequest:
         return requests.get(q, headers=head).json()
 
 
+def extract_movie_info(response, genres_dict):
+    movie = Movie()
+    movie.name = response["original_title"]
+    movie.id = str(response["id"])
+    movie.description = response["overview"]
+    movie.release = response["release_date"]
+    movie.poster_url = "http://image.tmdb.org/t/p/w185" + \
+        response["poster_path"]
+
+    topic_ids = response["genre_ids"]
+    for topic_id in topic_ids:
+        movie.topics.append(genres_dict[topic_id])
+
+    movie.trailer_url = getYoutubeUrl(movie.name + " trailer")
+
+    return movie
+
+
 def getTopMovies():
     ret_movies = {}
 
@@ -125,29 +144,14 @@ def getTopMovies():
     for gen in genres:
         genres_dict[gen["id"]] = gen["name"]
 
-    # read the first page of popular movies
-    movies = requests.get(
-        "https://api.themoviedb.org/3/discover/movie?api_key=21fed2c614e1de3b61f64b89beb692a5&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1").json()
-    movies_dict = movies["results"]
+    # iterate over pages of movies
+    for page in range(1, 3):
+        movies = requests.get(
+            "https://api.themoviedb.org/3/discover/movie?api_key=21fed2c614e1de3b61f64b89beb692a5&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=" + str(page)).json()
 
-    for i in range(3):  # currently we only get the top 3 for phase 1
-        movie_dict = movies_dict[i]
-
-        movie = Movie()
-        movie.name = movie_dict["original_title"]
-        movie.id = str(movie_dict["id"])
-        movie.description = movie_dict["overview"]
-        movie.release = movie_dict["release_date"]
-        movie.poster_url = "http://image.tmdb.org/t/p/w185" + \
-            movie_dict["poster_path"]
-
-        topic_ids = movie_dict["genre_ids"]
-        for topic_id in topic_ids:
-            movie.topics.append(genres_dict[topic_id])
-
-        movie.trailer_url = getYoutubeUrl(movie.name + " trailer")
-
-        ret_movies[movie.id] = movie
+        for result in movies["results"]:
+            movie = extract_movie_info(result, genres_dict)
+            ret_movies[movie.id] = movie
 
     return ret_movies
 
@@ -169,7 +173,7 @@ def extract_book_info(response, book_topic):
         if category not in book.topics:
             book.topics.append(category)
     """
-    
+
     return book
 
 
@@ -178,13 +182,13 @@ def getTopBooks(topics):
 
     for topic in topics:
         save_topic = topic.replace(" ", "+")
-    
+
         response = requests.get(
             "https://www.googleapis.com/books/v1/volumes?q=subject:" +
             save_topic +
          "&langRestrict=en&key=AIzaSyDsZoCLSczdtuT0Y5mGCdR2BhT4kpQ_kXA").json()
 
-        for i in range(3): # 3 books per topic
+        for i in range(3):  # 3 books per topic
             if i >= len(response["items"]):
                 break
 
@@ -226,15 +230,14 @@ def getTopSongs(topics):
 
     for topic in topics:
         save_topic = topic.replace(" ", "+")
-        
+
         response = spotify_api.query(
             "https://api.spotify.com/v1/search?q=" +
             save_topic +
          "&type=playlist&market=US")
         response = response["playlists"]
- 
 
-        for i in range(3): # 3 songs per topic
+        for i in range(3):  # 3 songs per topic
             if i >= len(response["items"]):
                 break
 
@@ -246,7 +249,11 @@ def getTopSongs(topics):
 
 def getYoutubeUrl(query_text):
     query_text = query_text.replace(" ", "+")
-    videos = requests.get("https://www.googleapis.com/youtube/v3/search?q=" + query_text + "&part=snippet&type=video&key=AIzaSyA_kByPFNibKSvpQxR-dMILjfx2M1TEgDg").json()
+    videos = requests.get(
+        "https://www.googleapis.com/youtube/v3/search?q=" +
+        query_text +
+     "&part=snippet&type=video&key=AIzaSyA_kByPFNibKSvpQxR-dMILjfx2M1TEgDg").json(
+    )
     return "https://www.youtube.com/watch?v=" + videos["items"][0]["id"]["videoId"]
 
 
@@ -261,6 +268,7 @@ def get_media_per_topic(media):
 
     return media_per_topic
 
+
 def get_topics(movies):
     topics = set()
     for movie_id, movie_info in movies.items():
@@ -270,23 +278,27 @@ def get_topics(movies):
     return list(topics)
 
 
-def record_similarities(media_type, media, movies_per_topic, books_per_topic, songs_per_topic):
+def record_similarities(
+    media_type,
+     media,
+     movies_per_topic,
+     books_per_topic,
+     songs_per_topic):
     for _, media_info in media.items():
         if media_type != "movies":
             rand_topic = random.choice(media_info.topics)
             rand_movie = random.choice(movies_per_topic[rand_topic])
             media_info.similar_movies.append(rand_movie)
-        
+
         if media_type != "books":
             rand_topic = random.choice(media_info.topics)
             rand_book = random.choice(books_per_topic[rand_topic])
             media_info.similar_books.append(rand_book)
-        
+
         if media_type != "songs":
             rand_topic = random.choice(media_info.topics)
             rand_song = random.choice(songs_per_topic[rand_topic])
             media_info.similar_songs.append(rand_song)
-        
 
 
 if __name__ == "__main__":
@@ -300,9 +312,24 @@ if __name__ == "__main__":
     books_per_topic = get_media_per_topic(top_books)
     songs_per_topic = get_media_per_topic(top_songs)
 
-    record_similarities("movies", top_movies, movies_per_topic, books_per_topic, songs_per_topic)
-    record_similarities("books", top_books, movies_per_topic, books_per_topic, songs_per_topic)
-    record_similarities("songs", top_songs, movies_per_topic, books_per_topic, songs_per_topic)
+    record_similarities(
+        "movies",
+        top_movies,
+     movies_per_topic,
+     books_per_topic,
+     songs_per_topic)
+    record_similarities(
+        "books",
+        top_books,
+     movies_per_topic,
+     books_per_topic,
+     songs_per_topic)
+    record_similarities(
+        "songs",
+        top_songs,
+     movies_per_topic,
+     books_per_topic,
+     songs_per_topic)
 
     print("***** MOVIES *****\n")
     for _, m in top_movies.items():
