@@ -1,0 +1,29 @@
+{
+   
+   "logos": [
+      {
+         "link": "https://www.python.org/",
+         "image": "python.png"
+      },
+      {
+         "link": "https://www.github.com/",
+         "image": "github.png"
+      },
+      {
+         "link": "https://aws.amazon.com/",
+         "image": "aws.png"
+      },
+      {
+         "link": "https://www.docker.com/",
+         "image": "docker.png"
+      },
+      {
+         "link": "https://getbootstrap.com/",
+         "image": "bootstrap.png"
+      },
+      {
+         "link": "https://reactjs.org/",
+         "image": "react.png"
+      }
+   ]
+}
