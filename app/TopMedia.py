@@ -29,6 +29,7 @@ class Movie:
         ret += "Topics: " + str(self.topics) + "\n"
         ret += "Similar books: " + str(self.similar_books) + "\n"
         ret += "Similar songs: " + str(self.similar_songs) + "\n"
+        ret += "Id: " + self.id + "\n"
         return ret
 
 
@@ -55,6 +56,7 @@ class Book:
         ret += "Topics: " + str(self.topics) + "\n"
         ret += "Similar movies: " + str(self.similar_movies) + "\n"
         ret += "Similar songs: " + str(self.similar_songs) + "\n"
+        ret += "Id: " + self.id + "\n"
 
         return ret
 
@@ -87,6 +89,7 @@ class Song:
         ret += "Topics: " + str(self.topics) + "\n"
         ret += "Similar movies: " + str(self.similar_movies) + "\n"
         ret += "Similar books: " + str(self.similar_books) + "\n"
+        ret += "Id: " + self.id + "\n"
 
         return ret
 
@@ -203,7 +206,6 @@ def extract_song_info(response, song_topic, spotify_api):
 
     track_dict = spotify_api.query(
         playlist_href)["tracks"]["items"][0]["track"]
-
     song = Song()
     song.name = track_dict["name"]
     song.id = str(track_dict["id"])
@@ -285,20 +287,24 @@ def record_similarities(
      books_per_topic,
      songs_per_topic):
     for _, media_info in media.items():
-        if media_type != "movies":
-            rand_topic = random.choice(media_info.topics)
-            rand_movie = random.choice(movies_per_topic[rand_topic])
-            media_info.similar_movies.append(rand_movie)
+        for i in range(3): # up to three similar media per media type
+            if media_type != "movies":
+                rand_topic = random.choice(media_info.topics)
+                rand_movie = random.choice(movies_per_topic[rand_topic])
+                if rand_movie not in media_info.similar_movies:
+                    media_info.similar_movies.append(rand_movie)
 
-        if media_type != "books":
-            rand_topic = random.choice(media_info.topics)
-            rand_book = random.choice(books_per_topic[rand_topic])
-            media_info.similar_books.append(rand_book)
+            if media_type != "books":
+                rand_topic = random.choice(media_info.topics)
+                rand_book = random.choice(books_per_topic[rand_topic])
+                if rand_book not in media_info.similar_books:
+                    media_info.similar_books.append(rand_book)
 
-        if media_type != "songs":
-            rand_topic = random.choice(media_info.topics)
-            rand_song = random.choice(songs_per_topic[rand_topic])
-            media_info.similar_songs.append(rand_song)
+            if media_type != "songs":
+                rand_topic = random.choice(media_info.topics)
+                rand_song = random.choice(songs_per_topic[rand_topic])
+                if rand_song not in media_info.similar_songs:
+                    media_info.similar_songs.append(rand_song)
 
 
 if __name__ == "__main__":
