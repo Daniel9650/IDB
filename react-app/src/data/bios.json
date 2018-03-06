@@ -1,0 +1,49 @@
+{
+   "members": [
+      {
+         "name": "Kylie Sanderson",
+         "role": "React Developer",
+         "image": "kylie.jpg",
+         "commits": "0",
+         "issues": "0",
+         "tests": "0"
+      },
+
+      {
+         "name": "Drew Dearing",
+         "role": "Server Manager and Front-end Developer",
+         "image": "drew.png",
+         "commits": "0",
+         "issues": "0",
+         "tests": "0"
+      },
+
+      {
+         "name": "Gerlou Shyy",
+         "role": "API Design Specialist",
+         "image": "gerlou.jpg",
+         "commits": "0",
+         "issues": "0",
+         "tests": "0"
+      },
+
+      {
+         "name": "Daniel Olmos",
+         "role": "Server Manager and Python Developer",
+         "image": "olmos.jpg",
+         "commits": "0",
+         "issues": "0",
+         "tests": "0"
+      },
+
+      {
+         "name": "Daniel Talamas",
+         "role": "Back-end Python Developer",
+         "image": "talamas.jpg",
+         "commits": "0",
+         "issues": "0",
+         "tests": "0"
+      }
+
+   ]
+}
