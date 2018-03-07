@@ -1,9 +1,46 @@
 """
-Gets top 3 most popular movies, books, and songs. Prints the info we want from them.
+Gets most popular movies, books, and songs. Clears the Movies, Books, Songs, and Topics tables, and then stores the new info on them.
 """
 
 import requests
+import json
+
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+import os
+import sys
+from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
+from sqlalchemy import create_engine
+from sqlalchemy import inspect
 import random
+import hashlib
+
+
+class MovieEntity(declarative_base()):
+    __tablename__ = "Movies"
+
+    movie_id = Column(String(), primary_key=True)
+    movie_name = Column(String())
+    description = Column(String())
+    release_date = Column(String())
+    poster_url = Column(String())
+    trailer_url = Column(String())
+    topics = Column(String())
+    similar_books = Column(String())
+    similar_songs = Column(String())
+
+    def __init__(self, movie):
+        self.movie_id = movie.id
+        self.movie_name = remove_non_ascii(movie.name)
+        self.description = remove_non_ascii(movie.description)
+        self.release_date = movie.release
+        self.poster_url = movie.poster_url
+        self.trailer_url = movie.trailer_url
+        self.topics = json.dumps(movie.topics)
+        self.similar_books = json.dumps(movie.similar_books)
+        self.similar_songs = json.dumps(movie.similar_songs)
 
 
 class Movie:
@@ -33,8 +70,32 @@ class Movie:
         return ret
 
 
-class Book:
+class BookEntity(declarative_base()):
+    __tablename__ = "Books"
 
+    book_id = Column(String(), primary_key=True)
+    book_name = Column(String())
+    description = Column(String())
+    authors = Column(String())
+    release_date = Column(String())
+    poster_url = Column(String())
+    topics = Column(String())
+    similar_movies = Column(String())
+    similar_songs = Column(String())
+
+    def __init__(self, book):
+        self.book_id = book.id
+        self.book_name = remove_non_ascii(book.name)
+        self.description = remove_non_ascii(book.description)
+        self.authors = remove_non_ascii(json.dumps(book.authors))
+        self.release_date = book.release
+        self.poster_url = book.poster_url
+        self.topics = json.dumps(book.topics)
+        self.similar_movies = json.dumps(book.similar_movies)
+        self.similar_songs = json.dumps(book.similar_songs)
+
+
+class Book:
     def __init__(self):
         self.name = ""
         self.description = ""
@@ -62,6 +123,33 @@ class Book:
 
     def __repr__(self):
         return self.__str__()
+
+
+class SongEntity(declarative_base()):
+    __tablename__ = "Songs"
+
+    song_id = Column(String(), primary_key=True)
+    song_name = Column(String())
+    artists = Column(String())
+    album = Column(String())
+    poster_url = Column(String())
+    youtube_url = Column(String())
+    release_date = Column(String())
+    topics = Column(String())
+    similar_movies = Column(String())
+    similar_books = Column(String())
+
+    def __init__(self, song):
+        self.song_id = song.id
+        self.song_name = remove_non_ascii(song.name)
+        self.artists = remove_non_ascii(json.dumps(song.artists))
+        self.album = remove_non_ascii(song.album)
+        self.poster_url = song.poster_url
+        self.youtube_url = song.youtube_url
+        self.release_date = song.release
+        self.topics = json.dumps(song.topics)
+        self.similar_movies = json.dumps(song.similar_movies)
+        self.similar_books = json.dumps(song.similar_books)
 
 
 class Song:
@@ -97,6 +185,28 @@ class Song:
         return self.__str__()
 
 
+class TopicEntity(declarative_base()):
+    __tablename__ = "Topics"
+
+    topic_id = Column(String(), primary_key=True)
+    topic_name = Column(String())
+    related_movies = Column(String())
+    related_songs = Column(String())
+    related_books = Column(String())
+
+    def __init__(self, topic_name, movies, books, songs):
+        self.topic_id = TopicEntity.get_topic_id(topic_name)
+        self.topic_name = topic_name
+        self.related_movies = json.dumps(movies)
+        self.related_books = json.dumps(books)
+        self.related_songs = json.dumps(songs)
+
+    @staticmethod
+    def get_topic_id(topic_name):
+        hash_object = hashlib.md5(topic_name.encode())
+        return hash_object.hexdigest()[:20]
+
+
 class SpotifyRequest:
 
     def __init__(self):
@@ -115,9 +225,13 @@ class SpotifyRequest:
         return requests.get(q, headers=head).json()
 
 
+def remove_non_ascii(s):
+    return "".join(i for i in s if ord(i) < 128)
+
+
 def extract_movie_info(response, genres_dict):
     movie = Movie()
-    movie.name = response["original_title"]
+    movie.name = response["title"]
     movie.id = str(response["id"])
     movie.description = response["overview"]
     movie.release = response["release_date"]
@@ -150,7 +264,8 @@ def getTopMovies():
     # iterate over pages of movies
     for page in range(1, 3):
         movies = requests.get(
-            "https://api.themoviedb.org/3/discover/movie?api_key=21fed2c614e1de3b61f64b89beb692a5&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=" + str(page)).json()
+            "https://api.themoviedb.org/3/discover/movie?api_key=21fed2c614e1de3b61f64b89beb692a5&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=" +
+            str(page)).json()
 
         for result in movies["results"]:
             movie = extract_movie_info(result, genres_dict)
@@ -167,7 +282,8 @@ def extract_book_info(response, book_topic):
     book.name = book_dict["title"]
     book.id = str(response["id"])
     book.authors = book_dict["authors"]
-    book.description = book_dict["description"]
+    if "description" in book_dict:
+        book.description = book_dict["description"]
     book.release = book_dict["publishedDate"]
     book.poster_url = book_dict["imageLinks"]["thumbnail"]
     book.topics.append(book_topic)
@@ -189,7 +305,7 @@ def getTopBooks(topics):
         response = requests.get(
             "https://www.googleapis.com/books/v1/volumes?q=subject:" +
             save_topic +
-         "&langRestrict=en&key=AIzaSyDsZoCLSczdtuT0Y5mGCdR2BhT4kpQ_kXA").json()
+            "&langRestrict=en&key=AIzaSyDsZoCLSczdtuT0Y5mGCdR2BhT4kpQ_kXA").json()
 
         for i in range(3):  # 3 books per topic
             if i >= len(response["items"]):
@@ -236,7 +352,7 @@ def getTopSongs(topics):
         response = spotify_api.query(
             "https://api.spotify.com/v1/search?q=" +
             save_topic +
-         "&type=playlist&market=US")
+            "&type=playlist&market=US")
         response = response["playlists"]
 
         for i in range(3):  # 3 songs per topic
@@ -254,9 +370,9 @@ def getYoutubeUrl(query_text):
     videos = requests.get(
         "https://www.googleapis.com/youtube/v3/search?q=" +
         query_text +
-     "&part=snippet&type=video&key=AIzaSyA_kByPFNibKSvpQxR-dMILjfx2M1TEgDg").json(
-    )
-    return "https://www.youtube.com/watch?v=" + videos["items"][0]["id"]["videoId"]
+        "&part=snippet&type=video&key=AIzaSyA_kByPFNibKSvpQxR-dMILjfx2M1TEgDg").json()
+    return "https://www.youtube.com/watch?v=" + \
+        videos["items"][0]["id"]["videoId"]
 
 
 def get_media_per_topic(media):
@@ -281,13 +397,13 @@ def get_topics(movies):
 
 
 def record_similarities(
-    media_type,
-     media,
-     movies_per_topic,
-     books_per_topic,
-     songs_per_topic):
+        media_type,
+        media,
+        movies_per_topic,
+        books_per_topic,
+        songs_per_topic):
     for _, media_info in media.items():
-        for i in range(3): # up to three similar media per media type
+        for i in range(3):  # up to three similar media per media type
             if media_type != "movies":
                 rand_topic = random.choice(media_info.topics)
                 rand_movie = random.choice(movies_per_topic[rand_topic])
@@ -307,6 +423,92 @@ def record_similarities(
                     media_info.similar_songs.append(rand_song)
 
 
+def create_session():
+    # an Engine, which the Session will use for connection resources
+    con_str = "mysql+pymysql://PT_Admin:cookies123@pt-db-instance.cden9ozljt61.us-west-1.rds.amazonaws.com:3306/poptopic_db"
+    engine = create_engine(con_str)
+
+    # create a configured "Session" class
+    Session = sessionmaker(bind=engine)
+
+    # create a Session
+    return Session()
+
+
+def store_in_db(
+        movies,
+        books,
+        songs,
+        movies_per_topic,
+        books_per_topic,
+        songs_per_topic):
+    session = create_session()
+
+    # start table from scratch
+    session.query(MovieEntity).delete()
+    session.query(BookEntity).delete()
+    session.query(SongEntity).delete()
+    session.query(TopicEntity).delete()
+
+    for _, m in movies.items():
+        session.add(MovieEntity(m))
+    for _, b in books.items():
+        session.add(BookEntity(b))
+    for _, s in songs.items():
+        session.add(SongEntity(s))
+
+    for topic in movies_per_topic.keys():
+        session.add(
+            TopicEntity(
+                topic, movies_per_topic.get(
+                    topic, []), books_per_topic.get(
+                    topic, []), songs_per_topic.get(
+                    topic, [])))
+
+    session.commit()
+
+
+def get_media_from_db():
+    # Function for debugging purposes
+
+    session = create_session()
+    print("Printing Movies: ")
+    q = session.query(MovieEntity)
+    for instance in q:
+        print(instance.movie_id, instance.movie_name, instance.trailer_url)
+
+    print("Printing Books: ")
+    q = session.query(BookEntity)
+    for instance in q:
+        print(instance.book_id, instance.book_name)
+
+    print("Printing Songs: ")
+    q = session.query(SongEntity)
+    for instance in q:
+        print(instance.song_id, instance.song_name)
+
+    print("Printing Topics: ")
+    q = session.query(TopicEntity)
+    for instance in q:
+        print(instance.topic_id, instance.topic_name, instance.related_books)
+
+
+def print_media(top_movies, top_books, top_songs):
+    # Function for debugging purposes
+
+    print("***** MOVIES *****\n")
+    for _, m in top_movies.items():
+        print(m)
+
+    print("***** BOOKS *****\n")
+    for _, b in top_books.items():
+        print(b)
+
+    print("***** SONGS *****\n")
+    for _, s in top_songs.items():
+        print(s)
+
+
 if __name__ == "__main__":
     top_movies = getTopMovies()
     topics = get_topics(top_movies)
@@ -321,30 +523,28 @@ if __name__ == "__main__":
     record_similarities(
         "movies",
         top_movies,
-     movies_per_topic,
-     books_per_topic,
-     songs_per_topic)
+        movies_per_topic,
+        books_per_topic,
+        songs_per_topic)
     record_similarities(
         "books",
         top_books,
-     movies_per_topic,
-     books_per_topic,
-     songs_per_topic)
+        movies_per_topic,
+        books_per_topic,
+        songs_per_topic)
     record_similarities(
         "songs",
         top_songs,
-     movies_per_topic,
-     books_per_topic,
-     songs_per_topic)
+        movies_per_topic,
+        books_per_topic,
+        songs_per_topic)
 
-    print("***** MOVIES *****\n")
-    for _, m in top_movies.items():
-        print(m)
+    # print_media(top_movies, top_books, top_songs)
 
-    print("***** BOOKS *****\n")
-    for _, b in top_books.items():
-        print(b)
-
-    print("***** SONGS *****\n")
-    for _, s in top_songs.items():
-        print(s)
+    store_in_db(
+        top_movies,
+        top_books,
+        top_songs,
+        movies_per_topic,
+        books_per_topic,
+        songs_per_topic)
