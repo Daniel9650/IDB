@@ -1,0 +1,23 @@
+{
+   "book_id": "1",
+   "book_name": "Sample Title",
+   "description": "This is the sample description for a book.",
+   "author": "Johnny Appleseed",
+   "release_date": "00 Month 0000",
+   "poster_url": "https://assets.mubi.com/images/notebook/post_images/22267/images-w1400.jpg?1474980339",
+   "topics": [
+      "topic1",
+      "topic2",
+      "topic3"
+   ],
+   "similar_movies": [
+      "movie1",
+      "movie2",
+      "movie3"
+   ],
+   "similar_songs": [
+      "song1",
+      "song2",
+      "song3"
+   ]
+}

@@ -1,0 +1,24 @@
+{
+   "music_id": "1",
+   "music_name": "Sample Title",
+   "artists": "Johnny Appleseed",
+   "album": "Album Name",
+   "poster_url": "https://assets.mubi.com/images/notebook/post_images/22267/images-w1400.jpg?1474980339",
+   "youtube_url": "https://youtu.be/425M4M3Opkk",
+   "release_date": "00 Month 0000",
+   "topics": [
+      "topic1",
+      "topic2",
+      "topic3"
+   ],
+   "similar_movies": [
+      "movie1",
+      "movie2",
+      "movie3"
+   ],
+   "similar_books": [
+      "book1",
+      "book2",
+      "book3"
+   ]
+}
