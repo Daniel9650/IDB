@@ -17,12 +17,17 @@
 }
 
 .card img{
-  max-height: 250px;
+  height: 250px;
+  width: 250px;
   object-fit: cover;
 }
-
+.card {
+   margin: 10px;
+   width: 250px;
+}
 .card-deck{
   margin-bottom: 32px;
+
 }
 
 .instance-tron{
@@ -70,11 +75,11 @@
 
 .model-title {
    font-size: 70px;
-   margin-left: 20%;
+
    font-weight: bold;
 }
 .spacing-div {
-   padding-top: 57px;
+   padding-top: 120px;
 }
 
 .about-logo {
@@ -109,9 +114,7 @@
 .divider {
    border-width: 3px;
    border-color: black;
-   width: 60%;
-   margin-left: 20%;
-   margin-right: 20%;
+
 }
 
 .about-title {

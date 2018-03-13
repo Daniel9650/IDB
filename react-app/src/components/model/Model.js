@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import ThumbnailGrid from './ThumbnailGrid.js';
+
+import { Container } from 'reactstrap';
 import data from '../../data/mock.json';
+import CardGrid from './CardGrid.js';
 
 class Model extends Component {
 
@@ -22,14 +24,14 @@ class Model extends Component {
          instances = data.topics;
 
       return (
-         <div className="spacing-div">
+         <Container className="spacing-div">
             <h1 className="model-title">{this.props.type}</h1>
             <hr className="divider"/>
-            <ThumbnailGrid
+            <CardGrid
                instances={instances}
                type={this.props.type}
                />
-         </div>
+         </Container>
 
       );
    }

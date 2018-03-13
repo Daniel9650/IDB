@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import { Container, Row } from 'reactstrap';
-import Thumbnail from './Thumbnail.js';
+import { Container, Row, CardDeck } from 'reactstrap';
+import CardMod from './CardMod.js';
 
 
-class ThumbnailGrid extends Component {
+class CardGrid extends Component {
 
    constructor(props) {
       super(props);
-      this.createThumbnail = this.createThumbnail.bind(this);
-      this.createThumbnails = this.createThumbnails.bind(this);
+      this.createCard = this.createCard.bind(this);
+      this.createCards = this.createCards.bind(this);
    }
-   createThumbnail(instance) {
+   createCard(instance) {
       var name = "";
       var id = "";
       if (this.props.type === "Movies") {
@@ -29,8 +29,8 @@ class ThumbnailGrid extends Component {
          name= instance.topic_name;
          id= instance.topic_id;
       }
-      
-      return <Thumbnail
+
+      return <CardMod
          image={instance.poster_url}
          title={name}
          topics={instance.topics}
@@ -38,21 +38,19 @@ class ThumbnailGrid extends Component {
          />;
    }
 
-   createThumbnails(instances) {
-      return instances.map(this.createThumbnail);
+   createCards(instances) {
+      return instances.map(this.createCard);
    }
 
    render(props) {
       return (
-         <Container>
-            <Row>
+            <CardDeck>
 
-               {this.createThumbnails(this.props.instances)}
+               {this.createCards(this.props.instances)}
 
-            </Row>
-         </Container>
+            </CardDeck>
       );
    }
 }
 
-export default ThumbnailGrid;
+export default CardGrid;

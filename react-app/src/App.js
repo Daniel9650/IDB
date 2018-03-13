@@ -12,7 +12,7 @@ class App extends Component {
     return (
       <div>
          <Navigation />
-         <MovieInstance/>
+         <Model type="Movies"/>
       </div>
     );
   }
