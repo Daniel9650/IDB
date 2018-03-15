@@ -7,7 +7,7 @@ class About extends Component {
 
    render () {
       return (
-         <div className='spacing-div'>
+         <Container className='spacing-div'>
             <h1 className='about-title'>Our Concept</h1>
             <hr className='divider'/>
             <p className='about-text'>
@@ -24,7 +24,6 @@ class About extends Component {
             <br></br>
             <h1 className='about-title'>Implementation</h1>
             <hr className='divider'/>
-            <Container>
                <h4 className='about-sub'>Code</h4>
                <p>
                   <a href='https://github.com/Daniel9650/idb'>Github Repository</a>
@@ -51,8 +50,7 @@ class About extends Component {
                <h4 className='about-sub'>Tools</h4>
                <LogoGrid />
 
-            </Container>
-         </div>
+         </Container>
       );
 
    }

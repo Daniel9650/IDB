@@ -31,6 +31,8 @@ class Model extends Component {
                instances={instances}
                type={this.props.type}
                />
+            
+
          </Container>
 
       );

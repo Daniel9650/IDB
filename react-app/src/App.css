@@ -91,8 +91,7 @@
 }
 
 .about-text {
-   margin-left: 20%;
-   margin-right: 20%;
+
    font-size: 18px;
 }
 
@@ -118,7 +117,6 @@
 }
 
 .about-title {
-   margin-left: 20%;
    font-weight: bold;
    font-size: 50px;
 }

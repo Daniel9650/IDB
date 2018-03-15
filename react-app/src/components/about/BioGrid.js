@@ -22,12 +22,9 @@ class BioGrid extends Component {
 
    render() {
       return (
-         <Container>
-            <Row>
-                  {this.createBios(bios.members)}
-
-            </Row>
-         </Container>
+         <Row>
+               {this.createBios(bios.members)}
+         </Row>
       );
    }
 

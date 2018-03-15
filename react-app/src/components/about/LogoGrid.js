@@ -18,12 +18,9 @@ class LogoGrid extends Component {
 
    render() {
       return (
-         <Container>
-            <Row>
-                  {this.createLogos(about.logos)}
-
-            </Row>
-         </Container>
+         <Row>
+               {this.createLogos(about.logos)}
+         </Row>
       );
    }
 

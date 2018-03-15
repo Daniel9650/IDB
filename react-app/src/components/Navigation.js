@@ -34,29 +34,21 @@ class Navigation extends Component {
       			<NavbarToggler onClick={this.toggle} />
       			<Collapse isOpen={this.state.isOpen} navbar>
       				<Nav className="ml-auto" navbar>
+                     <NavItem>
+                        <NavLink href="/topics/">Topics</NavLink>
+                     </NavItem>
       					<NavItem>
-      						<NavLink href="/components/">Components</NavLink>
+      						<NavLink href="/movies/">Movies</NavLink>
       					</NavItem>
-      					<NavItem>
-      						<NavLink href="https://github.com/reactstrap/reactstrap">Github</NavLink>
+                     <NavItem>
+      						<NavLink href="/books/">Books</NavLink>
       					</NavItem>
-      					<UncontrolledDropdown nav inNavbar>
-      						<DropdownToggle nav caret>
-      							Options
-      						</DropdownToggle>
-      						<DropdownMenu>
-      							<DropdownItem>
-      								Option 1
-      							</DropdownItem>
-      							<DropdownItem>
-      								Option 2
-      							</DropdownItem>
-      							<DropdownItem divider />
-      							<DropdownItem>
-      								Reset
-      							</DropdownItem>
-      						</DropdownMenu>
-      					</UncontrolledDropdown>
+                     <NavItem>
+      						<NavLink href="/music/">Music</NavLink>
+      					</NavItem>
+                     <NavItem>
+                        <NavLink href="/about/">About</NavLink>
+                     </NavItem>
       				</Nav>
       			</Collapse>
       		</Navbar>
