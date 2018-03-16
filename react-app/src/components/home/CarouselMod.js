@@ -70,12 +70,14 @@ class CarouselMod extends Component {
     const slides = items.map((item) => {
       return (
         <CarouselItem
+          className="relative-pos"
           onExiting={this.onExiting}
           onExited={this.onExited}
           key={item.src}
         >
           <img  className="carousel-img" src={item.src} alt={item.altText} />
-          <CarouselCaption captionText={item.caption} captionHeader={item.header} />
+          <h1 className="slide-header">{item.header}</h1>
+          <h3 className="slide-caption">{item.caption}</h3>
         </CarouselItem>
       );
     });

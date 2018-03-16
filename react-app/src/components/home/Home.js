@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Jumbotron, Button } from 'reactstrap';
+import { Container } from 'reactstrap';
 import CarouselMod from './CarouselMod.js';
+import TrendingTopicsGrid from './TrendingTopicsGrid.js';
+import trending_topics from '../../data/topics.json';
 
 
 class Home extends Component {
@@ -8,6 +10,12 @@ class Home extends Component {
       return (
           <div className="home-spacing-div">
             <CarouselMod />
+            <br />
+            <Container>
+               <TrendingTopicsGrid
+                  data={trending_topics.trending}
+               />
+            </Container>
           </div>
         );
          }
