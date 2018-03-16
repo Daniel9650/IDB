@@ -30,7 +30,7 @@ class Navigation extends Component {
       return (
       	<div>
       		<Navbar className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      			<NavbarBrand href="/">reactstrap</NavbarBrand>
+      			<NavbarBrand href="/home">reactstrap</NavbarBrand>
       			<NavbarToggler onClick={this.toggle} />
       			<Collapse isOpen={this.state.isOpen} navbar>
       				<Nav className="ml-auto" navbar>

@@ -12,17 +12,31 @@ let CardMod = function(props) {
    var title = props.title;
    var topics = props.topics;
 
-   return (
-      <a href={props.id}>
-         <Card>
-            <CardImg top src={image} />
-            <CardBody>
-               <CardTitle>{title}</CardTitle>
-               <CardSubtitle>{topics}</CardSubtitle>
-            </CardBody>
-         </Card>
-      </a>
-   );
+   if(props.type != "Topics") {
+      return (
+         <a href={props.id}>
+            <Card>
+               <CardImg top src={image} />
+               <CardBody>
+                  <CardTitle>{title}</CardTitle>
+                  <CardSubtitle>{topics}</CardSubtitle>
+               </CardBody>
+            </Card>
+         </a>
+      );
+   }
+   else {
+      return (
+         <a href={props.id}>
+            <Card>
+               <CardImg top src={image} />
+               <CardBody>
+                  <CardTitle>{title}</CardTitle>
+               </CardBody>
+            </Card>
+         </a>
+      );
+   }
 }
 
 export default CardMod;

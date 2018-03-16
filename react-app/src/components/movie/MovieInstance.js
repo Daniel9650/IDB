@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import data from '../data/mock_movie.json';
-import book_data from '../data/mock_book.json';
-import song_data from '../data/mock_song.json';
+import data from '../../data/mock_movie.json';
+import book_data from '../../data/mock_book.json';
+import song_data from '../../data/mock_song.json';
 import {
   Container,
   Jumbotron,
