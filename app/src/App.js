@@ -20,6 +20,7 @@ class App extends Component {
          <Route path='/topics' render={()=><Model type="Topics" />} />
          <Route path='/about' component={About}/>
          <Route path='/home' component={Home}/>
+         <Route exact path='/' component={Home} />
       </div>
     );
   }
