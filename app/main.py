@@ -8,7 +8,7 @@ app = Flask(__name__, template_folder='build', static_folder='build/static')
 # Splash page
 @app.route('/')
 def index():
-    return render_template("index.html")
+    return render_template("index.html") 
 
 if __name__ == "__main__":
     app.run()
