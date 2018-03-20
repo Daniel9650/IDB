@@ -89,7 +89,7 @@ class MovieInstance extends Component {
       return (
          <div className="spacing-div">
             <Container>
-               <h1>{name}</h1>
+               <h1 className="general-title">{name}</h1>
                <Row>
                   <div className="col-sm text-right">
                      <div className="youtube-holder">

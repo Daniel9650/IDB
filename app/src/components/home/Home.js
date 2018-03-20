@@ -8,7 +8,7 @@ import trending_topics from '../../data/topics.json';
 class Home extends Component {
    render () {
       return (
-          <div className="spacing-div">
+          <div className="home-spacing-div">
             <CarouselMod />
             <br />
             <Container>

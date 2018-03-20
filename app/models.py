@@ -1,3 +1,26 @@
+<<<<<<< HEAD
+=======
+#from sqlalchemy.ext.declarative import declarative_base, declared_attr
+#from sqlalchemy import ForeignKey, Column, Integer, String, Boolean
+#from sqlalchemy.orm import backref, relationship
+#from automagic_api import Base
+
+import requests
+import json
+
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+import os
+import sys
+from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
+from sqlalchemy import create_engine
+from sqlalchemy import inspect
+import random
+import hashlib
+from dbcred import get_con_str
+>>>>>>> 8a13d2194d5658a4bbd4284c00d22e3b2ebb6b2c
 from flask import Flask
 from dbcred import get_con_str
 from sqlalchemy import Column, String, Integer, Text, Unicode, ForeignKey
@@ -6,6 +29,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import backref, relationship
 from sqlalchemy.orm import scoped_session, sessionmaker
 #import flask.ext.restless
+<<<<<<< HEAD
 import flask_restless 
 
 
@@ -109,11 +133,25 @@ movie_blueprint = manager.create_api(Movies, methods=['GET'])
 book_blueprint = manager.create_api(Books, methods=['GET'])
 #book_similar_movies_blueprint = manager.create_api(Books, methods=['GET'], include_columns=['similar_movies'])
 #book_similar_songs_blueprint = manager.create_api(Books, methods=['GET'], include_columns=['similar_songs'])
+=======
+>>>>>>> 8a13d2194d5658a4bbd4284c00d22e3b2ebb6b2c
 
-song_blueprint = manager.create_api(Songs, methods=['GET'])
-#song_similar_movies_blueprint = manager.create_api(Songs, methods=['GET'], include_columns=['similar_movies'])
-#song_similar_books_blueprint = manager.create_api(Songs, methods=['GET'], include_columns=['similar_books'])
+def create_session():
+    # an Engine, which the Session will use for connection resources
+    con_str = ret_con_str()
+    engine = create_engine(con_str)
 
+<<<<<<< HEAD
 topic_books_blueprint = manager.create_api(Topics, methods=['GET'])
 #topic_songs_blueprint = manager.create_api(Topics, methods=['GET'], include_columns=['related_songs'])
 #topic_movies_blueprint = manager.create_api(Topics, methods=['GET'], include_columns=['related_movies'])
+=======
+    # create a configured "Session" class
+    Session = sessionmaker(bind=engine)
+
+    # create a Session
+    return Session()
+
+def ret_con_str():
+    return "mysql+pymysql://PT_Admin:cookies123@pt-db-instance.cden9ozljt61.us-west-1.rds.amazonaws.com:3306/poptopic_db"
+>>>>>>> 8a13d2194d5658a4bbd4284c00d22e3b2ebb6b2c
