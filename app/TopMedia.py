@@ -427,7 +427,7 @@ def record_similarities(
 
 def create_session():
     # an Engine, which the Session will use for connection resources
-    con_str = get_con_str()
+    con_str = "mysql+pymysql://PT_Admin:cookies123@pt-db-instance.cden9ozljt61.us-west-1.rds.amazonaws.com:3306/poptopic_db"
     engine = create_engine(con_str)
 
     # create a configured "Session" class
