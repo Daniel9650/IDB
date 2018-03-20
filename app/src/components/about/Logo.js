@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Col } from 'reactstrap';
 
 let Logo = function statelessFunctionComponentClass(props) {
-   var image = require('../../images/' + props.image);
+   var image = require('../../images/logos/' + props.image);
    var link = props.link;
 
       return (

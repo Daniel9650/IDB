@@ -25,15 +25,11 @@ class About extends Component {
             <h1 className='about-title'>Implementation</h1>
             <hr className='divider'/>
                <h4 className='about-sub'>Code</h4>
-               <p>
-                  <a href='https://github.com/Daniel9650/idb'>Github Repository</a>
-               </p>
-               <p>
-                  <a href='https://www.gitbook.com/book/daniel9650/idb-phase-1/details'>Technical Report</a>
-               </p>
-               <p>
+               <a href='https://github.com/Daniel9650/idb'>Github Repository</a>
+               <br />
+               <a href='https://www.gitbook.com/book/daniel9650/idb-phase-1/details'>Technical Report</a>
+               <br />
                <a href='https://www.gitbook.com/book/daniel9650/poptopic-api-documentation/details'>PopTopic API</a>
-               </p>
                <br></br>
                <h4 className='about-sub'>Data</h4>
                <p>

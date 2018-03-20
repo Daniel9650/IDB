@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Col } from 'reactstrap';
 
 let Bio = function statelessFunctionComponentClass(props) {
-   var image = require('../../images/' + props.image);
+   var image = require('../../images/headshots/' + props.image);
 
    return (
       <Col className= 'col-center'>
