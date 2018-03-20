@@ -3,7 +3,7 @@ import { Button, Col } from 'reactstrap';
 
 //TODO: want to go to topics/id not home/id
 let TrendingTopic = function(props) {
-   var image = require('../../images/' + props.image);
+   var image = require('../../images/headshots/' + props.image);
    var topic = props.topic;
    var id = props.id;
 

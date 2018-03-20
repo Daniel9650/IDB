@@ -25,13 +25,13 @@ class Model extends Component {
 
       return (
          <Container className="spacing-div">
-            <h1 className="model-title">{this.props.type}</h1>
+            <h1 className="general-title">{this.props.type}</h1>
             <hr className="divider"/>
             <CardGrid
                instances={instances}
                type={this.props.type}
                />
-            
+
 
          </Container>
 

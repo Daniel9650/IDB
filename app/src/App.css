@@ -1,4 +1,11 @@
-
+/********************************  Colors  ************************************/
+:root{
+   --charcoal: #424242;
+   --accent: #359dba;
+   --warm: #e97f65;
+   --light: #d8b09d;
+   --dark: #535c7a;
+}
 
 /***************************  Text Styles  ************************************/
 
@@ -9,36 +16,38 @@
 
 .about-name {
    font-weight: bold;
+   color: var(--charcoal);
 }
 
 .about-sub {
    font-weight: bold;
    font-size: 30px;
+   color: var(--charcoal);
 }
 
 .about-title {
    font-weight: bold;
    font-size: 50px;
    font-family: Accent;
+   color: var(--charcoal);
 }
 
 .trending-title {
    font-weight: bold;
 }
 
-.model-title {
-   font-size: 90px;
+.general-title {
+   font-size: 80px;
    font-family: Accent;
    font-weight: bold;
+   color: var(--charcoal);
 }
 
 .about-text {
    font-size: 18px;
+   color: var(--charcoal);
 }
 
-.general-title {
-   font-size: 100px;
-}
 
 /***************************  Model Grid Styles  ******************************/
 
@@ -53,19 +62,45 @@
 }
 
 .card img{
-  height: 250px;
+  height: 200px;
   width: 250px;
   object-fit: cover;
 }
 
+.card-title{
+   font-weight: bold;
+   font-size: 25px;
+}
+
+.card-title:hover{
+   text-decoration: none !important;
+}
+
+
 .card {
    margin: 10px;
    width: 250px;
+   color: var(--charcoal);
+   text-align: center;
 }
 
+.card:hover{
+   color: var(--accent);
+   text-decoration: none !important;
+   text-decoration-color: none !important;
+   opacity: .75;
+
+}
 .card-deck{
   margin-bottom: 32px;
 }
+
+a:hover {
+
+   text-decoration: none !important;
+}
+
+
 
 /***************************  Home Page Styles  *******************************/
 
@@ -204,13 +239,21 @@
 
 /***************************  Misc. Styles  ***********************************/
 
-.spacing-div {
+.home-spacing-div {
    padding-top: 80px;
+}
+
+.spacing-div {
+   padding-top: 130px;
+}
+
+.model-spacing {
+   padding-top: 30px;
 }
 
 .divider {
    border-width: 3px;
-   border-color: black;
+   border-color: var(--charcoal);
 }
 
 .col-center {

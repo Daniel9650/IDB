@@ -569,6 +569,7 @@
       {
          "topic_id": "1",
          "topic_name": "Sample Title",
+         "poster_url": " https://upload.wikimedia.org/wikipedia/commons/d/d6/Timeless_Books.jpg",
          "related_movies": [
             "movie1",
             "movie2",
@@ -588,6 +589,7 @@
       {
          "topic_id": "2",
          "topic_name": "Sample Title",
+         "poster_url": " https://upload.wikimedia.org/wikipedia/commons/d/d6/Timeless_Books.jpg",
          "related_movies": [
             "movie1",
             "movie2",
@@ -607,6 +609,7 @@
       {
          "topic_id": "3",
          "topic_name": "Sample Title",
+         "poster_url": " https://upload.wikimedia.org/wikipedia/commons/d/d6/Timeless_Books.jpg",
          "related_movies": [
             "movie1",
             "movie2",
@@ -626,6 +629,7 @@
       {
          "topic_id": "4",
          "topic_name": "Sample Title",
+         "poster_url": " https://upload.wikimedia.org/wikipedia/commons/d/d6/Timeless_Books.jpg",
          "related_movies": [
             "movie1",
             "movie2",
@@ -645,6 +649,7 @@
       {
          "topic_id": "5",
          "topic_name": "Sample Title",
+         "poster_url": " https://upload.wikimedia.org/wikipedia/commons/d/d6/Timeless_Books.jpg",
          "related_movies": [
             "movie1",
             "movie2",
@@ -664,6 +669,7 @@
       {
          "topic_id": "6",
          "topic_name": "Sample Title",
+         "poster_url": " https://upload.wikimedia.org/wikipedia/commons/d/d6/Timeless_Books.jpg",
          "related_movies": [
             "movie1",
             "movie2",
@@ -683,6 +689,7 @@
       {
          "topic_id": "7",
          "topic_name": "Sample Title",
+         "poster_url": " https://upload.wikimedia.org/wikipedia/commons/d/d6/Timeless_Books.jpg",
          "related_movies": [
             "movie1",
             "movie2",
@@ -702,6 +709,7 @@
       {
          "topic_id": "8",
          "topic_name": "Sample Title",
+         "poster_url": " https://upload.wikimedia.org/wikipedia/commons/d/d6/Timeless_Books.jpg",
          "related_movies": [
             "movie1",
             "movie2",
