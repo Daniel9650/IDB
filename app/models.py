@@ -1,8 +1,3 @@
-#from sqlalchemy.ext.declarative import declarative_base, declared_attr
-#from sqlalchemy import ForeignKey, Column, Integer, String, Boolean
-#from sqlalchemy.orm import backref, relationship
-#from automagic_api import Base
-
 from flask import Flask
 from dbcred import get_con_str
 from sqlalchemy import Column, String, Integer, Text, Unicode, ForeignKey
@@ -10,17 +5,25 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import backref, relationship
 from sqlalchemy.orm import scoped_session, sessionmaker
-import flask.ext.restless
+#import flask.ext.restless
+import flask_restless 
+
 
 
 app = Flask(__name__)
-con_str = get_con_str
-engine = create_engine('mysql://pt-db-instance.cden9ozljt61.us-west-1.rds.amazonaws.com', convert_unicode=True)
+con_str = get_con_str()
+#engine = create_engine('mysql://pt-db-instance.cden9ozljt61.us-west-1.rds.amazonaws.com')
+engine = create_engine(con_str, convert_unicode=True)
+#connection = engine.raw_connection()
+#working_df.to_sql('data', connection, index=False, if_exists=append)
 Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 mysession = scoped_session(Session)
 
 Base = declarative_base()
 Base.metadata.bind = engine
+
+def get_con_str():
+    return "mysql+pymysql://PT_Admin:cookies123@pt-db-instance.cden9ozljt61.us-west-1.rds.amazonaws.com:3306/poptopic_db"
 
 class Movies(Base):
     __tablename__ = 'movies'
@@ -97,7 +100,7 @@ class Topics(Base):
 # create database tables
 Base.metadata.create_all()
 
-manager = flask.ext.restless.APIManager(app, session=mysession)
+manager = flask_restless.APIManager(app, session=mysession)
 
 movie_blueprint = manager.create_api(Movies, methods=['GET'])
 #movie_similar_books_blueprint = manager.create_api(Movies, methods=['GET'], include_columns=['similar_books'])
@@ -114,5 +117,3 @@ song_blueprint = manager.create_api(Songs, methods=['GET'])
 topic_books_blueprint = manager.create_api(Topics, methods=['GET'])
 #topic_songs_blueprint = manager.create_api(Topics, methods=['GET'], include_columns=['related_songs'])
 #topic_movies_blueprint = manager.create_api(Topics, methods=['GET'], include_columns=['related_movies'])
-
-
