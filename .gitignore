@@ -13,6 +13,7 @@ app/build
 venv
 
 # misc
+app/__pycache__
 API_keys
 .DS_Store
 .env.local

@@ -1,63 +1,46 @@
-.jumbo {
 
-   color: white;
-   height: 500px;
-   text-align: center;
 
+/***************************  Text Styles  ************************************/
+
+@font-face {
+   font-family: Accent;
+   src: url("Back to Black Demo.ttf");
 }
 
-.trending-img {
-   height: 200px;
-   width: 200px;
-   object-fit: cover;
-   border-radius: 50%;
-   justify-content: center;
-   margin: 10px;
+.about-name {
+   font-weight: bold;
+}
+
+.about-sub {
+   font-weight: bold;
+   font-size: 30px;
+}
+
+.about-title {
+   font-weight: bold;
+   font-size: 50px;
+   font-family: Accent;
 }
 
 .trending-title {
    font-weight: bold;
 }
 
-.trending-btn {
-
-}
-
-.relative-pos {
-   position: relative;
-}
-.slide-caption {
-   text-align:center;
-   color: white;
-   position: absolute;
-   top: 50%;
-   left: 50%;
-   transform: translate(-50%, 120%);
-}
-
-.slide-header {
-   text-align: center;
-   color: white;
-   position: absolute;
+.model-title {
+   font-size: 90px;
+   font-family: Accent;
    font-weight: bold;
-   font-size: 70px;
-   top: 50%;
-   left: 50%;
-   transform: translate(-50%, -50%);
-
-
-}
-.carousel {
-   height: 500px;
-   width: 100%;
 }
 
-.carousel-img {
-   width: 100%;
-   height: 500px;
-   object-fit: cover;
-   opacity: 0.75;
+.about-text {
+   font-size: 18px;
 }
+
+.general-title {
+   font-size: 100px;
+}
+
+/***************************  Model Grid Styles  ******************************/
 
 .model-grid-img {
    height: 250px;
@@ -74,13 +57,73 @@
   width: 250px;
   object-fit: cover;
 }
+
 .card {
    margin: 10px;
    width: 250px;
 }
+
 .card-deck{
   margin-bottom: 32px;
+}
 
+/***************************  Home Page Styles  *******************************/
+
+.relative-pos {
+   position: relative;
+}
+.slide-caption {
+   text-align:center;
+   color: white;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, 200%);
+}
+
+.slide-header {
+   text-align: center;
+   color: white;
+   position: absolute;
+   font-weight: bold;
+   font-size: 80px;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   font-family: Accent;
+
+}
+.carousel {
+   height: 500px;
+   width: 100%;
+}
+
+.carousel-img {
+   width: 100%;
+   height: 500px;
+   object-fit: cover;
+   opacity: 0.60;
+}
+
+.trending-img {
+   height: 200px;
+   width: 200px;
+   object-fit: cover;
+   border-radius: 50%;
+   justify-content: center;
+   margin: 10px;
+}
+
+.trending-btn {
+
+}
+
+/***************************  Jumbotron Styles  *******************************/
+
+.jumbo {
+   color: white;
+   height: 500px;
+   text-align: center;
 }
 
 .instance-tron{
@@ -111,6 +154,39 @@
   z-index: 2;
 }
 
+/***************************  Navbar Styles  **********************************/
+
+.navbar {
+   height: 80px;
+   color: black;
+}
+
+.brand-logo{
+   margin-top: 75px;
+   height: 150px;
+   width: 150px;
+}
+
+/***********************  About Page Styles  **********************************/
+
+.about-logo {
+   height: 100px;
+   object-fit: cover;
+   justify-content: center;
+   margin: 10px;
+}
+
+.headshot {
+   height: 250px;
+   width: 250px;
+   object-fit: cover;
+   border-radius: 50%;
+   justify-content: center;
+   margin: 10px;
+}
+
+/***********************  Movie Page Styles  **********************************/
+
 .youtube-holder {
   position:relative;
   width:100%;
@@ -126,55 +202,15 @@
   height:100%;
 }
 
-.model-title {
-   font-size: 70px;
+/***************************  Misc. Styles  ***********************************/
 
-   font-weight: bold;
-}
 .spacing-div {
-   padding-top: 120px;
-}
-.home-spacing-div {
-   padding-top: 56px;
-}
-
-.about-logo {
-   height: 100px;
-
-   object-fit: cover;
-   justify-content: center;
-   margin: 10px;
-}
-
-.about-text {
-
-   font-size: 18px;
-}
-
-.general-title {
-   font-size: 100px;
-   font-weight: bold;
-}
-
-.headshot {
-   height: 250px;
-   width: 250px;
-   object-fit: cover;
-   border-radius: 50%;
-   justify-content: center;
-   margin: 10px;
-
+   padding-top: 80px;
 }
 
 .divider {
    border-width: 3px;
    border-color: black;
-
-}
-
-.about-title {
-   font-weight: bold;
-   font-size: 50px;
 }
 
 .col-center {
@@ -183,46 +219,6 @@
    text-align: center
 }
 
-.about-name {
-   font-weight: bold;
-
-}
-
-.about-sub {
-   font-weight: bold;
-   font-size: 30px;
-}
-
-
-.about-page {
-   margin-top: 100px;
-}
-
 .App {
   text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
 }
