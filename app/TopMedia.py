@@ -194,6 +194,7 @@ class TopicEntity(declarative_base()):
     related_movies = Column(String())
     related_songs = Column(String())
     related_books = Column(String())
+    poster_url = Column(String())
 
     def __init__(self, topic_name, movies, books, songs):
         self.topic_id = TopicEntity.get_topic_id(topic_name)
@@ -201,6 +202,45 @@ class TopicEntity(declarative_base()):
         self.related_movies = json.dumps(movies)
         self.related_books = json.dumps(books)
         self.related_songs = json.dumps(songs)
+
+        poster_urls = {
+            "Action":
+                "https://c1.staticflickr.com/4/3242/2854366734_0f99cbaf31_b.jpg",
+            "Romance":
+                "https://static.pexels.com/photos/427547/pexels-photo-427547.jpeg",
+            "History":
+                "https://upload.wikimedia.org/wikipedia/commons/d/d6/Timeless_Books.jpg",
+            "Drama":
+                "https://upload.wikimedia.org/wikipedia/commons/7/78/Mask_Shopping_in_Venice_%285371442235%29.jpg",
+            "Mystery":
+                "https://upload.wikimedia.org/wikipedia/commons/e/e0/Postcards_and_magnifying_glass.jpg",
+            "Thriller":
+                "https://upload.wikimedia.org/wikipedia/commons/a/a6/Alfred_Hitchcock%27s_The_Wrong_Man_trailer_01.png",
+            "Music":
+                "https://c1.staticflickr.com/3/2100/5819184201_df0392f0e7_b.jpg",
+            "Science Fiction":
+                "https://upload.wikimedia.org/wikipedia/commons/a/ad/Celia-hovering-airship_mango_concept-art_02.png",
+            "Horror":
+                "https://www.publicdomainpictures.net/pictures/80000/velka/horror-silhouette-of-a-man.jpg",
+            "War":
+                "https://static.pexels.com/photos/78783/submachine-gun-rifle-automatic-weapon-weapon-78783.jpeg",
+            "Crime":
+                "https://farm4.staticflickr.com/3041/2744167003_7498f322d7_o.jpg",
+            "Family":
+                "https://c1.staticflickr.com/8/7071/13584554804_6c1ebae9bd_b.jpg",
+            "Animation":
+                "https://c1.staticflickr.com/6/5247/5312400439_c6bf4c41b9_b.jpg",
+            "Adventure":
+                "https://images.pexels.com/photos/442559/pexels-photo-442559.jpeg?w=940&h=650&auto=compress&cs=tinysrgb",
+            "Comedy":
+                "https://c1.staticflickr.com/4/3463/5712236914_bba2282f87_b.jpg",
+            "Fantasy":
+                "https://c1.staticflickr.com/5/4046/4703795262_f427f19971_b.jpg"
+        }
+
+        self.poster_url = poster_urls.get(
+            topic_name,
+            "https://static.pexels.com/photos/356079/pexels-photo-356079.jpeg")
 
     @staticmethod
     def get_topic_id(topic_name):
@@ -361,7 +401,9 @@ def get_top_songs(topics):
                 break
 
             song = extract_song_info(response["items"][i], topic, spotify_api)
-            ret_songs[song.id] = song
+
+            if remove_non_ascii(song.name) != "":
+                ret_songs[song.id] = song
 
     return ret_songs
 
@@ -478,20 +520,24 @@ def get_media_from_db():
     for instance in q:
         print(instance.movie_id, instance.movie_name, instance.trailer_url)
 
-    print("Printing Books: ")
+    print("\nPrinting Books: ")
     q = session.query(BookEntity)
     for instance in q:
         print(instance.book_id, instance.book_name)
 
-    print("Printing Songs: ")
+    print("\nPrinting Songs: ")
     q = session.query(SongEntity)
     for instance in q:
         print(instance.song_id, instance.song_name)
 
-    print("Printing Topics: ")
+    print("\nPrinting Topics: ")
     q = session.query(TopicEntity)
     for instance in q:
-        print(instance.topic_id, instance.topic_name, instance.related_books)
+        print(
+            instance.topic_id,
+            instance.topic_name,
+            instance.related_books,
+            instance.poster_url)
 
 
 def print_media(top_movies, top_books, top_songs):
@@ -511,6 +557,12 @@ def print_media(top_movies, top_books, top_songs):
 
 
 if __name__ == "__main__":
+    DEBUG_MODE = False
+
+    if DEBUG_MODE:
+        get_media_from_db()
+        sys.exit()
+
     top_movies = get_top_movies()
     topics = get_topics(top_movies)
 
