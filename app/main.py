@@ -3,9 +3,10 @@ from flask import Flask, request, send_from_directory, render_template, url_for
 from GitInfo import get_commits_count, get_issues_count
 
 # the all-important app variable:
-app = Flask(__name__, template_folder='build', static_folder='build/static')
+app = Flask(__name__, template_folder='./', static_folder='static')
 
 # Splash page
+@app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def index(path):
     return render_template("index.html")
