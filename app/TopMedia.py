@@ -16,6 +16,7 @@ from sqlalchemy import create_engine
 from sqlalchemy import inspect
 import random
 import hashlib
+from dbcred import get_con_str
 
 
 class MovieEntity(declarative_base()):
@@ -37,7 +38,7 @@ class MovieEntity(declarative_base()):
         self.description = remove_non_ascii(movie.description)
         self.release_date = movie.release
         self.poster_url = movie.poster_url
-        self.trailer_url = movie.trailer_url
+        self.trailer_url = movie.trailer_url.split("?v=").pop()
         self.topics = json.dumps(movie.topics)
         self.similar_books = json.dumps(movie.similar_books)
         self.similar_songs = json.dumps(movie.similar_songs)
@@ -96,6 +97,7 @@ class BookEntity(declarative_base()):
 
 
 class Book:
+
     def __init__(self):
         self.name = ""
         self.description = ""
@@ -242,12 +244,12 @@ def extract_movie_info(response, genres_dict):
     for topic_id in topic_ids:
         movie.topics.append(genres_dict[topic_id])
 
-    movie.trailer_url = getYoutubeUrl(movie.name + " trailer")
+    movie.trailer_url = get_youtube_url(movie.name + " trailer")
 
     return movie
 
 
-def getTopMovies():
+def get_top_movies():
     ret_movies = {}
 
     # read the genres of moviedb
@@ -296,7 +298,7 @@ def extract_book_info(response, book_topic):
     return book
 
 
-def getTopBooks(topics):
+def get_top_books(topics):
     ret_books = {}
 
     for topic in topics:
@@ -336,12 +338,12 @@ def extract_song_info(response, song_topic, spotify_api):
     song.release = album_dict["release_date"]
     song.topics.append(song_topic)
     song.poster_url = album_dict["images"][0]["url"]
-    song.youtube_url = getYoutubeUrl(song.name + " " + song.artists[0])
+    song.youtube_url = get_youtube_url(song.name + " " + song.artists[0])
 
     return song
 
 
-def getTopSongs(topics):
+def get_top_songs(topics):
     spotify_api = SpotifyRequest()
 
     ret_songs = {}
@@ -365,7 +367,7 @@ def getTopSongs(topics):
     return ret_songs
 
 
-def getYoutubeUrl(query_text):
+def get_youtube_url(query_text):
     query_text = query_text.replace(" ", "+")
     videos = requests.get(
         "https://www.googleapis.com/youtube/v3/search?q=" +
@@ -425,7 +427,7 @@ def record_similarities(
 
 def create_session():
     # an Engine, which the Session will use for connection resources
-    con_str = "mysql+pymysql://PT_Admin:cookies123@pt-db-instance.cden9ozljt61.us-west-1.rds.amazonaws.com:3306/poptopic_db"
+    con_str = get_con_str()
     engine = create_engine(con_str)
 
     # create a configured "Session" class
@@ -510,11 +512,11 @@ def print_media(top_movies, top_books, top_songs):
 
 
 if __name__ == "__main__":
-    top_movies = getTopMovies()
+    top_movies = get_top_movies()
     topics = get_topics(top_movies)
 
-    top_books = getTopBooks(topics)
-    top_songs = getTopSongs(topics)
+    top_books = get_top_books(topics)
+    top_songs = get_top_songs(topics)
 
     movies_per_topic = get_media_per_topic(top_movies)
     books_per_topic = get_media_per_topic(top_books)

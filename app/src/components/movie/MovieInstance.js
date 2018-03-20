@@ -87,39 +87,36 @@ class MovieInstance extends Component {
       }
 
       return (
-      	<div className="spacing-div">
-        <div className="jumbotron instance-tron">
-        <div className="img" style={tronbg}></div>
-        <Container>
-        <h1>{name}</h1>
-        <Row>
-        <div className="col-sm text-right">
-        <div className="youtube-holder">
-        <iframe className="youtube-player" type="text/html" width="100%" height="auto" src={video} frameBorder="0"/>
-        </div>
-        </div>
-        <div className="col-sm text-left">
-        <h6>Movie Description</h6>
-        <p>{ desc }</p>
-        <h6>Release Date</h6>
-        <p>{ date }</p>
-        </div>
-        </Row>
-        <hr className="my-4" />
-        <h6>Topics: <small className="text-muted"> {topics} </small> </h6>
-        </Container>
-        </div>
-        <Container>
-        <h4>Related Music</h4>
-        <CardDeck>
-        {songCards}
-        </CardDeck>
-        <h4>Related Books</h4>
-        <CardDeck>
-        {bookCards}
-        </CardDeck>
-        </Container>
-        </div>
+         <div className="spacing-div">
+            <Container>
+               <h1>{name}</h1>
+               <Row>
+                  <div className="col-sm text-right">
+                     <div className="youtube-holder">
+                        <iframe className="youtube-player" type="text/html" width="100%" height="auto" src={video} frameBorder="0"/>
+                     </div>
+                  </div>
+                  <div className="col-sm text-left">
+                     <h6>Movie Description</h6>
+                     <p>{ desc }</p>
+                     <h6>Release Date</h6>
+                     <p>{ date }</p>
+                  </div>
+               </Row>
+               <hr className="my-4" />
+               <h6>Topics: <small className="text-muted"> {topics} </small> </h6>
+            </Container>
+            <Container>
+               <h4>Related Music</h4>
+               <CardDeck>
+                  {songCards}
+               </CardDeck>
+               <h4>Related Books</h4>
+               <CardDeck>
+                  {bookCards}
+               </CardDeck>
+            </Container>
+         </div>
       );
    }
 
