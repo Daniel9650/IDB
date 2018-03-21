@@ -12,10 +12,7 @@ import flask_restless
 
 app = Flask(__name__)
 con_str = get_con_str()
-#engine = create_engine('mysql://pt-db-instance.cden9ozljt61.us-west-1.rds.amazonaws.com')
 engine = create_engine(con_str, convert_unicode=True)
-#connection = engine.raw_connection()
-#working_df.to_sql('data', connection, index=False, if_exists=append)
 Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 mysession = scoped_session(Session)
 
@@ -24,6 +21,7 @@ Base.metadata.bind = engine
 
 def get_con_str():
     return "mysql+pymysql://PT_Admin:cookies123@pt-db-instance.cden9ozljt61.us-west-1.rds.amazonaws.com:3306/poptopic_db"
+
 
 class Movies(Base):
     __tablename__ = 'movies'
@@ -101,6 +99,7 @@ class Topics(Base):
 Base.metadata.create_all()
 
 manager = flask_restless.APIManager(app, session=mysession)
+manager.init_app(app)
 
 movie_blueprint = manager.create_api(Movies, methods=['GET'])
 book_blueprint = manager.create_api(Books, methods=['GET'])
