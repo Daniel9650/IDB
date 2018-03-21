@@ -9,6 +9,7 @@ class LogoGrid extends Component {
       return <Logo
          image={logo.image}
          link={logo.link}
+         name={logo.name}
          />;
    }
 

@@ -9,7 +9,8 @@ class CardGrid extends Component {
       super(props);
       this.createCard = this.createCard.bind(this);
       this.createCards = this.createCards.bind(this);
-      var count = 0;
+      this.count = 0;
+
    }
    createCard(instance) {
       var name = "";
@@ -31,7 +32,7 @@ class CardGrid extends Component {
          id= instance.topic_id;
       }
 
-      this.count++;
+      this.count ++;
       return <CardMod
          image={instance.poster_url}
          title={name}

@@ -46,7 +46,7 @@ class TopicInstance extends Component {
                <br />
                <h6 className="instance-sub">Related Movies</h6>
                <RelatedGrid
-                  type="Topics"
+                  type="Movies"
                   instances= {data.related_movies}
                />
                <br/>

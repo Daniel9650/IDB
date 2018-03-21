@@ -7,7 +7,7 @@ class TrendingTopicsGrid extends Component {
       super(props);
       this.createTrendingTopic = this.createTrendingTopic.bind(this);
       this.createTrendingTopics = this.createTrendingTopics.bind(this);
-      var count = 0;
+      this.count = 0;
    }
 
 
