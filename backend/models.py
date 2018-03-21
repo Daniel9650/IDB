@@ -105,3 +105,6 @@ movie_blueprint = manager.create_api(Movies, methods=['GET'])
 book_blueprint = manager.create_api(Books, methods=['GET'])
 song_blueprint = manager.create_api(Songs, methods=['GET'])
 topic_books_blueprint = manager.create_api(Topics, methods=['GET'])
+
+if __name__ == "__main__":
+    app.run()
