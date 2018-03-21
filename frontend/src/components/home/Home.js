@@ -7,6 +7,7 @@ import trending_topics from '../../data/topics.json';
 
 class Home extends Component {
    render () {
+
       return (
           <div className="home-spacing-div">
             <CarouselMod />

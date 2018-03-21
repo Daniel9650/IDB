@@ -30,13 +30,13 @@ class About extends Component {
                <p>Total Number of Unit Tests: </p>
                <h4 className='about-sub'>Documentation</h4>
                <p>
-                  <a href='https://github.com/Daniel9650/idb'>Github Repository</a>
+                  <a name="repo-link" href='https://github.com/Daniel9650/idb'>Github Repository</a>
                </p>
                <p>
-                  <a href='https://www.gitbook.com/book/daniel9650/idb-phase-1/details'>Technical Report</a>
+                  <a name="tech-report-link" href='https://www.gitbook.com/book/daniel9650/idb-phase-1/details'>Technical Report</a>
                </p>
                <p>
-                  <a href='https://www.gitbook.com/book/daniel9650/poptopic-api-documentation/details'>PopTopic API</a>
+                  <a name="api-link" href='https://www.gitbook.com/book/daniel9650/poptopic-api-documentation/details'>PopTopic API</a>
                </p>
                <br></br>
                <h4 className="about-sub">Data</h4>

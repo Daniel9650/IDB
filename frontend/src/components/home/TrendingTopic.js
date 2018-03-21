@@ -6,12 +6,13 @@ let TrendingTopic = function(props) {
    var image = props.image;
    var topic = props.topic;
    var id = '/topics/' + props.id;
+   var name = "trending" + props.number;
 
    return (
       <Col className="col-center">
          <img className="trending-img" src={image}/>
          <h3 className="trending-title" >{topic}</h3>
-         <Button className="trending-btn" href={id}>Click Here</Button>
+         <Button name={name} className="trending-btn" href={id}>See More</Button>
       </Col>
    );
 

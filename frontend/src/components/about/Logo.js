@@ -7,7 +7,7 @@ let Logo = function statelessFunctionComponentClass(props) {
 
       return (
          <Col>
-            <a href={link}>
+            <a name={props.name}href={link}>
                <img className='about-logo center-block' src={image}/>
             </a>
          </Col>

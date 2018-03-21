@@ -11,10 +11,11 @@ let CardMod = function(props) {
    var image = props.image;
    var title = props.title;
    var topics = props.topics;
+   var name = props.type + props.number;
 
    if(props.type != "Topics") {
       return (
-         <a href={props.id}>
+         <a  name={name} href={props.id}>
             <Card>
                <CardImg top src={image} />
                <CardBody>
@@ -27,7 +28,7 @@ let CardMod = function(props) {
    }
    else {
       return (
-         <a href={props.id}>
+         <a name={name} href={props.id}>
             <Card>
                <CardImg top src={image} />
                <CardBody>

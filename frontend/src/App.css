@@ -215,6 +215,10 @@ a:hover {
    background-color: var(--charcoal);
 }
 
+.navbar-dark {
+   color: whtie !important;
+}
+
 .navbar-link {
    color: white;
 }

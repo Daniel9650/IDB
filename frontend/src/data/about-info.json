@@ -1,27 +1,33 @@
 {
-   
+
    "logos": [
       {
+         "name": "python",
          "link": "https://www.python.org/",
          "image": "python.png"
       },
       {
+         "name": "github",
          "link": "https://www.github.com/",
          "image": "github.png"
       },
       {
+         "name": "aws",
          "link": "https://aws.amazon.com/",
          "image": "aws.png"
       },
       {
+         "name": "docker",
          "link": "https://www.docker.com/",
          "image": "docker.png"
       },
       {
+         "name": "bootstrap",
          "link": "https://getbootstrap.com/",
          "image": "bootstrap.png"
       },
       {
+         "name": "react",
          "link": "https://reactjs.org/",
          "image": "react.png"
       }
