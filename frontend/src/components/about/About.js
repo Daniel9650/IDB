@@ -18,18 +18,26 @@ class About extends Component {
                trendy.
             </p>
             <br></br>
-            <h1 className='about-title'>Meet Our Team</h1>
+            <h1 className='about-title'>Meet Our Team: Double Daniel Inc.</h1>
             <hr className='divider'/>
             <BioGrid />
             <br></br>
             <h1 className='about-title'>Implementation</h1>
             <hr className='divider'/>
-               <h4 className='sub'>Code</h4>
-               <a href='https://github.com/Daniel9650/idb'>Github Repository</a>
-               <br />
-               <a href='https://www.gitbook.com/book/daniel9650/idb-phase-1/details'>Technical Report</a>
-               <br />
-               <a href='https://www.gitbook.com/book/daniel9650/poptopic-api-documentation/details'>PopTopic API</a>
+               <h4 className='about-sub'>Statistics</h4>
+               <p>Total Number of Commits: </p>
+               <p>Total Number of Issues: </p>
+               <p>Total Number of Unit Tests: </p>
+               <h4 className='about-sub'>Documentation</h4>
+               <p>
+                  <a href='https://github.com/Daniel9650/idb'>Github Repository</a>
+               </p>
+               <p>
+                  <a href='https://www.gitbook.com/book/daniel9650/idb-phase-1/details'>Technical Report</a>
+               </p>
+               <p>
+                  <a href='https://www.gitbook.com/book/daniel9650/poptopic-api-documentation/details'>PopTopic API</a>
+               </p>
                <br></br>
                <h4 className="about-sub">Data</h4>
                <p>
