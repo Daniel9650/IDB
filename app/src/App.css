@@ -36,6 +36,12 @@
    font-weight: bold;
 }
 
+.home-sub {
+   font-weight: bold;
+   text-align: center;
+   color: var(--charcoal);
+}
+
 .general-title {
    font-size: 80px;
    font-family: Accent;
@@ -120,6 +126,7 @@ a:hover {
 }
 .slide-caption {
    text-align:center;
+   font-weight: bold;
    color: white;
    position: absolute;
    top: 50%;
@@ -240,7 +247,7 @@ a:hover {
    margin: 10px;
 }
 
-/***********************  Movie Page Styles  **********************************/
+/*************************  Instance Styles  **********************************/
 
 .youtube-holder {
   position:relative;
@@ -260,6 +267,17 @@ a:hover {
 .poster {
    height: 400px;
    object-fit: cover;
+}
+
+.book-poster {
+   height: 600px;
+   object-fit: cover;
+}
+
+.topic-poster {
+   height: 400px;
+   object-fit: cover;
+   width: 100%;
 }
 
 /***************************  Misc. Styles  ***********************************/

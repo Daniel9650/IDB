@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import data from '../../data/mock_movie.json';
+import data from '../../data/mock_song.json';
 import RelatedGrid from '../RelatedGrid.js';
 
 import {
@@ -19,7 +19,7 @@ import {
 
 
 
-class MovieInstance extends Component {
+class MusicInstance extends Component {
 	constructor(props) {
     	super(props);
     	this.toggle = this.toggle.bind(this);
@@ -34,25 +34,14 @@ class MovieInstance extends Component {
   	}
 	render () {
 
-      //Todo: fetch related movie json file.
-      var movie_id = this.props.id;
-
       //get movie instance data
-      var name = data.movie_name;
-      var video = "https://www.youtube.com/embed/"+data.trailer_url+"?origin=http://poptopic.org";
-      var desc = data.description;
-      var date = data.release_date;
-      var tronbg = { backgroundImage: "url("+data.poster_url+")"};
-      var bookCards = [];
-      var songCards = [];
-      var topics = [];
-      var first = true;
+      var video = "https://www.youtube.com/embed/"+data.youtube_url+"?origin=http://poptopic.org";
 
       return (
          <div className="spacing-div">
 
             <Container>
-               <h1 className="general-title">{name}</h1>
+               <h1 className="general-title">{data.music_name}</h1>
                <hr className="divider"/>
                <Row>
                   <Col xs="auto">
@@ -66,12 +55,14 @@ class MovieInstance extends Component {
                </Row>
                <Row>
                   <Col>
-                     <h6 className="instance-sub">Description</h6>
-                     <p>{desc}</p>
+                     <h6 className="instance-sub">Artists</h6>
+                     <p>{data.artists}</p>
+                     <h6 className="instance-sub">Album</h6>
+                     <p>{data.album}</p>
                   </Col>
                   <Col xs="4" >
                      <h6 className="instance-sub">Release Date</h6>
-                     <p>{date}</p>
+                     <p>{data.release_date}</p>
                   </Col>
                </Row>
                <br />
@@ -81,10 +72,10 @@ class MovieInstance extends Component {
                   instances= {data.topics}
                />
                <br/>
-               <h6 className="instance-sub">Related Music</h6>
+               <h6 className="instance-sub">Related Movies</h6>
                <RelatedGrid
-                  type="Music"
-                  instances= {data.similar_songs}
+                  type="Movies"
+                  instances= {data.similar_movies}
                />
                <br/>
                <h6 className="instance-sub">Related Books</h6>
@@ -99,4 +90,4 @@ class MovieInstance extends Component {
 
 }
 
-export default MovieInstance;
+export default MusicInstance;

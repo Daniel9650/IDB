@@ -10,7 +10,7 @@ class TrendingTopicsGrid extends Component {
 
    createTrendingTopic(topic){
       return <TrendingTopic
-         image={topic.image}
+         image={topic.poster_url}
          topic={topic.topic_name}
          id={topic.topic_id}
       />

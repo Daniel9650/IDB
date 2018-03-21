@@ -34,6 +34,7 @@ class CardGrid extends Component {
          image={instance.poster_url}
          title={name}
          id= {id}
+         type={this.props.type}
          />;
    }
 

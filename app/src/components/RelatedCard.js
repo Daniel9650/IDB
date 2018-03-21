@@ -11,9 +11,10 @@ let CardMod = function(props) {
    var image = props.image;
    var title = props.title;
    var topics = props.topics;
+   var id = "/" + props.type + "/" + props.id;
 
       return (
-         <a href={props.id}>
+         <a href={id}>
             <Card>
                <CardImg top src={image} />
                <CardBody>

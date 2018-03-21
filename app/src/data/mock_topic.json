@@ -1,46 +1,8 @@
 {
-   "music_id": "1",
-   "music_name": "Sample Title",
-   "artists": "Johnny Appleseed",
-   "album": "Album Name",
-   "poster_url": "https://assets.mubi.com/images/notebook/post_images/22267/images-w1400.jpg?1474980339",
-   "youtube_url": "https://youtu.be/425M4M3Opkk",
-   "release_date": "00 Month 0000",
-   "topics": [
-      {
-         "topic_name": "topic1",
-         "poster_url": "https://assets.mubi.com/images/notebook/post_images/22267/images-w1400.jpg?1474980339",
-         "topic_id": "a"
-      },
-      {
-         "topic_name": "topic2",
-         "poster_url": "https://assets.mubi.com/images/notebook/post_images/22267/images-w1400.jpg?1474980339",
-         "topic_id": "b"
-      },
-      {
-         "topic_name": "topic3",
-         "poster_url": "https://assets.mubi.com/images/notebook/post_images/22267/images-w1400.jpg?1474980339",
-         "topic_id": "c"
-      }
-   ],
-   "similar_books": [
-      {
-         "book_name": "book1",
-         "poster_url": "https://assets.mubi.com/images/notebook/post_images/22267/images-w1400.jpg?1474980339",
-         "book_id": "a"
-      },
-      {
-         "book_name": "book2",
-         "poster_url": "https://assets.mubi.com/images/notebook/post_images/22267/images-w1400.jpg?1474980339",
-         "book_id": "b"
-      },
-      {
-         "book_name": "book3",
-         "poster_url": "https://assets.mubi.com/images/notebook/post_images/22267/images-w1400.jpg?1474980339",
-         "book_id": "c"
-      }
-   ],
-   "similar_movies": [
+   "topic_id": "1",
+   "topic_name": "Sample Title",
+   "poster_url": " https://upload.wikimedia.org/wikipedia/commons/d/d6/Timeless_Books.jpg",
+   "related_movies": [
       {
          "movie_name": "movie1",
          "poster_url": "https://assets.mubi.com/images/notebook/post_images/22267/images-w1400.jpg?1474980339",
@@ -55,6 +17,40 @@
          "movie_name": "movie3",
          "poster_url": "https://assets.mubi.com/images/notebook/post_images/22267/images-w1400.jpg?1474980339",
          "movie_id": "c"
+      }
+   ],
+   "related_songs": [
+      {
+         "song_name": "song1",
+         "poster_url": "https://assets.mubi.com/images/notebook/post_images/22267/images-w1400.jpg?1474980339",
+         "song_id": "a"
+      },
+      {
+         "song_name": "song2",
+         "poster_url": "https://assets.mubi.com/images/notebook/post_images/22267/images-w1400.jpg?1474980339",
+         "song_id": "b"
+      },
+      {
+         "song_name": "song3",
+         "poster_url": "https://assets.mubi.com/images/notebook/post_images/22267/images-w1400.jpg?1474980339",
+         "song_id": "c"
+      }
+   ],
+   "related_books": [
+      {
+         "book_name": "book1",
+         "poster_url": "https://assets.mubi.com/images/notebook/post_images/22267/images-w1400.jpg?1474980339",
+         "book_id": "a"
+      },
+      {
+         "book_name": "book2",
+         "poster_url": "https://assets.mubi.com/images/notebook/post_images/22267/images-w1400.jpg?1474980339",
+         "book_id": "b"
+      },
+      {
+         "book_name": "book3",
+         "poster_url": "https://assets.mubi.com/images/notebook/post_images/22267/images-w1400.jpg?1474980339",
+         "book_id": "c"
       }
    ]
 }
