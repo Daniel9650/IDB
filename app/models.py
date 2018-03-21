@@ -103,17 +103,7 @@ Base.metadata.create_all()
 manager = flask_restless.APIManager(app, session=mysession)
 
 movie_blueprint = manager.create_api(Movies, methods=['GET'])
-#movie_similar_books_blueprint = manager.create_api(Movies, methods=['GET'], include_columns=['similar_books'])
-#movie_similar_songs_blueprint = manager.create_api(Movies, methods=['GET'], include_columns=['similar_songs'])
-
 book_blueprint = manager.create_api(Books, methods=['GET'])
-#book_similar_movies_blueprint = manager.create_api(Books, methods=['GET'], include_columns=['similar_movies'])
-#book_similar_songs_blueprint = manager.create_api(Books, methods=['GET'], include_columns=['similar_songs'])
-
 song_blueprint = manager.create_api(Songs, methods=['GET'])
-#song_similar_movies_blueprint = manager.create_api(Songs, methods=['GET'], include_columns=['similar_movies'])
-#song_similar_books_blueprint = manager.create_api(Songs, methods=['GET'], include_columns=['similar_books'])
-
 topic_books_blueprint = manager.create_api(Topics, methods=['GET'])
-#topic_songs_blueprint = manager.create_api(Topics, methods=['GET'], include_columns=['related_songs'])
-#topic_movies_blueprint = manager.create_api(Topics, methods=['GET'], include_columns=['related_movies'])
+
