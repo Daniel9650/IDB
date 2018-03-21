@@ -42,9 +42,7 @@ class TopicInstance extends Component {
             <Container>
                <h1 className="general-title">{name}</h1>
                <hr className="divider"/>
-               <Row>
-                  <img className="topic-poster" src={data.poster_url} />
-               </Row>
+               <img className="topic-poster" src={data.poster_url} />
                <br />
                <h6 className="instance-sub">Related Movies</h6>
                <RelatedGrid

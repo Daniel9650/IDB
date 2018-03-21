@@ -21,7 +21,7 @@ const items = [
     caption: 'Find out which messages are being listened to.'
   },
   {
-    src: require('../../images/movies.jpeg'),
+    src: require('../../images/movie_reel.jpg'),
     altText: 'Slide 3',
     header: 'Target Movie Lovers',
     caption: 'Get to know your audience before your next project.'
