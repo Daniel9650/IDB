@@ -16,7 +16,6 @@ from sqlalchemy import create_engine
 from sqlalchemy import inspect
 import random
 import hashlib
-from dbcred import get_con_str
 
 
 class MovieEntity(declarative_base()):
