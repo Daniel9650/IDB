@@ -29,7 +29,7 @@ class Navigation extends Component {
 	render () {
       return (
       	<div>
-      		<Navbar className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      		<Navbar className="navbar navbar-expand-md fixed-top">
       			<NavbarBrand href="/home">
                   <img className="brand-logo" src={require('../logo.png')} />
                </NavbarBrand>
@@ -37,19 +37,19 @@ class Navigation extends Component {
       			<Collapse isOpen={this.state.isOpen} navbar>
       				<Nav className="ml-auto" navbar>
                      <NavItem>
-                        <NavLink href="/topics/">Topics</NavLink>
+                        <NavLink className="navbar-link" href="/topics/">Topics</NavLink>
                      </NavItem>
       					<NavItem>
-      						<NavLink href="/movies/">Movies</NavLink>
+      						<NavLink className="navbar-link" href="/movies/">Movies</NavLink>
       					</NavItem>
                      <NavItem>
-      						<NavLink href="/books/">Books</NavLink>
+      						<NavLink className="navbar-link" href="/books/">Books</NavLink>
       					</NavItem>
                      <NavItem>
-      						<NavLink href="/music/">Music</NavLink>
+      						<NavLink className="navbar-link" href="/music/">Music</NavLink>
       					</NavItem>
                      <NavItem>
-                        <NavLink href="/about/">About</NavLink>
+                        <NavLink className="navbar-link" href="/about/">About</NavLink>
                      </NavItem>
       				</Nav>
       			</Collapse>

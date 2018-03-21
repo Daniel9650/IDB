@@ -48,6 +48,17 @@
    color: var(--charcoal);
 }
 
+.instance-sub {
+   font-weight: bold;
+   font-size: 25px;
+   color: var(--charcoal);
+}
+
+p{
+   font-size: 18px;
+   color: var(--charcoal);
+}
+
 
 /***************************  Model Grid Styles  ******************************/
 
@@ -193,7 +204,16 @@ a:hover {
 
 .navbar {
    height: 80px;
-   color: black;
+   color: white !important;
+   background-color: var(--charcoal);
+}
+
+.navbar-link {
+   color: white;
+}
+
+.navbar-link:hover{
+   color: var(--accent);
 }
 
 .brand-logo{
@@ -234,7 +254,12 @@ a:hover {
   top:0;
   left:0;
   width:100%;
-  height:100%;
+  height:400px;
+}
+
+.poster {
+   height: 400px;
+   object-fit: cover;
 }
 
 /***************************  Misc. Styles  ***********************************/

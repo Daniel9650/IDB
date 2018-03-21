@@ -6,18 +6,54 @@
    "release_date": "00 Month 0000",
    "poster_url": "https://assets.mubi.com/images/notebook/post_images/22267/images-w1400.jpg?1474980339",
    "topics": [
-      "topic1",
-      "topic2",
-      "topic3"
+      {
+         "topic_name": "topic1",
+         "poster_url": "https://assets.mubi.com/images/notebook/post_images/22267/images-w1400.jpg?1474980339",
+         "topic_id": "a"
+      },
+      {
+         "topic_name": "topic2",
+         "poster_url": "https://assets.mubi.com/images/notebook/post_images/22267/images-w1400.jpg?1474980339",
+         "topic_id": "b"
+      },
+      {
+         "topic_name": "topic3",
+         "poster_url": "https://assets.mubi.com/images/notebook/post_images/22267/images-w1400.jpg?1474980339",
+         "topic_id": "c"
+      }
    ],
    "similar_movies": [
-      "movie1",
-      "movie2",
-      "movie3"
+      {
+         "movie_name": "movie1",
+         "poster_url": "https://assets.mubi.com/images/notebook/post_images/22267/images-w1400.jpg?1474980339",
+         "movie_id": "a"
+      },
+      {
+         "movie_name": "movie2",
+         "poster_url": "https://assets.mubi.com/images/notebook/post_images/22267/images-w1400.jpg?1474980339",
+         "movie_id": "b"
+      },
+      {
+         "movie_name": "movie3",
+         "poster_url": "https://assets.mubi.com/images/notebook/post_images/22267/images-w1400.jpg?1474980339",
+         "movie_id": "c"
+      }
    ],
    "similar_songs": [
-      "song1",
-      "song2",
-      "song3"
+      {
+         "song_name": "song1",
+         "poster_url": "https://assets.mubi.com/images/notebook/post_images/22267/images-w1400.jpg?1474980339",
+         "song_id": "a"
+      },
+      {
+         "song_name": "song2",
+         "poster_url": "https://assets.mubi.com/images/notebook/post_images/22267/images-w1400.jpg?1474980339",
+         "song_id": "b"
+      },
+      {
+         "song_name": "song3",
+         "poster_url": "https://assets.mubi.com/images/notebook/post_images/22267/images-w1400.jpg?1474980339",
+         "song_id": "c"
+      }
    ]
 }

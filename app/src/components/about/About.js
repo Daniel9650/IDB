@@ -24,14 +24,14 @@ class About extends Component {
             <br></br>
             <h1 className='about-title'>Implementation</h1>
             <hr className='divider'/>
-               <h4 className='about-sub'>Code</h4>
+               <h4 className='sub'>Code</h4>
                <a href='https://github.com/Daniel9650/idb'>Github Repository</a>
                <br />
                <a href='https://www.gitbook.com/book/daniel9650/idb-phase-1/details'>Technical Report</a>
                <br />
                <a href='https://www.gitbook.com/book/daniel9650/poptopic-api-documentation/details'>PopTopic API</a>
                <br></br>
-               <h4 className='about-sub'>Data</h4>
+               <h4 className="about-sub">Data</h4>
                <p>
                   Our data concerning movies is scraped from The Movie Database
                   using their API.
@@ -43,7 +43,7 @@ class About extends Component {
                <p>
                   Our data concerning books is found using the Google Books API.
                </p>
-               <h4 className='about-sub'>Tools</h4>
+               <h4 className="about-sub">Tools</h4>
                <LogoGrid />
 
          </Container>
