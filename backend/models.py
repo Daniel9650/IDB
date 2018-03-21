@@ -1,5 +1,4 @@
 from flask import Flask
-from dbcred import get_con_str
 from sqlalchemy import Column, String, Integer, Text, Unicode, ForeignKey
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
@@ -8,9 +7,11 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 #import flask.ext.restless
 import flask_restless 
 
-
-
 app = Flask(__name__)
+
+def get_con_str():
+    return "mysql+pymysql://PT_Admin:cookies123@pt-db-instance.cden9ozljt61.us-west-1.rds.amazonaws.com:3306/poptopic_db"
+
 con_str = get_con_str()
 engine = create_engine(con_str, convert_unicode=True)
 Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -18,10 +19,6 @@ mysession = scoped_session(Session)
 
 Base = declarative_base()
 Base.metadata.bind = engine
-
-def get_con_str():
-    return "mysql+pymysql://PT_Admin:cookies123@pt-db-instance.cden9ozljt61.us-west-1.rds.amazonaws.com:3306/poptopic_db"
-
 
 class Movies(Base):
     __tablename__ = 'movies'
@@ -34,6 +31,9 @@ class Movies(Base):
     topics = Column(Text)
     similar_books = Column(Text)
     similar_songs = Column(Text)
+
+    def __init__(self, movie_name, description, release_date, poster_url, trailer_url, topics, similar_books, similar_songs):
+        self.movie_name = movie_name;
 
     '''
     GET /api/movies 
@@ -99,10 +99,9 @@ class Topics(Base):
 Base.metadata.create_all()
 
 manager = flask_restless.APIManager(app, session=mysession)
-manager.init_app(app)
+#manager.init_app(app)
 
 movie_blueprint = manager.create_api(Movies, methods=['GET'])
 book_blueprint = manager.create_api(Books, methods=['GET'])
 song_blueprint = manager.create_api(Songs, methods=['GET'])
 topic_books_blueprint = manager.create_api(Topics, methods=['GET'])
-
