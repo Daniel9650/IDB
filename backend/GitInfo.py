@@ -22,7 +22,7 @@ def get_cached(url, name):
     head = {"If-None-Match": etag}
     r = requests.get(url, headers=head)
 
-    if r.status_code == 304:
+    if r.status_code == 304 or r.satus_code != 200:
         # we can use cached version
         response = d["response"]
         d.close()
