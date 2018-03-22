@@ -1,0 +1,317 @@
+{
+	"info": {
+		"name": "PopTopic API Tests",
+		"_postman_id": "511aef62-858c-94a8-9cf8-d44870455ccb",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "api.poptopic.org/movies",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ee9c2b7a-7f17-458e-8a10-9284b7988f75",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Response is OK\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"movie_id\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "api.poptopic.org/movies",
+					"host": [
+						"api",
+						"poptopic",
+						"org"
+					],
+					"path": [
+						"movies"
+					]
+				},
+				"description": "Ensure API responds with OK (200)"
+			},
+			"response": []
+		},
+		{
+			"name": "api.poptopic.org/books",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "73079438-96d9-425a-a454-e27a4e111590",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Response is OK\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"book_id\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "api.poptopic.org/books",
+					"host": [
+						"api",
+						"poptopic",
+						"org"
+					],
+					"path": [
+						"books"
+					]
+				},
+				"description": "Ensure API responds with OK (200)"
+			},
+			"response": []
+		},
+		{
+			"name": "api.poptopic.org/songs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fa7fc2f9-17ed-4c9d-8e2e-3d19c2aa2456",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Response is OK\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"song_id\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "api.poptopic.org/songs",
+					"host": [
+						"api",
+						"poptopic",
+						"org"
+					],
+					"path": [
+						"songs"
+					]
+				},
+				"description": "Ensure API responds with OK (200)"
+			},
+			"response": []
+		},
+		{
+			"name": "api.poptopic.org/movies?page=2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "eec4bcd3-e92b-4542-b1e1-3cc5833f4e03",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Response is OK\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"\\\"page\\\": 2\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "api.poptopic.org/movies?page=2",
+					"host": [
+						"api",
+						"poptopic",
+						"org"
+					],
+					"path": [
+						"movies"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2",
+							"equals": true
+						}
+					]
+				},
+				"description": "Ensure API responds with OK (200)"
+			},
+			"response": []
+		},
+		{
+			"name": "api.poptopic.org/songs?page=2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6deaf766-104e-483a-81da-5327f2e799c6",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Response is OK\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"\\\"page\\\": 2\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "api.poptopic.org/songs?page=2",
+					"host": [
+						"api",
+						"poptopic",
+						"org"
+					],
+					"path": [
+						"songs"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2",
+							"equals": true
+						}
+					]
+				},
+				"description": "Ensure API responds with OK (200)"
+			},
+			"response": []
+		},
+		{
+			"name": "api.poptopic.org/books?page=2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86581505-da85-49d4-abfc-1c896ea72b96",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Response is OK\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"\\\"page\\\": 2\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "api.poptopic.org/books?page=2",
+					"host": [
+						"api",
+						"poptopic",
+						"org"
+					],
+					"path": [
+						"books"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2",
+							"equals": true
+						}
+					]
+				},
+				"description": "Ensure API responds with OK (200)"
+			},
+			"response": []
+		},
+		{
+			"name": "api.poptopic.org/movies/-8444",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1246ba76-d950-438b-b443-03c874da36c2",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Body contains 'Not Found'\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Not Found\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "api.poptopic.org/movies/-8444",
+					"host": [
+						"api",
+						"poptopic",
+						"org"
+					],
+					"path": [
+						"movies",
+						"-8444"
+					]
+				},
+				"description": "Attempts to search for an impossible primary key value, should return a 404: Not Found error"
+			},
+			"response": []
+		}
+	]
+}
