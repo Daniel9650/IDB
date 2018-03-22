@@ -83,6 +83,29 @@ def get_default_count():
     return count
 
 
+def get_counts():
+    commits = get_commits_count()
+    issues = get_issues_count()
+
+    ret = {}
+    ret["total_commits"] = commits["Total"]
+    ret["total_issues"] = issues["Total"]
+
+    users = []
+    for name in commits:
+        if name == "Total":
+            continue
+        d = {}
+        d["name"] = name
+        d["commits"] = commits[name]
+        d["issues"] = issues[name]
+
+        users.append(d)
+
+    ret["users"] = users
+
+    return ret
+
 def output_counts(commits_count, issues_count):
     for user, val in commits_count.items():
         print("User: " + user)
@@ -96,3 +119,4 @@ def output_counts(commits_count, issues_count):
 #    commits_count = get_commits_count()
 #    issues_count = get_issues_count()
 #    output_counts(commits_count, issues_count)
+#    print(get_counts())
