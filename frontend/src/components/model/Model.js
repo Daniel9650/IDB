@@ -23,9 +23,10 @@ class Model extends Component {
       else
          instances = data.topics;
 
+      var name = this.props.type + " Title";
       return (
          <Container className="spacing-div">
-            <h1 className="general-title">{this.props.type}</h1>
+            <h1 name={name} className="general-title">{this.props.type}</h1>
             <hr className="divider"/>
             <CardGrid
                instances={instances}

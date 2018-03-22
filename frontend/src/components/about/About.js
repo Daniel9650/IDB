@@ -8,7 +8,7 @@ class About extends Component {
    render () {
       return (
          <Container className='spacing-div'>
-            <h1 className='about-title'>Our Concept</h1>
+            <h1 name="about-concept" className='about-title'>Our Concept</h1>
             <hr className='divider'/>
             <p className='about-text'>
                PopTopic categorizes books, movies, and music by topic to show

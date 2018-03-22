@@ -13,7 +13,7 @@ class Home extends Component {
             <CarouselMod />
             <br />
             <Container>
-               <h1 className="home-sub">Trending Topics</h1>
+               <h1 name="trending-topics" className="home-sub">Trending Topics</h1>
                <TrendingTopicsGrid
                   data={trending_topics.trending}
                />

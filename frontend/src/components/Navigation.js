@@ -49,7 +49,7 @@ class Navigation extends Component {
       						<NavLink name="books-link" className="navbar-link" href="/books/">Books</NavLink>
       					</NavItem>
                      <NavItem>
-      						<NavLink name="music" className="navbar-link" href="/music/">Music</NavLink>
+      						<NavLink name="music-link" className="navbar-link" href="/music/">Music</NavLink>
       					</NavItem>
                      <NavItem>
                         <NavLink name="about-link" className="navbar-link" href="/about/">About</NavLink>
