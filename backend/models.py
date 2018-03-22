@@ -168,9 +168,5 @@ song_blueprint = manager.create_api(Songs, methods=['GET'])
 topic_books_blueprint = manager.create_api(Topics, methods=['GET'])
 
 if __name__ == "__main__":
-<<<<<<< HEAD
     app.run()
 
-=======
-    app.run()
->>>>>>> a09b9c053289a510bedaac5d10dec6a395c45ad0
