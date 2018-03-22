@@ -141,7 +141,7 @@ class PopTopicGUITests(unittest.TestCase):
 ########################### Navigation Tests ###################################
     def test_nav (self):
         self.assertNotEqual(self.nav_about(), None)
-        #self.assertNotEqual(self.nav_books(), None)
+        self.assertNotEqual(self.nav_books(), None)
         self.assertNotEqual(self.nav_logo(), None)
         self.assertNotEqual(self.nav_music(), None)
         self.assertNotEqual(self.nav_home(), None)
@@ -160,21 +160,6 @@ class PopTopicGUITests(unittest.TestCase):
     def test_nav_same_location (self):
         for x in range(0,10):
             self.assertNotEqual(self.nav_home(), None)
-
-    def test_trending_topics (self):
-        driver = self.driver
-        success = 1;
-        for x in range(1, 4):
-            name = "trending" + str(x)
-            trending_topic = driver.find_element_by_name(name)
-            trending_topic.click()
-            driver.implicitly_wait(20)
-            topic_success = driver.find_element_by_name("topic-instance-name")
-            success = success and self.assertNotEqual(topic_success, None)
-            self.nav_home()
-        return success
-
-########################### Grid & Instance Tests ##############################
 
     def test_topic_grid_and_instances (self):
         for w in range(1,9):
@@ -196,7 +181,39 @@ class PopTopicGUITests(unittest.TestCase):
             self.nav_music()
             self.music_instance(z)
 
-########################### More Tests ##############################
+    def test_trending_topics (self):
+        driver = self.driver
+        success = 1;
+        for x in range(1, 4):
+            name = "trending" + str(x)
+            trending_topic = driver.find_element_by_name(name)
+            trending_topic.click()
+            driver.implicitly_wait(20)
+            topic_success = driver.find_element_by_name("topic-instance-name")
+            success = success and self.assertNotEqual(topic_success, None)
+            self.nav_home()
+        return success
+
+    def test_about_links (self):
+        driver = self.driver
+        self.nav_about()
+        link = driver.find_element_by_name("repo-link")
+        link.click()
+        driver.implicitly_wait(20)
+        link_success = driver.find_element_by_class_name("pagehead-actions")
+        self.assertNotEqual(link_success, None)
+        driver.back()
+        link = driver.find_element_by_name("tech-report-link")
+        link.click()
+        driver.implicitly_wait(20)
+        link_success = driver.find_element_by_class_name("gb-page-inner")
+        self.assertNotEqual(link_success, None)
+        driver.back()
+        link = driver.find_element_by_name("api-link")
+        link.click()
+        driver.implicitly_wait(20)
+        link_success = driver.find_element_by_class_name("BookPage")
+        self.assertNotEqual(link_success, None)
 
     def test_title (self):
         # able to access poptopic.org
