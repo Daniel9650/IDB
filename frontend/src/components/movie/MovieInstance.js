@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-
-import data from '../../data/mock_movie.json';
+import axios from 'axios'
 import RelatedGrid from '../RelatedGrid.js';
 
 import {
@@ -24,7 +23,10 @@ class MovieInstance extends Component {
     	super(props);
     	this.toggle = this.toggle.bind(this);
     	this.state = {
-      		isOpen: false
+      		isOpen: false,
+          error: null,
+          isLoaded: false,
+          data: []
     	};
   	}
   	toggle() {
@@ -32,69 +34,98 @@ class MovieInstance extends Component {
       	isOpen: !this.state.isOpen
     	});
   	}
-	render () {
+    componentDidMount() {
+      const { id } = this.props.match.params
+      fetch("http://api.poptopic.org/movies/"+id)
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({
+            isLoaded: true,
+            data: result
+          });
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        }
+      )
+    }
+    render () {
 
-      //Todo: fetch related movie json file.
-      var movie_id = this.props.id;
+      const { error, isLoaded, data } = this.state;
 
-      //get movie instance data
-      var name = data.movie_name;
-      var video = "https://www.youtube.com/embed/"+data.trailer_url+"?origin=http://poptopic.org";
-      var desc = data.description;
-      var date = data.release_date;
-      var tronbg = { backgroundImage: "url("+data.poster_url+")"};
-      var bookCards = [];
-      var songCards = [];
-      var topics = [];
-      var first = true;
+      if (error) {
+        return <div>Error: {error.message}</div>;
+      }
+      else if (!isLoaded) {
+        return <div>Loading...</div>;
+      }
+      else {
+        //get movie instance data
+        var name = data.movie_name;
+        var video = "https://www.youtube.com/embed/"+data.trailer_url+"?origin=http://poptopic.org";
+        var desc = data.description;
+        var date = data.release_date;
+        var tronbg = { backgroundImage: "url("+data.poster_url+")"};
+        var bookCards = [];
+        var songCards = [];
+        var topics = [];
+        var first = true;
 
-      return (
-         <div className="spacing-div">
+        return (
+           <div className="spacing-div">
 
-            <Container>
-               <h1 name="movie-instance-name" className="general-title">{name}</h1>
-               <hr className="divider"/>
-               <Row>
-                  <Col xs="auto">
-                     <img className="poster" src={data.poster_url} />
-                  </Col>
-                  <Col>
-                     <div className="youtube-holder">
-                        <iframe className="youtube-player" type="text/html" width="100%" height="auto" src={video} frameBorder="0"/>
-                     </div>
-                  </Col>
-               </Row>
-               <Row>
-                  <Col>
-                     <h6 className="instance-sub">Description</h6>
-                     <p>{desc}</p>
-                  </Col>
-                  <Col xs="4" >
-                     <h6 className="instance-sub">Release Date</h6>
-                     <p>{date}</p>
-                  </Col>
-               </Row>
-               <br />
-               <h6 className="instance-sub">Topics</h6>
-               <RelatedGrid
-                  type="Topics"
-                  instances= {data.topics}
-               />
-               <br/>
-               <h6 className="instance-sub">Related Music</h6>
-               <RelatedGrid
-                  type="Music"
-                  instances= {data.similar_songs}
-               />
-               <br/>
-               <h6 className="instance-sub">Related Books</h6>
-               <RelatedGrid
-                  type="Books"
-                  instances= {data.similar_books}
-               />
-         </Container>
-         </div>
-      );
+              <Container>
+                 <h1 name="movie-instance-name" className="general-title">{name}</h1>
+                 <hr className="divider"/>
+                 <Row>
+                    <Col xs="auto">
+                       <img className="poster" src={data.poster_url} />
+                    </Col>
+                    <Col>
+                       <div className="youtube-holder">
+                          <iframe className="youtube-player" type="text/html" width="100%" height="auto" src={video} frameBorder="0"/>
+                       </div>
+                    </Col>
+                 </Row>
+                 <Row>
+                    <Col>
+                       <h6 className="instance-sub">Description</h6>
+                       <p>{desc}</p>
+                    </Col>
+                    <Col xs="4" >
+                       <h6 className="instance-sub">Release Date</h6>
+                       <p>{date}</p>
+                    </Col>
+                 </Row>
+                 <br />
+                 <h6 className="instance-sub">Topics</h6>
+                 <RelatedGrid
+                    type="Topics"
+                    instances= {data.topics}
+                 />
+                 <br/>
+                 <h6 className="instance-sub">Related Music</h6>
+                 <RelatedGrid
+                    type="Music"
+                    instances= {data.similar_songs}
+                 />
+                 <br/>
+                 <h6 className="instance-sub">Related Books</h6>
+                 <RelatedGrid
+                    type="Books"
+                    instances= {data.similar_books}
+                 />
+           </Container>
+           </div>
+        );
+      }
    }
 
 }
