@@ -1,53 +1,6 @@
 **Poptopic Technical Report**
 
-**Movies:**
 
-For the Movies model, we had several attributes, including the following:
-
-* name
-* description
-* year of release
-* movie trailer \(if available\)
-* movie poster \(if no trailer\)
-* link\(s\) to movie's topics
-* link\(s\) to similar books
-* link\(s\) to similar music
-
-**Music:**
-
-For the Music model, we had the following attributes:
-
-* name of song
-* artist
-* album
-* year of release
-* song preview
-* link\(s\) to song's topics
-* link\(s\) to similar movies
-* link\(s\) to similar books
-
-**Books:**
-
-For the Books model, we had the following attributes:
-
-* title
-* author
-* description
-* publication year
-* image of book cover
-* link\(s\) to book's topics
-* link\(s\) to similar movies
-* link\(s\) to similar music
-
-**Topics:**
-
-For the Topics mode, we had the following attributes:
-
-* name
-* basic image for this topic
-* link\(s\) to books
-* link\(s\) to movies
-* link\(s\) to music
 
 **RESTful API:**
 
