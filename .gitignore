@@ -1,20 +1,20 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # dependencies
-app/node_modules
+frontend/node_modules
 
 # testing
-app/coverage
+frontend/coverage
 
 # production
-app/build
+frontend/build
 
 #venv
 venv
 
 # misc
-app/__pycache__
 backend/__pycache__
+backend/cred.py
 API_keys
 .DS_Store
 .env.local
