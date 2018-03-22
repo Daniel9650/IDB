@@ -11,7 +11,7 @@ from math import ceil
 
 app = Flask(__name__, template_folder='.', static_folder='static')
 app.config['SERVER_NAME'] = 'poptopic.org'
-
+app.url_map.strict_slashes = False
 api = Blueprint('api', 'api', subdomain='api')
 
 con_str = "mysql+pymysql://PT_Admin:cookies123@pt-db-instance.cden9ozljt61.us-west-1.rds.amazonaws.com:3306/poptopic_db"
@@ -205,25 +205,32 @@ items_per_page = 8
 def app_index(path):
     return render_template("index.html")
 
+@api.before_request
+def clear_trailing():
+    rp = request.full_path.split("?")
+    if rp[0] != '/' and rp[0].endswith('/'):
+        if(len(rp) > 1):
+            return redirect(rp[0][:-1] + "?" + rp[1])
+        else:
+            return redirect(rp[0][:-1])
+
 @api.route('/')
 def api_index():
     return redirect("http://poptopic.org/api", code=302)
 
-@api.route('/Movies/', defaults={'path': ''})
-@api.route("/Movies/<path:path>", methods=['GET'])
+@api.route('/movies/', defaults={'path': ''})
+@api.route("/movies/<path:path>", methods=['GET'])
 def get_movies(path):
     params = path.split("/")
     num_params = len(params)
-    focus = "all"
+    movie_id = ""
     if(num_params > 0 and len(params[0]) > 0):
-        focus = params[0]
-    if(focus == "all"):
-        page = 1
-        sort = "alpha"
-        if(num_params > 1 and len(params[1]) > 0):
-            page = eval(params[1])
-        if(num_params > 2 and len(params[2]) > 0):
-            sort = params[2]
+        movie_id = params[0]
+    if(movie_id == ""):
+        page_request = request.args.get('page')
+        sort_request = request.args.get('sort')
+        page = 1 if (page_request is None) else eval(page_request)
+        sort = "alpha" if (sort_request is None) else sort_request
         min_instance = 1 + items_per_page * (page - 1)
         max_instance = (items_per_page + 1) + items_per_page * (page - 1)
         num_rows = mysession.query(Movies).count()
@@ -234,38 +241,32 @@ def get_movies(path):
             page_return["num_results"] += 1
             page_return["objects"].append(instance.as_dict())
         return jsonify(page_return)
-    if(focus == "instance"):
-        movie_id = ""
+    else:
+        attr_focus = ""
+        instance = mysession.query(Movies).filter(Movies.movie_id == movie_id).first()
         if(num_params > 1 and len(params[1]) > 0):
-            movie_id = params[1]
-        if(movie_id != ""):
-            attr_focus = ""
-            instance = mysession.query(Movies).filter(Movies.movie_id == movie_id).first()
-            if(num_params > 2 and len(params[2]) > 0):
-                attr_focus = params[2]
-            if(attr_focus == "" and instance != None):
-                return jsonify(instance.as_dict())
-            if(attr_focus != "" and instance != None):
-                attr_object = instance.get_col(attr_focus)
-                if(attr_object != None):
-                    return jsonify(attr_object)
+            attr_focus = params[1]
+        if(attr_focus == "" and instance != None):
+            return jsonify(instance.as_dict())
+        if(attr_focus != "" and instance != None):
+            attr_object = instance.get_col(attr_focus)
+            if(attr_object != None):
+                return jsonify(attr_object)
         abort(404)
 
-@api.route('/Songs/', defaults={'path': ''})
-@api.route("/Songs/<path:path>", methods=['GET'])
+@api.route('/songs/', defaults={'path': ''})
+@api.route("/songs/<path:path>", methods=['GET'])
 def get_songs(path):
     params = path.split("/")
     num_params = len(params)
-    focus = "all"
+    song_id = ""
     if(num_params > 0 and len(params[0]) > 0):
-        focus = params[0]
-    if(focus == "all"):
-        page = 1
-        sort = "alpha"
-        if(num_params > 1 and len(params[1]) > 0):
-            page = eval(params[1])
-        if(num_params > 2 and len(params[2]) > 0):
-            sort = params[2]
+        song_id = params[0]
+    if(song_id == ""):
+        page_request = request.args.get('page')
+        sort_request = request.args.get('sort')
+        page = 1 if (page_request is None) else eval(page_request)
+        sort = "alpha" if (sort_request is None) else sort_request
         min_instance = 1 + items_per_page * (page - 1)
         max_instance = (items_per_page + 1) + items_per_page * (page - 1)
         num_rows = mysession.query(Songs).count()
@@ -276,38 +277,32 @@ def get_songs(path):
             page_return["num_results"] += 1
             page_return["objects"].append(instance.as_dict())
         return jsonify(page_return)
-    if(focus == "instance"):
-        song_id = ""
+    else:
+        attr_focus = ""
+        instance = mysession.query(Songs).filter(Songs.song_id == song_id).first()
         if(num_params > 1 and len(params[1]) > 0):
-            song_id = params[1]
-        if(song_id != ""):
-            attr_focus = ""
-            instance = mysession.query(Songs).filter(Songs.song_id == song_id).first()
-            if(num_params > 2 and len(params[2]) > 0):
-                attr_focus = params[2]
-            if(attr_focus == "" and instance != None):
-                return jsonify(instance.as_dict())
-            if(attr_focus != "" and instance != None):
-                attr_object = instance.get_col(attr_focus)
-                if(attr_object != None):
-                    return jsonify(attr_object)
+            attr_focus = params[1]
+        if(attr_focus == "" and instance != None):
+            return jsonify(instance.as_dict())
+        if(attr_focus != "" and instance != None):
+            attr_object = instance.get_col(attr_focus)
+            if(attr_object != None):
+                return jsonify(attr_object)
         abort(404)
 
-@api.route('/Books/', defaults={'path': ''})
-@api.route("/Books/<path:path>", methods=['GET'])
+@api.route('/books/', defaults={'path': ''})
+@api.route("/books/<path:path>", methods=['GET'])
 def get_books(path):
     params = path.split("/")
     num_params = len(params)
-    focus = "all"
+    book_id = ""
     if(num_params > 0 and len(params[0]) > 0):
-        focus = params[0]
-    if(focus == "all"):
-        page = 1
-        sort = "alpha"
-        if(num_params > 1 and len(params[1]) > 0):
-            page = eval(params[1])
-        if(num_params > 2 and len(params[2]) > 0):
-            sort = params[2]
+        book_id = params[0]
+    if(book_id == ""):
+        page_request = request.args.get('page')
+        sort_request = request.args.get('sort')
+        page = 1 if (page_request is None) else eval(page_request)
+        sort = "alpha" if (sort_request is None) else sort_request
         min_instance = 1 + items_per_page * (page - 1)
         max_instance = (items_per_page + 1) + items_per_page * (page - 1)
         num_rows = mysession.query(Books).count()
@@ -318,38 +313,32 @@ def get_books(path):
             page_return["num_results"] += 1
             page_return["objects"].append(instance.as_dict())
         return jsonify(page_return)
-    if(focus == "instance"):
-        book_id = ""
+    else:
+        attr_focus = ""
+        instance = mysession.query(Books).filter(Books.book_id == book_id).first()
         if(num_params > 1 and len(params[1]) > 0):
-            book_id = params[1]
-        if(book_id != ""):
-            attr_focus = ""
-            instance = mysession.query(Books).filter(Books.book_id == book_id).first()
-            if(num_params > 2 and len(params[2]) > 0):
-                attr_focus = params[2]
-            if(attr_focus == "" and instance != None):
-                return jsonify(instance.as_dict())
-            if(attr_focus != "" and instance != None):
-                attr_object = instance.get_col(attr_focus)
-                if(attr_object != None):
-                    return jsonify(attr_object)
+            attr_focus = params[1]
+        if(attr_focus == "" and instance != None):
+            return jsonify(instance.as_dict())
+        if(attr_focus != "" and instance != None):
+            attr_object = instance.get_col(attr_focus)
+            if(attr_object != None):
+                return jsonify(attr_object)
         abort(404)
 
-@api.route('/Topics/', defaults={'path': ''})
-@api.route("/Topics/<path:path>", methods=['GET'])
+@api.route('/topics/', defaults={'path': ''})
+@api.route("/topics/<path:path>", methods=['GET'])
 def get_topics(path):
     params = path.split("/")
     num_params = len(params)
-    focus = "all"
+    topic_id = ""
     if(num_params > 0 and len(params[0]) > 0):
-        focus = params[0]
-    if(focus == "all"):
-        page = 1
-        sort = "alpha"
-        if(num_params > 1 and len(params[1]) > 0):
-            page = eval(params[1])
-        if(num_params > 2 and len(params[2]) > 0):
-            sort = params[2]
+        topic_id = params[0]
+    if(topic_id == ""):
+        page_request = request.args.get('page')
+        sort_request = request.args.get('sort')
+        page = 1 if (page_request is None) else eval(page_request)
+        sort = "alpha" if (sort_request is None) else sort_request
         min_instance = 1 + items_per_page * (page - 1)
         max_instance = (items_per_page + 1) + items_per_page * (page - 1)
         num_rows = mysession.query(Topics).count()
@@ -360,21 +349,17 @@ def get_topics(path):
             page_return["num_results"] += 1
             page_return["objects"].append(instance.as_dict())
         return jsonify(page_return)
-    if(focus == "instance"):
-        topic_id = ""
+    else:
+        attr_focus = ""
+        instance = mysession.query(Topics).filter(Topics.topic_id == topic_id).first()
         if(num_params > 1 and len(params[1]) > 0):
-            topic_id = params[1]
-        if(topic_id != ""):
-            attr_focus = ""
-            instance = mysession.query(Topics).filter(Topics.topic_id == topic_id).first()
-            if(num_params > 2 and len(params[2]) > 0):
-                attr_focus = params[2]
-            if(attr_focus == "" and instance != None):
-                return jsonify(instance.as_dict())
-            if(attr_focus != "" and instance != None):
-                attr_object = instance.get_col(attr_focus)
-                if(attr_object != None):
-                    return jsonify(attr_object)
+            attr_focus = params[1]
+        if(attr_focus == "" and instance != None):
+            return jsonify(instance.as_dict())
+        if(attr_focus != "" and instance != None):
+            attr_object = instance.get_col(attr_focus)
+            if(attr_object != None):
+                return jsonify(attr_object)
         abort(404)
 
 app.register_blueprint(api)
