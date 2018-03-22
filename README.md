@@ -1,4 +1,4 @@
-# IDB - Poptopic.org API Documentation
+# IDB - Poptopic.org Technical Report
 
 © 2018 Double Daniel, Inc.
 
