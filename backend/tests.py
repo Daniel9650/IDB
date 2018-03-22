@@ -13,20 +13,20 @@ class PopTopicTests(TestCase):
         # 	Connection Tests
         # ======================
 
-        # Checks if a GET request gets to the live homepage
-    #    def test_site_connection(self):
-    #        r = requests.get('http://poptopic.org')
-    #        self.assertEqual(r.status_code, 200)
+    # Checks if a GET request gets to the live homepage
+    def test_site_connection(self):
+        r = requests.get('http://poptopic.org')
+        self.assertEqual(r.status_code, 200)
 
-        # Checks if a GET request gets to the API
-    #	def test_api_connection(self):
-    #		r = requests.get('http://api.poptopic.org')
-    #		self.assertEqual(r.status_code, 200)
+    # Checks if a GET request gets to the API
+    def test_api_connection(self):
+        r = requests.get('http://api.poptopic.org')
+        self.assertEqual(r.status_code, 200)
 
-        # Check connection to a model page
-    #	def test_model_connection(self):
-    #		r = requests.get('http://poptopic/movies.org')
-    #		self.assertEqual(r.status_code, 200)
+    # Check connection to a model page
+    def test_model_connection(self):
+        r = requests.get('http://poptopic.org/movies')
+        self.assertEqual(r.status_code, 200)
 
         # ======================
         # 	TopMedia.py Tests
@@ -99,6 +99,18 @@ class PopTopicTests(TestCase):
         counts = get_issues_count()
         self.assertTrue(isinstance(counts, dict))
         self.assertEqual(len(counts), 6)
+
+    def test_get_counts(self):
+        response = get_counts()
+        self.assertTrue("total_commits" in response)
+        self.assertTrue("total_issues" in response)
+        self.assertTrue("users" in response)
+
+        users = response["users"]
+        for user in users:
+            self.assertTrue("name" in user)
+            self.assertTrue("commits" in user)
+            self.assertTrue("issues" in user)
 
 
 if __name__ == "__main__":
