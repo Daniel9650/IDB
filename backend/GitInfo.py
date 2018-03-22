@@ -22,7 +22,7 @@ def get_cached(url, name):
     head = {"If-None-Match": etag}
     r = requests.get(url, headers=head)
 
-    if r.satus_code != 200:
+    if r.status_code != 200:
         # we can use cached version
         response = d["response"]
         d.close()
@@ -84,7 +84,7 @@ def output_counts(commits_count, issues_count):
         print()
 
 
-#if __name__ == "__main__":
-#    commits_count = get_commits_count()
-#    issues_count = get_issues_count()
-#    output_counts(commits_count, issues_count)
+if __name__ == "__main__":
+    commits_count = get_commits_count()
+    issues_count = get_issues_count()
+    output_counts(commits_count, issues_count)
