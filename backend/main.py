@@ -165,17 +165,17 @@ class Topics(Base):
 
     topic_id = Column(String(), primary_key=True)
     topic_name = Column(String())
-    related_movies = Column(String())
-    related_songs = Column(String())
-    related_books = Column(String())
+    similar_movies = Column(String())
+    similar_songs = Column(String())
+    similar_books = Column(String())
     poster_url = Column(String())
 
     def __init__(self, topic_name, movies, books, songs):
         self.topic_id = TopicEntity.get_topic_id(topic_name)
         self.topic_name = topic_name
-        self.related_movies = json.dumps(movies)
-        self.related_books = json.dumps(books)
-        self.related_songs = json.dumps(songs)
+        self.similar_movies = json.dumps(movies)
+        self.similar_books = json.dumps(books)
+        self.similar_songs = json.dumps(songs)
 
     def get_col(self, attr):
         data = None
@@ -192,9 +192,9 @@ class Topics(Base):
        return {c.name: self.get_col(c.name) for c in self.__table__.columns}
 
     '''
-    GET /api/topics/<topic_id>/related_movies -> get list of all Movie objects related to this topic
-    GET /api/topics/<topic_id>/related_songs -> get list of all Songs related to this topic
-    GET /api/topics/<topic_id>/related_books -> get list of all Books related to this topic
+    GET /api/topics/<topic_id>/similar_movies -> get list of all Movie objects related to this topic
+    GET /api/topics/<topic_id>/similar_songs -> get list of all Songs related to this topic
+    GET /api/topics/<topic_id>/similar_books -> get list of all Books related to this topic
     '''
 
 # create database tables
