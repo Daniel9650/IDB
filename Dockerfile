@@ -9,3 +9,5 @@ RUN pip3 install sqlalchemy
 RUN pip3 install Flask_Restless
 
 RUN pip3 install PyMySQL
+
+RUN pip3 install -U flask-cors
