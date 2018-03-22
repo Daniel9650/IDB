@@ -84,7 +84,7 @@ def output_counts(commits_count, issues_count):
         print()
 
 
-if __name__ == "__main__":
-    commits_count = get_commits_count()
-    issues_count = get_issues_count()
-    output_counts(commits_count, issues_count)
+#if __name__ == "__main__":
+#    commits_count = get_commits_count()
+#    issues_count = get_issues_count()
+#    output_counts(commits_count, issues_count)
