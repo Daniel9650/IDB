@@ -1,4 +1,4 @@
-**Motivation and Uses:**
+**Motivation and Uses**
 
 For our project, we decided to make a website that categorizes books, movies, and music by topic/subject to show related media and correlations between popular media and popular topics. The media makes up a large part of people's lives now and provides a source of entertainment for many of us, no matter how old we are, so we thought it would be interesting to have a way for people to find new books, music, and movies that are currently popular.
 
