@@ -2,12 +2,13 @@ import os
 import ast
 import json
 from flask import Flask, redirect, jsonify, abort, request, send_from_directory, render_template, url_for, Blueprint
-from GitInfo import get_commits_count, get_issues_count
+from GitInfo import get_counts
 from sqlalchemy import Column, String, Integer, Text, Unicode, ForeignKey
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
 from math import ceil
+from cred import getUser
 from flask_cors import CORS
 
 app = Flask(__name__, template_folder='.', static_folder='static')
@@ -16,10 +17,9 @@ app.url_map.strict_slashes = False
 CORS(app)
 api = Blueprint('api', 'api', subdomain='api')
 
-con_str = "mysql+pymysql://PT_Admin:cookies123@pt-db-instance.cden9ozljt61.us-west-1.rds.amazonaws.com:3306/poptopic_db"
+con_str = "mysql+pymysql://"+getUser()+"@pt-db-instance.cden9ozljt61.us-west-1.rds.amazonaws.com:3306/poptopic_db"
 engine = create_engine(con_str, convert_unicode=True)
 Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-mysession = scoped_session(Session)
 Base = declarative_base()
 Base.metadata.bind = engine
 
@@ -199,7 +199,7 @@ class Topics(Base):
 
 # create database tables
 Base.metadata.create_all(engine)
-default_items_per_page = 8
+default_items_per_page = 9
 default_items_per_instance_page = 3
 
 # Splash page
@@ -219,11 +219,12 @@ def clear_trailing():
 
 @api.route('/')
 def api_index():
-    return redirect("http://poptopic.org/api", code=302)
+    return redirect("https://daniel9650.gitbooks.io/poptopic-api-documentation/content/", code=302)
 
 @api.route('/movies/', defaults={'path': ''})
 @api.route("/movies/<path:path>", methods=['GET'])
 def get_movies(path):
+    mysession = scoped_session(Session)
     params = path.split("/")
     num_params = len(params)
     page_request = request.args.get('page')
@@ -276,6 +277,7 @@ def get_movies(path):
 @api.route('/songs/', defaults={'path': ''})
 @api.route("/songs/<path:path>", methods=['GET'])
 def get_songs(path):
+    mysession = scoped_session(Session)
     params = path.split("/")
     num_params = len(params)
     page_request = request.args.get('page')
@@ -328,6 +330,7 @@ def get_songs(path):
 @api.route('/books/', defaults={'path': ''})
 @api.route("/books/<path:path>", methods=['GET'])
 def get_books(path):
+    mysession = scoped_session(Session)
     params = path.split("/")
     num_params = len(params)
     page_request = request.args.get('page')
@@ -380,6 +383,7 @@ def get_books(path):
 @api.route('/topics/', defaults={'path': ''})
 @api.route("/topics/<path:path>", methods=['GET'])
 def get_topics(path):
+    mysession = scoped_session(Session)
     params = path.split("/")
     num_params = len(params)
     page_request = request.args.get('page')
@@ -434,6 +438,10 @@ def get_topics(path):
             if(attr_object != None):
                 return jsonify(attr_object)
         abort(404)
+
+@api.route("/git_info/", methods=['GET'])
+def get_git_info():
+    return jsonify(get_counts())
 
 app.register_blueprint(api)
 
