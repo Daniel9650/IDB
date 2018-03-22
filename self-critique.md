@@ -6,5 +6,3 @@ This project required a lot of tools, most of which were new to us, so we had to
 
 We can probably do a better job planning out what time we want to meet by making plans earlier, instead of on the day of. This way we could be a bit more prepared before we meet up together. We should probably start earlier on the next project too, so we don't feel rushed near the deadline. This would also give us more time to learn how to use new tools and if we need help, we'll have time to ask the TAs or other groups.
 
-We're still thinking about how to make the website dynamic. For now, we just got the top three movies, books, and music and put those on our pages for each model. Professor Downing also mentioned in class that in later phases of the project, we'll want to implement some kind of sorting for the grid instances of each model, so we need to think about that too.
-
