@@ -146,7 +146,7 @@ class SongEntity(declarative_base()):
         self.artists = remove_non_ascii(json.dumps(song.artists))
         self.album = remove_non_ascii(song.album)
         self.poster_url = song.poster_url
-        self.youtube_url = song.youtube_url
+        self.youtube_url = song.youtube_url.split("?v=").pop()
         self.release_date = song.release
         self.topics = json.dumps(song.topics)
         self.similar_movies = json.dumps(song.similar_movies)

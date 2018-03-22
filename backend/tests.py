@@ -93,12 +93,12 @@ class PopTopicTests(TestCase):
     def test_get_commits_count(self):
         counts = get_commits_count()
         self.assertTrue(isinstance(counts, dict))
-        self.assertEqual(len(counts), 5)
+        self.assertEqual(len(counts), 6)
 
     def test_get_issues_count(self):
         counts = get_issues_count()
         self.assertTrue(isinstance(counts, dict))
-        self.assertEqual(len(counts), 5)
+        self.assertEqual(len(counts), 6)
 
 
 if __name__ == "__main__":

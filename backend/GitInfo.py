@@ -22,14 +22,11 @@ def get_cached(url, name):
     head = {"If-None-Match": etag}
     r = requests.get(url, headers=head)
 
-    if r.status_code == 304:
+    if r.status_code != 200:
         # we can use cached version
         response = d["response"]
         d.close()
         return response
-
-    if r.status_code != 200:
-        return []
 
     return update_and_close(d, r)
 
@@ -46,8 +43,10 @@ def get_commits_count():
 
     for contributor in r:
         login_name = contributor["author"]["login"]
-        commits_count[login_name] = contributor["total"]
+        if login_name != "gitbook-bot":
+            commits_count[login_name] = contributor["total"]
 
+    insert_total(commits_count)
     return commits_count
 
 
@@ -62,10 +61,16 @@ def get_issues_count():
         user = issue["user"]["login"]
         if user in issues_count:
             issues_count[user] += 1
-        else:
-            issues_count[user] = 1
 
+    insert_total(issues_count)
     return issues_count
+
+
+def insert_total(counts):
+    total = 0
+    for _, count in counts.items():
+        total += count
+    counts["Total"] = total
 
 
 def get_default_count():
