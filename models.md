@@ -4,7 +4,9 @@ There are four models on our website: Movies, Music, Books, and Topics. Each mod
 
 **UML Diagram:**
 
+This is a visual representation of our database layout which stores the data presented on the site. For each Model, the first entry, the unique ID number acts as the Primary Key:
 
+![](/assets/UML Diagram.png)
 
 **Movies:**
 
