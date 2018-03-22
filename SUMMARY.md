@@ -4,6 +4,7 @@
 * [Technical Report](technical-report.md)
 * [Motivation and Uses](motivation-and-uses.md)
 * [Models](models.md)
+* [RESTful API](restful-api.md)
 * [Self Critique](self-critique.md)
 * [Other Critique](other-critique.md)
 
