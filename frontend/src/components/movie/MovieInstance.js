@@ -52,7 +52,7 @@ class MovieInstance extends Component {
          <div className="spacing-div">
 
             <Container>
-               <h1 className="general-title">{name}</h1>
+               <h1 name="movie-instance-name" className="general-title">{name}</h1>
                <hr className="divider"/>
                <Row>
                   <Col xs="auto">

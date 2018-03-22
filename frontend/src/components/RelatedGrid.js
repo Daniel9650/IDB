@@ -45,8 +45,9 @@ class CardGrid extends Component {
    }
 
    render(props) {
+      var deckname = this.props.type + " Deck";
       return (
-            <CardDeck>
+            <CardDeck name={deckname}>
                {this.createCards(this.props.instances)}
             </CardDeck>
       );

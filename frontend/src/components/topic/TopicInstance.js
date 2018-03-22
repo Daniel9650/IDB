@@ -40,7 +40,7 @@ class TopicInstance extends Component {
          <div className="spacing-div">
 
             <Container>
-               <h1 className="general-title">{name}</h1>
+               <h1 name="topic-instance-name" className="general-title">{name}</h1>
                <hr className="divider"/>
                <img className="topic-poster" src={data.poster_url} />
                <br />

@@ -38,7 +38,7 @@ class BookInstance extends Component {
          <div className="spacing-div">
 
             <Container>
-               <h1 className="general-title">{data.book_name}</h1>
+               <h1 name="book-instance-name" className="general-title">{data.book_name}</h1>
                <hr className="divider"/>
                <Row>
                   <Col xs="auto">
@@ -68,7 +68,7 @@ class BookInstance extends Component {
                <br/>
                <h6 className="instance-sub">Related Music</h6>
                <RelatedGrid
-                  type="Books"
+                  type="Music"
                   instances= {data.similar_songs}
                />
          </Container>

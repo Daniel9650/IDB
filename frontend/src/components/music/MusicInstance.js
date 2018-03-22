@@ -41,7 +41,7 @@ class MusicInstance extends Component {
          <div className="spacing-div">
 
             <Container>
-               <h1 className="general-title">{data.music_name}</h1>
+               <h1 name="music-instance-name" className="general-title">{data.music_name}</h1>
                <hr className="divider"/>
                <Row>
                   <Col xs="auto">
