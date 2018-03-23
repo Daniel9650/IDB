@@ -201,6 +201,10 @@ class Topics(Base):
 Base.metadata.create_all(engine)
 default_items_per_page = 9
 default_items_per_instance_page = 3
+movie_sorts = ["release_year_asc", "release_year_desc", "title_asc", "title_desc", "title_asc"]
+song_sorts = ["release_year_asc", "artist_asc", "artist_desc", "title_asc", "title_desc"]
+book_sorts = ["author_asc", "author_desc", "title_asc", "title_desc", "release_year_asc"]
+topics_sorts = ["title_asc", "title_desc"]
 
 # Splash page
 @app.route('/', defaults={'path': ''})
@@ -235,8 +239,10 @@ def get_movies(path):
         movie_id = params[0]
     if(movie_id == ""):
         page = 1 if (page_request is None) else eval(page_request)
-        sort = "alpha" if (sort_request is None) else sort_request
+        sort = "title_asc" if (sort_request is None) else sort_request
         items_per_page = default_items_per_page if (items_per_page_request is None) else eval(items_per_page_request)
+        if(page < 1 or not any(sort in s for s in movie_sorts) or items_per_page < 1):
+            abort(400)
         min_instance = 1 + items_per_page * (page - 1)
         max_instance = (items_per_page + 1) + items_per_page * (page - 1)
         num_rows = mysession.query(Movies).count()
@@ -250,8 +256,10 @@ def get_movies(path):
     else:
         attr_focus = ""
         page = 1 if (page_request is None) else eval(page_request)
-        sort = "alpha" if (sort_request is None) else sort_request
+        sort = "title_asc" if (sort_request is None) else sort_request
         items_per_page = default_items_per_instance_page if (items_per_page_request is None) else eval(items_per_page_request)
+        if(page < 1 or items_per_page < 1):
+            abort(400)
         instance = mysession.query(Movies).filter(Movies.movie_id == movie_id).first()
         if(num_params > 1 and len(params[1]) > 0):
             attr_focus = params[1]
@@ -259,7 +267,13 @@ def get_movies(path):
             return jsonify(instance.as_dict())
         if(attr_focus != "" and instance != None):
             attr_object = instance.get_col(attr_focus)
-            if(attr_focus == "similar_books" or attr_focus == "similar_songs"):
+            if(attr_focus == "similar_books" or attr_focus == "similar_songs" or attr_focus == "topics"):
+                if(attr_focus == "similar_books" and not any(sort in s for s in book_sorts)):
+                    abort(400)
+                if(attr_focus == "similar_songs" and not any(sort in s for s in book_sorts)):
+                    abort(400)
+                if(attr_focus == "topics" and not any(sort in s for s in topics_sorts)):
+                    abort(400)
                 min_instance = 0 + items_per_page * (page - 1)
                 max_instance = items_per_page + items_per_page * (page - 1)
                 num_related = len(attr_object)
@@ -267,11 +281,19 @@ def get_movies(path):
                 page_return = {"num_results": 0, "objects": [], "page": page, "total_pages": max_pages}
                 for i in attr_object[min_instance:max_instance]:
                     page_return["num_results"] += 1
-                    related_obj = mysession.query(Books).filter(Books.book_id == i).first() if (attr_focus == "similar_books") else mysession.query(Songs).filter(Songs.song_id == i).first()
+                    related_obj = None
+                    if(attr_focus == "similar_books"):
+                        related_obj = mysession.query(Books).filter(Books.book_id == i).first()
+                    if(attr_focus == "similar_songs"):
+                        related_obj = mysession.query(Songs).filter(Songs.song_id == i).first()
+                    if(attr_focus == "topics"):
+                        related_obj = mysession.query(Topics).filter(Topics.topic_id == i).first()
                     page_return["objects"].append(related_obj.as_dict())
                 return jsonify(page_return)
             if(attr_object != None):
                 return jsonify(attr_object)
+            else:
+                abort(400)
         abort(404)
 
 @api.route('/songs/', defaults={'path': ''})
@@ -288,8 +310,10 @@ def get_songs(path):
         song_id = params[0]
     if(song_id == ""):
         page = 1 if (page_request is None) else eval(page_request)
-        sort = "alpha" if (sort_request is None) else sort_request
+        sort = "title_asc" if (sort_request is None) else sort_request
         items_per_page = default_items_per_page if (items_per_page_request is None) else eval(items_per_page_request)
+        if(page < 1 or not any(sort in s for s in song_sorts) or items_per_page < 1):
+            abort(400)
         min_instance = 1 + items_per_page * (page - 1)
         max_instance = (items_per_page + 1) + items_per_page * (page - 1)
         num_rows = mysession.query(Songs).count()
@@ -303,8 +327,10 @@ def get_songs(path):
     else:
         attr_focus = ""
         page = 1 if (page_request is None) else eval(page_request)
-        sort = "alpha" if (sort_request is None) else sort_request
+        sort = "title_asc" if (sort_request is None) else sort_request
         items_per_page = default_items_per_instance_page if (items_per_page_request is None) else eval(items_per_page_request)
+        if(page < 1 or items_per_page < 1):
+            abort(400)
         instance = mysession.query(Songs).filter(Songs.song_id == song_id).first()
         if(num_params > 1 and len(params[1]) > 0):
             attr_focus = params[1]
@@ -312,7 +338,13 @@ def get_songs(path):
             return jsonify(instance.as_dict())
         if(attr_focus != "" and instance != None):
             attr_object = instance.get_col(attr_focus)
-            if(attr_focus == "similar_books" or attr_focus == "similar_movies"):
+            if(attr_focus == "similar_books" or attr_focus == "similar_movies" or attr_focus == "topics"):
+                if(attr_focus == "similar_books" and not any(sort in s for s in book_sorts)):
+                    abort(400)
+                if(attr_focus == "similar_movies" and not any(sort in s for s in movie_sorts)):
+                    abort(400)
+                if(attr_focus == "topics" and not any(sort in s for s in topics_sorts)):
+                    abort(400)
                 min_instance = 0 + items_per_page * (page - 1)
                 max_instance = items_per_page + items_per_page * (page - 1)
                 num_related = len(attr_object)
@@ -320,11 +352,19 @@ def get_songs(path):
                 page_return = {"num_results": 0, "objects": [], "page": page, "total_pages": max_pages}
                 for i in attr_object[min_instance:max_instance]:
                     page_return["num_results"] += 1
-                    related_obj = mysession.query(Books).filter(Books.book_id == i).first() if (attr_focus == "similar_books") else mysession.query(Movies).filter(Movies.movie_id == i).first()
+                    related_obj = None
+                    if(attr_focus == "similar_books"):
+                        related_obj = mysession.query(Books).filter(Books.book_id == i).first()
+                    if(attr_focus == "similar_movies"):
+                        related_obj = mysession.query(Movies).filter(Movies.movie_id == i).first()
+                    if(attr_focus == "topics"):
+                        related_obj = mysession.query(Topics).filter(Topics.topic_id == i).first()
                     page_return["objects"].append(related_obj.as_dict())
                 return jsonify(page_return)
             if(attr_object != None):
                 return jsonify(attr_object)
+            else:
+                abort(400)
         abort(404)
 
 @api.route('/books/', defaults={'path': ''})
@@ -341,23 +381,27 @@ def get_books(path):
         book_id = params[0]
     if(book_id == ""):
         page = 1 if (page_request is None) else eval(page_request)
-        sort = "alpha" if (sort_request is None) else sort_request
+        sort = "title_asc" if (sort_request is None) else sort_request
         items_per_page = default_items_per_page if (items_per_page_request is None) else eval(items_per_page_request)
+        if(page < 1 or not any(sort in s for s in book_sorts) or items_per_page < 1):
+            abort(400)
         min_instance = 1 + items_per_page * (page - 1)
         max_instance = (items_per_page + 1) + items_per_page * (page - 1)
         num_rows = mysession.query(Books).count()
         max_pages = int(ceil(num_rows/items_per_page))
         num_results = 0
         page_return = {"num_results": num_results, "objects": [], "page": page, "total_pages": max_pages}
-        for instance in mysession.query(Books).order_by(Books.book_id)[min_instance:max_instance]:
+        for instance in mysession.query(Books).order_by(Books.book_name)[min_instance:max_instance]:
             page_return["num_results"] += 1
             page_return["objects"].append(instance.as_dict())
         return jsonify(page_return)
     else:
         attr_focus = ""
         page = 1 if (page_request is None) else eval(page_request)
-        sort = "alpha" if (sort_request is None) else sort_request
+        sort = "title_asc" if (sort_request is None) else sort_request
         items_per_page = default_items_per_instance_page if (items_per_page_request is None) else eval(items_per_page_request)
+        if(page < 1 or items_per_page < 1):
+            abort(400)
         instance = mysession.query(Books).filter(Books.book_id == book_id).first()
         if(num_params > 1 and len(params[1]) > 0):
             attr_focus = params[1]
@@ -365,7 +409,13 @@ def get_books(path):
             return jsonify(instance.as_dict())
         if(attr_focus != "" and instance != None):
             attr_object = instance.get_col(attr_focus)
-            if(attr_focus == "similar_songs" or attr_focus == "similar_movies"):
+            if(attr_focus == "similar_songs" or attr_focus == "similar_movies" or attr_focus == "topics"):
+                if(attr_focus == "similar_songs" and not any(sort in s for s in song_sorts)):
+                    abort(400)
+                if(attr_focus == "similar_movies" and not any(sort in s for s in movie_sorts)):
+                    abort(400)
+                if(attr_focus == "topics" and not any(sort in s for s in topics_sorts)):
+                    abort(400)
                 min_instance = 0 + items_per_page * (page - 1)
                 max_instance = items_per_page + items_per_page * (page - 1)
                 num_related = len(attr_object)
@@ -373,11 +423,19 @@ def get_books(path):
                 page_return = {"num_results": 0, "objects": [], "page": page, "total_pages": max_pages}
                 for i in attr_object[min_instance:max_instance]:
                     page_return["num_results"] += 1
-                    related_obj = mysession.query(Songs).filter(Songs.song_id == i).first() if (attr_focus == "similar_songs") else mysession.query(Movies).filter(Movies.movie_id == i).first()
+                    related_obj = None
+                    if(attr_focus == "similar_songs"):
+                        related_obj = mysession.query(Songs).filter(Songs.song_id == i).first()
+                    if(attr_focus == "similar_movies"):
+                        related_obj = mysession.query(Movies).filter(Movies.movie_id == i).first()
+                    if(attr_focus == "topics"):
+                        related_obj = mysession.query(Topics).filter(Topics.topic_id == i).first()
                     page_return["objects"].append(related_obj.as_dict())
                 return jsonify(page_return)
             if(attr_object != None):
                 return jsonify(attr_object)
+            else:
+                abort(400)
         abort(404)
 
 @api.route('/topics/', defaults={'path': ''})
@@ -394,8 +452,10 @@ def get_topics(path):
         topic_id = params[0]
     if(topic_id == ""):
         page = 1 if (page_request is None) else eval(page_request)
-        sort = "alpha" if (sort_request is None) else sort_request
+        sort = "title_asc" if (sort_request is None) else sort_request
         items_per_page = default_items_per_page if (items_per_page_request is None) else eval(items_per_page_request)
+        if(page < 1 or not any(sort in s for s in topics_sorts) or items_per_page < 1):
+            abort(400)
         min_instance = 1 + items_per_page * (page - 1)
         max_instance = (items_per_page + 1) + items_per_page * (page - 1)
         num_rows = mysession.query(Topics).count()
@@ -409,8 +469,10 @@ def get_topics(path):
     else:
         attr_focus = ""
         page = 1 if (page_request is None) else eval(page_request)
-        sort = "alpha" if (sort_request is None) else sort_request
+        sort = "title_asc" if (sort_request is None) else sort_request
         items_per_page = default_items_per_instance_page if (items_per_page_request is None) else eval(items_per_page_request)
+        if(page < 1 or items_per_page < 1):
+            abort(400)
         instance = mysession.query(Topics).filter(Topics.topic_id == topic_id).first()
         if(num_params > 1 and len(params[1]) > 0):
             attr_focus = params[1]
@@ -419,6 +481,12 @@ def get_topics(path):
         if(attr_focus != "" and instance != None):
             attr_object = instance.get_col(attr_focus)
             if(attr_focus == "similar_songs" or attr_focus == "similar_movies" or attr_focus == "similar_books"):
+                if(attr_focus == "similar_songs" and not any(sort in s for s in song_sorts)):
+                    abort(400)
+                if(attr_focus == "similar_movies" and not any(sort in s for s in movie_sorts)):
+                    abort(400)
+                if(attr_focus == "similar_books" and not any(sort in s for s in book_sorts)):
+                    abort(400)
                 min_instance = 0 + items_per_page * (page - 1)
                 max_instance = items_per_page + items_per_page * (page - 1)
                 num_related = len(attr_object)
