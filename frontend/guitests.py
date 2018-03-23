@@ -11,9 +11,9 @@ class PopTopicGUITests(unittest.TestCase):
         chrome_driver_path = dir + "/chromedriver"
         # create a new Chrome session
         self.driver = webdriver.Chrome(chrome_driver_path)
-        self.driver.implicitly_wait(20)
+        self.driver.implicitly_wait(100)
         self.driver.maximize_window()
-        self.driver.get("http://localhost:3000")
+        self.driver.get("http://www.poptopic.org")
 
 ########################### Helper Functions ###################################
 
@@ -21,7 +21,7 @@ class PopTopicGUITests(unittest.TestCase):
         driver = self.driver
         topic_link = driver.find_element_by_name("topics-link")
         topic_link.click()
-        driver.implicitly_wait(20)
+        driver.implicitly_wait(100)
         topic_link_success = driver.find_element_by_name("Topics Title")
         return topic_link_success
 
@@ -29,7 +29,7 @@ class PopTopicGUITests(unittest.TestCase):
         driver = self.driver
         movie_link = driver.find_element_by_name("movies-link")
         movie_link.click()
-        driver.implicitly_wait(20)
+        driver.implicitly_wait(100)
         movie_link_success = driver.find_element_by_name("Movies Title")
         return movie_link_success
 
@@ -37,7 +37,7 @@ class PopTopicGUITests(unittest.TestCase):
         driver = self.driver
         home_link = driver.find_element_by_name("home-link")
         home_link.click()
-        driver.implicitly_wait(20)
+        driver.implicitly_wait(100)
         home_link_success = driver.find_element_by_name("trending-topics")
         return home_link_success
 
@@ -45,7 +45,7 @@ class PopTopicGUITests(unittest.TestCase):
         driver = self.driver
         music_link = driver.find_element_by_name("music-link")
         music_link.click()
-        driver.implicitly_wait(20)
+        driver.implicitly_wait(100)
         music_link_success = driver.find_element_by_name("Music Title")
         return music_link_success
 
@@ -53,7 +53,7 @@ class PopTopicGUITests(unittest.TestCase):
         driver = self.driver
         home_logo_link = driver.find_element_by_name("home-logo-link")
         home_logo_link.click()
-        driver.implicitly_wait(20)
+        driver.implicitly_wait(100)
         home_logo_link_success = driver.find_element_by_name("trending-topics")
         return home_logo_link_success
 
@@ -61,7 +61,7 @@ class PopTopicGUITests(unittest.TestCase):
         driver = self.driver
         book_link = driver.find_element_by_name("books-link")
         book_link.click()
-        driver.implicitly_wait(20)
+        driver.implicitly_wait(100)
         book_link_success = driver.find_element_by_name("Books Title")
         return book_link_success
 
@@ -69,23 +69,23 @@ class PopTopicGUITests(unittest.TestCase):
         driver = self.driver
         about_link = driver.find_element_by_name("about-link")
         about_link.click()
-        driver.implicitly_wait(20)
+        driver.implicitly_wait(100)
         about_link_success = driver.find_element_by_name("about-concept")
         return about_link_success
 
     def related_media (self, type, lower):
         driver = self.driver
 
-        for x in range(1,4):
-            name = type + str(x)
-            card = driver.find_element_by_name(name)
-            card.click()
-            driver.implicitly_wait(20)
-            instance_name = lower + "-instance-name"
-            card_success = driver.find_element_by_name(instance_name)
-            driver.back()
-            driver.implicitly_wait(20)
-            self.assertNotEqual(card_success, None)
+        x = 1
+        name = type + str(x)
+        card = driver.find_element_by_name(name)
+        card.click()
+        driver.implicitly_wait(100)
+        instance_name = lower + "-instance-name"
+        card_success = driver.find_element_by_name(instance_name)
+        driver.back()
+        driver.implicitly_wait(100)
+        self.assertNotEqual(card_success, None)
 
 
     def topic_instance (self, num):
@@ -93,6 +93,8 @@ class PopTopicGUITests(unittest.TestCase):
         topic_name = "card" + str(num)
         topic_instance = driver.find_element_by_name(topic_name)
         topic_instance.click()
+        driver.implicitly_wait(100)
+        driver.refresh()
         driver.implicitly_wait(20)
         instance_success = driver.find_element_by_name("topic-instance-name")
         self.assertNotEqual(instance_success, None)
@@ -105,6 +107,8 @@ class PopTopicGUITests(unittest.TestCase):
         movie_name = "card" + str(num)
         movie_instance = driver.find_element_by_name(movie_name)
         movie_instance.click()
+        driver.implicitly_wait(100)
+        driver.refresh()
         driver.implicitly_wait(20)
         instance_success = driver.find_element_by_name("movie-instance-name")
         self.assertNotEqual(instance_success, None)
@@ -118,6 +122,8 @@ class PopTopicGUITests(unittest.TestCase):
         music_name = "card" + str(num)
         music_instance = driver.find_element_by_name(music_name)
         music_instance.click()
+        driver.implicitly_wait(100)
+        driver.refresh()
         driver.implicitly_wait(20)
         instance_success = driver.find_element_by_name("music-instance-name")
         self.assertNotEqual(instance_success, None)
@@ -130,6 +136,8 @@ class PopTopicGUITests(unittest.TestCase):
         book_name = "card" + str(num)
         book_instance = driver.find_element_by_name(book_name)
         book_instance.click()
+        driver.implicitly_wait(100)
+        driver.refresh()
         driver.implicitly_wait(20)
         instance_success = driver.find_element_by_name("book-instance-name")
         self.assertNotEqual(instance_success, None)
@@ -162,22 +170,22 @@ class PopTopicGUITests(unittest.TestCase):
             self.assertNotEqual(self.nav_home(), None)
 
     def test_topic_grid_and_instances (self):
-        for w in range(1,9):
+        for w in range(1,6):
             self.nav_topics()
             self.topic_instance(w)
 
     def test_movie_grid_and_instances (self):
-        for x in range(1,9):
+        for x in range(1,6):
             self.nav_movies()
             self.movie_instance(x)
 
     def test_book_grid_and_instances (self):
-        for y in range(1,9):
+        for y in range(1,6):
             self.nav_books()
             self.book_instance(y)
 
     def test_music_grid_and_instances (self):
-        for z in range(1,9):
+        for z in range(1,6):
             self.nav_music()
             self.music_instance(z)
 
@@ -188,7 +196,7 @@ class PopTopicGUITests(unittest.TestCase):
             name = "trending" + str(x)
             trending_topic = driver.find_element_by_name(name)
             trending_topic.click()
-            driver.implicitly_wait(20)
+            driver.implicitly_wait(100)
             topic_success = driver.find_element_by_name("topic-instance-name")
             success = success and self.assertNotEqual(topic_success, None)
             self.nav_home()
@@ -199,19 +207,19 @@ class PopTopicGUITests(unittest.TestCase):
         self.nav_about()
         link = driver.find_element_by_name("repo-link")
         link.click()
-        driver.implicitly_wait(20)
+        driver.implicitly_wait(100)
         link_success = driver.find_element_by_class_name("pagehead-actions")
         self.assertNotEqual(link_success, None)
         driver.back()
         link = driver.find_element_by_name("tech-report-link")
         link.click()
-        driver.implicitly_wait(20)
+        driver.implicitly_wait(100)
         link_success = driver.find_element_by_class_name("gb-page-inner")
         self.assertNotEqual(link_success, None)
         driver.back()
         link = driver.find_element_by_name("api-link")
         link.click()
-        driver.implicitly_wait(20)
+        driver.implicitly_wait(100)
         link_success = driver.find_element_by_class_name("BookPage")
         self.assertNotEqual(link_success, None)
 

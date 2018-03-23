@@ -93,7 +93,7 @@ p{
 
 .card img{
   height: 200px;
-  width: 250px;
+  width: 350px;
   object-fit: cover;
 }
 
@@ -109,7 +109,7 @@ p{
 
 .card {
    margin: 10px;
-   width: 250px;
+   width: 350px;
    color: var(--charcoal);
    text-align: center;
 }

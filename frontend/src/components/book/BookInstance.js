@@ -68,6 +68,7 @@ class BookInstance extends Component {
         return <div>Loading...</div>;
       }
       else{
+         var authors = data.authors.join(", ")
          return (
             <div className="spacing-div">
 
@@ -82,7 +83,7 @@ class BookInstance extends Component {
                         <h6 className="instance-sub">Description</h6>
                         <p>{data.description}</p>
                         <h6 className="instance-sub">Author</h6>
-                        <p>{data.author}</p>
+                        <p>{authors}</p>
                         <h6 className="instance-sub">Release Date</h6>
                         <p>{data.release_date}</p>
                      </Col>

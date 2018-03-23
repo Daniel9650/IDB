@@ -3,7 +3,6 @@ import { Col } from 'reactstrap';
 
 let Bio = function statelessFunctionComponentClass(props) {
    var image = require('../../images/headshots/' + props.image);
-
    return (
       <Col className= 'col-center'>
          <img className='headshot center-block' src={image} />
