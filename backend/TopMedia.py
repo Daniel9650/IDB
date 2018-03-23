@@ -39,7 +39,7 @@ class MovieEntity(declarative_base()):
         self.release_date = movie.release
         self.poster_url = movie.poster_url
         self.trailer_url = movie.trailer_url.split("?v=").pop()
-        self.topics = json.dumps(movie.topics)
+        self.topics = json.dumps(list(map(TopicEntity.get_topic_id, movie.topics)))
         self.similar_books = json.dumps(movie.similar_books)
         self.similar_songs = json.dumps(movie.similar_songs)
 
@@ -91,7 +91,7 @@ class BookEntity(declarative_base()):
         self.authors = remove_non_ascii(json.dumps(book.authors))
         self.release_date = book.release
         self.poster_url = book.poster_url
-        self.topics = json.dumps(book.topics)
+        self.topics = json.dumps(list(map(TopicEntity.get_topic_id, book.topics)))
         self.similar_movies = json.dumps(book.similar_movies)
         self.similar_songs = json.dumps(book.similar_songs)
 
@@ -149,7 +149,7 @@ class SongEntity(declarative_base()):
         self.poster_url = song.poster_url
         self.youtube_url = song.youtube_url.split("?v=").pop()
         self.release_date = song.release
-        self.topics = json.dumps(song.topics)
+        self.topics = json.dumps(list(map(TopicEntity.get_topic_id, song.topics)))
         self.similar_movies = json.dumps(song.similar_movies)
         self.similar_books = json.dumps(song.similar_books)
 
