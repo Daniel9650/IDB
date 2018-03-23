@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import NotFound from '../NotFound.js';
 import data from '../../data/mock_topic.json';
 import RelatedGrid from '../RelatedGrid.js';
 
@@ -62,7 +62,7 @@ class TopicInstance extends Component {
 
       const {id} = this.props.match.params;
       if (error) {
-        return <div>Error: {error.message}</div>;
+        return <NotFound />;
       }
       else if (!isLoaded) {
         return <div>Loading...</div>;

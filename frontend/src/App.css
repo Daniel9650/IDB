@@ -14,6 +14,19 @@
    src: url("Back to Black Demo.ttf");
 }
 
+.big-title {
+   color: var(--warm);
+   font-size: 200px;
+   text-align: center;
+   font-family: Accent;
+}
+
+.big-text {
+   text-align: center;
+   font-size: 100px;
+   font-family: Accent;
+   color: var(--charcoal);
+}
 .about-name {
    font-weight: bold;
    color: var(--charcoal);

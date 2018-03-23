@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-
-import data from '../../data/mock_song.json';
+import NotFound from '../NotFound.js';
 import RelatedGrid from '../RelatedGrid.js';
 
 import {
@@ -61,7 +60,7 @@ class MusicInstance extends Component {
       const { error, isLoaded, data } = this.state;
 
       if (error) {
-        return <div>Error: {error.message}</div>;
+        return <NotFound />;
       }
       else if (!isLoaded) {
         return <div>Loading...</div>;

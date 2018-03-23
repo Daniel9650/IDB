@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import NotFound from '../NotFound.js';
 import RelatedGrid from '../RelatedGrid.js';
 
 import {
@@ -62,7 +62,7 @@ class BookInstance extends Component {
       const { error, isLoaded, data } = this.state;
 
       if (error) {
-        return <div>Error: {error.message}</div>;
+        return <NotFound />;
       }
       else if (!isLoaded) {
         return <div>Loading...</div>;

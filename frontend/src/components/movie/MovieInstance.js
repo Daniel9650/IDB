@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import RelatedGrid from '../RelatedGrid.js';
+import NotFound from '../NotFound.js';
 
 import {
   Container,
@@ -61,7 +62,7 @@ class MovieInstance extends Component {
       const { error, isLoaded, data } = this.state;
 
       if (error) {
-        return <div>Error: {error.message}</div>;
+        return <NotFound />;
       }
       else if (!isLoaded) {
         return <div>Loading...</div>;

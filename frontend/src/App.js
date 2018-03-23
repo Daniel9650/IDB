@@ -5,7 +5,7 @@ import MovieInstance from './components/movie/MovieInstance.js';
 import MusicInstance from './components/music/MusicInstance.js';
 import BookInstance from './components/book/BookInstance.js';
 import TopicInstance from './components/topic/TopicInstance.js';
-
+import NotFound from './components/NotFound.js';
 import Navigation from './components/Navigation.js';
 import Home from './components/home/Home.js';
 import About from './components/about/About.js';
