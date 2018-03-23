@@ -1011,6 +1011,86 @@
 				"description": ""
 			},
 			"response": []
+		},
+		{
+			"name": "test for invalid attribute for given media type",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ab008bea-2b49-492c-ba72-bec7f1d10721",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "api.poptopic.org/books/qWG9qdUsFrMC/movie_name",
+					"host": [
+						"api",
+						"poptopic",
+						"org"
+					],
+					"path": [
+						"books",
+						"qWG9qdUsFrMC",
+						"movie_name"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "test for invalid page number",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9e351d97-7c13-4dde-9e1b-c2eaccc6341b",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "api.poptopic.org/books/qWG9qdUsFrMC?page=0",
+					"host": [
+						"api",
+						"poptopic",
+						"org"
+					],
+					"path": [
+						"books",
+						"qWG9qdUsFrMC"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
 		}
 	]
 }
