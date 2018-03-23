@@ -7,7 +7,7 @@ import { Card,
    CardSubtitle,
    Button } from 'reactstrap';
 
-let CardMod = function(props) {
+let RelatedCard = function(props) {
    var image = props.image;
    var title = props.title;
    var topics = props.topics;
@@ -27,4 +27,4 @@ let CardMod = function(props) {
 
 }
 
-export default CardMod;
+export default RelatedCard;

@@ -10,18 +10,18 @@ import { Card,
 let CardMod = function(props) {
    var image = props.image;
    var title = props.title;
-   var topics = props.topics.join(", ");
+
    var name = "card" + props.number;
-   var id = props.type + "/" + props.id;
+   var id =  props.id;
 
    if(props.type != "Topics") {
+      var topics = props.topics.join(", ");
       return (
          <a name={name} href={id}>
             <Card>
                <CardImg top src={image} />
                <CardBody>
                   <CardTitle>{title}</CardTitle>
-                  <CardSubtitle>{topics}</CardSubtitle>
                </CardBody>
             </Card>
          </a>

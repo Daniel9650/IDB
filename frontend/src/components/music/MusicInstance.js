@@ -23,8 +23,11 @@ class MusicInstance extends Component {
 	constructor(props) {
     	super(props);
     	this.toggle = this.toggle.bind(this);
-    	this.state = {
-      		isOpen: false
+      this.state = {
+      		isOpen: false,
+          error: null,
+          isLoaded: false,
+          data: []
     	};
   	}
   	toggle() {
@@ -32,16 +35,47 @@ class MusicInstance extends Component {
       	isOpen: !this.state.isOpen
     	});
   	}
+   componentDidMount() {
+     const { id } = this.props.match.params
+     fetch("http://api.poptopic.org/songs/"+id)
+     .then(res => res.json())
+     .then(
+      (result) => {
+         this.setState({
+           isLoaded: true,
+           data: result
+         });
+      },
+      // Note: it's important to handle errors here
+      // instead of a catch() block so that we don't swallow
+      // exceptions from actual bugs in components.
+      (error) => {
+         this.setState({
+           isLoaded: true,
+           error
+         });
+      }
+     )
+   }
 	render () {
+      const { error, isLoaded, data } = this.state;
+
+      if (error) {
+        return <div>Error: {error.message}</div>;
+      }
+      else if (!isLoaded) {
+        return <div>Loading...</div>;
+      }
+      else {
 
       //get movie instance data
       var video = "https://www.youtube.com/embed/"+data.youtube_url+"?origin=http://poptopic.org";
-
+      var {id} = this.props.match.params;
       return (
          <div className="spacing-div">
 
             <Container>
-               <h1 name="music-instance-name" className="general-title">{data.music_name}</h1>
+               <h1 name="music-instance-name" className="general-title">{data.song_name}</h1>
                <hr className="divider"/>
                <Row>
                   <Col xs="auto">
@@ -68,24 +102,28 @@ class MusicInstance extends Component {
                <br />
                <h6 className="instance-sub">Topics</h6>
                <RelatedGrid
-                  type="Topics"
-                  instances= {data.topics}
+                  caller_type="songs"
+                  request_type="Topics"
+                  id = {id}
                />
                <br/>
                <h6 className="instance-sub">Related Movies</h6>
                <RelatedGrid
-                  type="Movies"
-                  instances= {data.similar_movies}
+                  caller_type="songs"
+                  request_type="Movies"
+                  id={id}
                />
                <br/>
                <h6 className="instance-sub">Related Books</h6>
                <RelatedGrid
-                  type="Books"
-                  instances= {data.similar_books}
+               caller_type="songs"
+                  request_type="Books"
+                  id={id}
                />
          </Container>
          </div>
       );
+   }
    }
 
 }

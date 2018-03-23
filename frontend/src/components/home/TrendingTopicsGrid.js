@@ -8,8 +8,34 @@ class TrendingTopicsGrid extends Component {
       this.createTrendingTopic = this.createTrendingTopic.bind(this);
       this.createTrendingTopics = this.createTrendingTopics.bind(this);
       this.count = 0;
-   }
 
+      this.state = {
+         error: null,
+         isLoaded: false,
+         data: []
+    	};
+   }
+   componentDidMount() {
+     fetch("http://api.poptopic.org/topics?items_per_page=3")
+     .then(res => res.json())
+     .then(
+      (result) => {
+         this.setState({
+           isLoaded: true,
+           data: result
+         });
+      },
+      // Note: it's important to handle errors here
+      // instead of a catch() block so that we don't swallow
+      // exceptions from actual bugs in components.
+      (error) => {
+         this.setState({
+           isLoaded: true,
+           error
+         });
+      }
+     )
+   }
 
 
    createTrendingTopic(topic){
@@ -24,16 +50,26 @@ class TrendingTopicsGrid extends Component {
    }
 
    createTrendingTopics(topics){
-      return topics.map(this.createTrendingTopic);
+      return topics.objects.map(this.createTrendingTopic);
    }
 
    render(){
+      const { error, isLoaded, data } = this.state;
+
+      if (error) {
+        return <div>Error: {error.message}</div>;
+      }
+      else if (!isLoaded) {
+        return <div>Loading...</div>;
+      }
+      else {
       return (
          <Row>
-            {this.createTrendingTopics(this.props.data)}
+            {this.createTrendingTopics(data)}
          </Row>
       );
    }
+}
 }
 
 export default TrendingTopicsGrid;

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Container } from 'reactstrap';
 import CarouselMod from './CarouselMod.js';
 import TrendingTopicsGrid from './TrendingTopicsGrid.js';
-import trending_topics from '../../data/topics.json';
 
 
 class Home extends Component {
@@ -14,9 +13,7 @@ class Home extends Component {
             <br />
             <Container>
                <h1 name="trending-topics" className="home-sub">Trending Topics</h1>
-               <TrendingTopicsGrid
-                  data={trending_topics.trending}
-               />
+               <TrendingTopicsGrid/>
             </Container>
           </div>
         );

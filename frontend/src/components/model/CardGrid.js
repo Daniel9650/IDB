@@ -20,7 +20,7 @@ class CardGrid extends Component {
 
    }
    componentDidMount() {
-      
+      if(this.props.type === "Movies"){
            fetch("http://api.poptopic.org/movies/")
            .then(res => res.json())
            .then(
@@ -40,6 +40,70 @@ class CardGrid extends Component {
                });
             }
            )
+      }
+      else if(this.props.type === "Books"){
+         fetch("http://api.poptopic.org/books/")
+         .then(res => res.json())
+         .then(
+          (result) => {
+             this.setState({
+               isLoaded: true,
+               data: result
+             });
+          },
+          // Note: it's important to handle errors here
+          // instead of a catch() block so that we don't swallow
+          // exceptions from actual bugs in components.
+          (error) => {
+             this.setState({
+               isLoaded: true,
+               error
+             });
+          }
+         )
+      }
+      else if(this.props.type === "Music"){
+         fetch("http://api.poptopic.org/songs/")
+         .then(res => res.json())
+         .then(
+          (result) => {
+             this.setState({
+               isLoaded: true,
+               data: result
+             });
+          },
+          // Note: it's important to handle errors here
+          // instead of a catch() block so that we don't swallow
+          // exceptions from actual bugs in components.
+          (error) => {
+             this.setState({
+               isLoaded: true,
+               error
+             });
+          }
+         )
+      }
+      else{
+         fetch("http://api.poptopic.org/topics/")
+         .then(res => res.json())
+         .then(
+          (result) => {
+             this.setState({
+               isLoaded: true,
+               data: result
+             });
+          },
+          // Note: it's important to handle errors here
+          // instead of a catch() block so that we don't swallow
+          // exceptions from actual bugs in components.
+          (error) => {
+             this.setState({
+               isLoaded: true,
+               error
+             });
+          }
+         )
+      }
    }
 
    createCard(instance) {
@@ -50,8 +114,8 @@ class CardGrid extends Component {
          id= instance.movie_id;
       }
       else if (this.props.type === "Music") {
-         name= instance.music_name;
-         id= instance.music_id;
+         name= instance.song_name;
+         id= instance.song_id;
       }
       else if (this.props.type === "Books") {
          name= instance.book_name;

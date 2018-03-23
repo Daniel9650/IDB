@@ -78,6 +78,7 @@ class MovieInstance extends Component {
         var topics = [];
         var first = true;
 
+        var {id} = this.props.match.params;
         return (
            <div className="spacing-div">
 
@@ -107,20 +108,23 @@ class MovieInstance extends Component {
                  <br />
                  <h6 className="instance-sub">Topics</h6>
                  <RelatedGrid
-                    type="Topics"
-                    instances= {data.topics}
+                    caller_type="movies"
+                    request_type="Topics"
+                    id = {id}
                  />
                  <br/>
                  <h6 className="instance-sub">Related Music</h6>
                  <RelatedGrid
-                    type="Music"
-                    instances= {data.similar_songs}
+                    caller_type="movies"
+                    request_type="Music"
+                    id={id}
                  />
                  <br/>
                  <h6 className="instance-sub">Related Books</h6>
                  <RelatedGrid
-                    type="Books"
-                    instances= {data.similar_books}
+                    caller_type="movies"
+                    request_type="Books"
+                    id={id}
                  />
            </Container>
            </div>
