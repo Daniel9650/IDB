@@ -4,7 +4,7 @@ import json
 from flask import Flask, redirect, jsonify, abort, request, send_from_directory, render_template, url_for, Blueprint
 from GitInfo import get_counts
 from sqlalchemy import Column, String, Integer, Text, Unicode, ForeignKey
-from sqlalchemy import create_engine, and_, or_
+from sqlalchemy import create_engine, and_, or_, desc, asc
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
 from math import ceil
@@ -47,19 +47,19 @@ class Movies(Base):
         self.similar_books = json.dumps(movie.similar_books)
         self.similar_songs = json.dumps(movie.similar_songs)
 
-    def get_col(self, attr):
-        data = None
-        try:
-            data = ast.literal_eval(getattr(self,attr))
-        except:
-            try:
-                data = getattr(self, attr)
-            except:
-                data = None
-        return data
-
     def as_dict(self):
-       return {c.name: self.get_col(c.name) for c in self.__table__.columns}
+        model_dict = {
+            "movie_id": self.movie_id,
+            "movie_name": self.movie_name,
+            "description": self.description,
+            "release_date": self.release_date,
+            "poster_url": self.poster_url,
+            "trailer_url": self.trailer_url,
+            "topics": ast.literal_eval(self.topics),
+            "similar_books": ast.literal_eval(self.similar_books),
+            "similar_songs": ast.literal_eval(self.similar_songs)
+        }
+        return model_dict
 
     '''
     GET /api/movies 
@@ -92,19 +92,19 @@ class Books(Base):
         self.similar_movies = json.dumps(book.similar_movies)
         self.similar_songs = json.dumps(book.similar_songs)
 
-    def get_col(self, attr):
-        data = None
-        try:
-            data = ast.literal_eval(getattr(self,attr))
-        except:
-            try:
-                data = getattr(self, attr)
-            except:
-                data = None
-        return data
-
     def as_dict(self):
-       return {c.name: self.get_col(c.name) for c in self.__table__.columns}
+        model_dict = {
+            "book_id": self.book_id,
+            "book_name": self.book_name,
+            "description": self.description,
+            "authors": ast.literal_eval(self.authors),
+            "release_date": self.release_date,
+            "poster_url": self.poster_url,
+            "topics": ast.literal_eval(self.topics),
+            "similar_movies": ast.literal_eval(self.similar_movies),
+            "similar_songs": ast.literal_eval(self.similar_songs)
+        }
+        return model_dict
 
     '''
     GET /api/books
@@ -139,19 +139,20 @@ class Songs(Base):
         self.similar_movies = json.dumps(song.similar_movies)
         self.similar_books = json.dumps(song.similar_books)
 
-    def get_col(self, attr):
-        data = None
-        try:
-            data = ast.literal_eval(getattr(self,attr))
-        except:
-            try:
-                data = getattr(self, attr)
-            except:
-                data = None
-        return data
-
     def as_dict(self):
-       return {c.name: self.get_col(c.name) for c in self.__table__.columns}
+        model_dict = {
+            "song_id": self.song_id,
+            "song_name": self.song_name,
+            "artists": ast.literal_eval(self.artists),
+            "album": self.album,
+            "poster_url": self.poster_url,
+            "youtube_url": self.youtube_url,
+            "release_date": self.release_date,
+            "topics": ast.literal_eval(self.topics),
+            "similar_movies": ast.literal_eval(self.similar_movies),
+            "similar_books": ast.literal_eval(self.similar_books)
+        }
+        return model_dict
 
     '''
     GET /api/songs
@@ -177,19 +178,16 @@ class Topics(Base):
         self.similar_books = json.dumps(books)
         self.similar_songs = json.dumps(songs)
 
-    def get_col(self, attr):
-        data = None
-        try:
-            data = ast.literal_eval(getattr(self,attr))
-        except:
-            try:
-                data = getattr(self, attr)
-            except:
-                data = None
-        return data
-
     def as_dict(self):
-       return {c.name: self.get_col(c.name) for c in self.__table__.columns}
+        model_dict = {
+            "topic_id": self.topic_id,
+            "topic_name": self.topic_name,
+            "similar_movies": ast.literal_eval(self.similar_movies),
+            "similar_songs": ast.literal_eval(self.similar_songs),
+            "similar_books": ast.literal_eval(self.similar_books),
+            "poster_url": self.poster_url
+        }
+        return model_dict
 
     '''
     GET /api/topics/<topic_id>/similar_movies -> get list of all Movie objects related to this topic
@@ -233,7 +231,7 @@ def get_similar_books(mysession, attr_object, page, sort, items_per_page, query_
     num_related = len(attr_object)
     max_pages = max(int(ceil(num_related/items_per_page)), 1)
     sort_col = book_sorts[sort][0]
-    sort_func = (book_sorts[sort][1] == "asc")
+    sort_func = (book_sorts[sort][1] == "desc")
     page_return = {"num_results": 0, "objects": [], "page": page, "total_pages": max_pages}
     for i in attr_object[min_instance:max_instance]:
         query = None
@@ -258,7 +256,7 @@ def get_similar_songs(mysession, attr_object, page, sort, items_per_page, query_
     num_related = len(attr_object)
     max_pages = max(int(ceil(num_related/items_per_page)), 1)
     sort_col = song_sorts[sort][0]
-    sort_func = (song_sorts[sort][1] == "asc")
+    sort_func = (song_sorts[sort][1] == "desc")
     page_return = {"num_results": 0, "objects": [], "page": page, "total_pages": max_pages}
     for i in attr_object[min_instance:max_instance]:
         query = None
@@ -283,7 +281,7 @@ def get_similar_movies(mysession, attr_object, page, sort, items_per_page, query
     num_related = len(attr_object)
     max_pages = max(int(ceil(num_related/items_per_page)), 1)
     sort_col = movie_sorts[sort][0]
-    sort_func = (movie_sorts[sort][1] == "asc")
+    sort_func = (movie_sorts[sort][1] == "desc")
     page_return = {"num_results": 0, "objects": [], "page": page, "total_pages": max_pages}
     for i in attr_object[min_instance:max_instance]:
         query = None
@@ -301,14 +299,14 @@ def get_similar_movies(mysession, attr_object, page, sort, items_per_page, query
     page_return["objects"] = sorted(page_return["objects"], key=lambda k: k[sort_col], reverse=sort_func)
     return jsonify(page_return)
 
-def get_topics(mysession, attr_object, page, sort, items_per_page, query_request, filter_request):
+def get_instance_topics(mysession, attr_object, page, sort, items_per_page, query_request, filter_request):
     filter_col = "topic_name" if (filter_request is None) else filter_request
     min_instance = items_per_page * (page - 1)
     max_instance = items_per_page * page
     num_related = len(attr_object)
     max_pages = max(int(ceil(num_related/items_per_page)), 1)
     sort_col = topics_sorts[sort][0]
-    sort_func = (topics_sorts[sort][1] == "asc")
+    sort_func = (topics_sorts[sort][1] == "desc")
     page_return = {"num_results": 0, "objects": [], "page": page, "total_pages": max_pages}
     for i in attr_object[min_instance:max_instance]:
         query = None
@@ -383,16 +381,14 @@ def get_movies(path):
             instance = mysession.query(Movies).filter(Movies.movie_id == movie_id).first()
             if(instance != None):
                 if(attr_focus != ""):
-                    attr_object = instance.get_col(attr_focus)
-                    if(attr_object != None):
-                        if(attr_focus == "similar_books" and sort in book_sorts):
-                            return get_similar_books(mysession, attr_object, page, sort, items_per_page, query_request, filter_request)
-                        elif(attr_focus == "similar_songs" and sort in song_sorts):
-                            return get_similar_songs(mysession, attr_object, page, sort, items_per_page, query_request, filter_request)
-                        elif(attr_focus == "topics" and sort in topics_sorts):
-                            return get_topics(mysession, attr_object, page, sort, items_per_page, query_request, filter_request)
-                        else:
-                            return jsonify(attr_object)
+                    if(attr_focus == "similar_books" and sort in book_sorts):
+                        return get_similar_books(mysession, ast.literal_eval(instance.similar_books), page, sort, items_per_page, query_request, filter_request)
+                    elif(attr_focus == "similar_songs" and sort in movie_sorts):
+                        return get_similar_songs(mysession, ast.literal_eval(instance.similar_songs), page, sort, items_per_page, query_request, filter_request)
+                    elif(attr_focus == "topics" and sort in topics_sorts):
+                        return get_instance_topics(mysession, ast.literal_eval(instance.topics), page, sort, items_per_page, query_request, filter_request)
+                    elif(getattr(instance, attr_focus) != None):
+                        return jsonify(getattr(instance, attr_focus))
                     abort(400)
                 else:
                     return jsonify(instance.as_dict())
@@ -443,16 +439,14 @@ def get_songs(path):
             instance = mysession.query(Songs).filter(Songs.song_id == song_id).first()
             if(instance != None):
                 if(attr_focus != ""):
-                    attr_object = instance.get_col(attr_focus)
-                    if(attr_object != None):
-                        if(attr_focus == "similar_books" and sort in book_sorts):
-                            return get_similar_books(mysession, attr_object, page, sort, items_per_page, query_request, filter_request)
-                        elif(attr_focus == "similar_movies" and sort in movie_sorts):
-                            return get_similar_movies(mysession, attr_object, page, sort, items_per_page, query_request, filter_request)
-                        elif(attr_focus == "topics" and sort in topics_sorts):
-                            return get_topics(mysession, attr_object, page, sort, items_per_page, query_request, filter_request)
-                        else:
-                            return jsonify(attr_object)
+                    if(attr_focus == "similar_books" and sort in book_sorts):
+                        return get_similar_books(mysession, ast.literal_eval(instance.similar_books), page, sort, items_per_page, query_request, filter_request)
+                    elif(attr_focus == "similar_movies" and sort in movie_sorts):
+                        return get_similar_movies(mysession, ast.literal_eval(instance.similar_movies), page, sort, items_per_page, query_request, filter_request)
+                    elif(attr_focus == "topics" and sort in topics_sorts):
+                        return get_instance_topics(mysession, ast.literal_eval(instance.topics), page, sort, items_per_page, query_request, filter_request)
+                    elif(getattr(instance, attr_focus) != None):
+                        return jsonify(getattr(instance, attr_focus))
                     abort(400)
                 else:
                     return jsonify(instance.as_dict())
@@ -503,16 +497,14 @@ def get_books(path):
             instance = mysession.query(Books).filter(Books.book_id == book_id).first()
             if(instance != None):
                 if(attr_focus != ""):
-                    attr_object = instance.get_col(attr_focus)
-                    if(attr_object != None):
-                        if(attr_focus == "similar_movies" and sort in movie_sorts):
-                            return get_similar_movies(mysession, attr_object, page, sort, items_per_page, query_request, filter_request)
-                        elif(attr_focus == "similar_songs" and sort in song_sorts):
-                            return get_similar_songs(mysession, attr_object, page, sort, items_per_page, query_request, filter_request)
-                        elif(attr_focus == "topics" and sort in topics_sorts):
-                            return get_topics(mysession, attr_object, page, sort, items_per_page, query_request, filter_request)
-                        else:
-                            return jsonify(attr_object)
+                    if(attr_focus == "similar_songs" and sort in book_sorts):
+                        return get_similar_songs(mysession, ast.literal_eval(instance.similar_songs), page, sort, items_per_page, query_request, filter_request)
+                    elif(attr_focus == "similar_movies" and sort in movie_sorts):
+                        return get_similar_movies(mysession, ast.literal_eval(instance.similar_movies), page, sort, items_per_page, query_request, filter_request)
+                    elif(attr_focus == "topics" and sort in topics_sorts):
+                        return get_instance_topics(mysession, ast.literal_eval(instance.topics), page, sort, items_per_page, query_request, filter_request)
+                    elif(getattr(instance, attr_focus) != None):
+                        return jsonify(getattr(instance, attr_focus))
                     abort(400)
                 else:
                     return jsonify(instance.as_dict())
@@ -563,21 +555,27 @@ def get_topics(path):
             instance = mysession.query(Topics).filter(Topics.topic_id == topic_id).first()
             if(instance != None):
                 if(attr_focus != ""):
-                    attr_object = instance.get_col(attr_focus)
-                    if(attr_object != None):
-                        if(attr_focus == "similar_books" and sort in book_sorts):
-                            return get_similar_books(mysession, attr_object, page, sort, items_per_page, query_request, filter_request)
-                        elif(attr_focus == "similar_songs" and sort in song_sorts):
-                            return get_similar_songs(mysession, attr_object, page, sort, items_per_page, query_request, filter_request)
-                        elif(attr_focus == "similar_movies" and sort in movie_sorts):
-                            return get_similar_movies(mysession, attr_object, page, sort, items_per_page, query_request, filter_request)
-                        else:
-                            return jsonify(attr_object)
+                    if(attr_focus == "similar_books" and sort in book_sorts):
+                        return get_similar_books(mysession, ast.literal_eval(instance.similar_books), page, sort, items_per_page, query_request, filter_request)
+                    elif(attr_focus == "similar_movies" and sort in movie_sorts):
+                        return get_similar_movies(mysession, ast.literal_eval(instance.similar_movies), page, sort, items_per_page, query_request, filter_request)
+                    elif(attr_focus == "similar_songs" and sort in topics_sorts):
+                        return get_similar_songs(mysession, ast.literal_eval(instance.similar_songs), page, sort, items_per_page, query_request, filter_request)
+                    elif(getattr(instance, attr_focus) != None):
+                        return jsonify(getattr(instance, attr_focus))
                     abort(400)
                 else:
                     return jsonify(instance.as_dict())
             abort(404)
         abort(400)
+
+@app.route("/test/", methods=['GET'])
+def test():
+    mysession = scoped_session(Session)
+    query = mysession.query(Books).order_by(asc("release_date")).all()
+    for i in query:
+        print(i.release_date)
+    abort(404)
 
 @app.route("/git_info/", methods=['GET'])
 def get_git_info():
