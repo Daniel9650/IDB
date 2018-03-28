@@ -12,10 +12,10 @@ from cred import getUser
 from flask_cors import CORS
 
 app = Flask(__name__, template_folder='.', static_folder='static')
-app.config['SERVER_NAME'] = 'poptopic.org'
+#app.config['SERVER_NAME'] = 'poptopic.org'
 app.url_map.strict_slashes = False
 CORS(app)
-api = Blueprint('api', 'api', subdomain='api')
+#api = Blueprint('api', 'api', subdomain='api')
 
 con_str = "mysql+pymysql://"+getUser()+"@pt-db-instance.cden9ozljt61.us-west-1.rds.amazonaws.com:3306/poptopic_db"
 engine = create_engine(con_str, convert_unicode=True)
@@ -307,8 +307,8 @@ def get_topics(mysession, attr_object, page, sort, items_per_page, query_request
     max_instance = items_per_page * page
     num_related = len(attr_object)
     max_pages = max(int(ceil(num_related/items_per_page)), 1)
-    sort_col = topic_sorts[sort][0]
-    sort_func = (topic_sorts[sort][1] == "asc")
+    sort_col = topics_sorts[sort][0]
+    sort_func = (topics_sorts[sort][1] == "asc")
     page_return = {"num_results": 0, "objects": [], "page": page, "total_pages": max_pages}
     for i in attr_object[min_instance:max_instance]:
         query = None
@@ -326,13 +326,7 @@ def get_topics(mysession, attr_object, page, sort, items_per_page, query_request
     page_return["objects"] = sorted(page_return["objects"], key=lambda k: k[sort_col], reverse=sort_func)
     return jsonify(page_return)
 
-# Splash page
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def app_index(path):
-    return render_template("index.html")
-
-@api.before_request
+@app.before_request
 def clear_trailing():
     rp = request.full_path.split("?")
     if rp[0] != '/' and rp[0].endswith('/'):
@@ -341,12 +335,12 @@ def clear_trailing():
         else:
             return redirect(rp[0][:-1])
 
-@api.route('/')
+@app.route('/')
 def api_index():
     return redirect("https://daniel9650.gitbooks.io/poptopic-api-documentation/content/", code=302)
 
-@api.route('/movies/', defaults={'path': ''})
-@api.route("/movies/<path:path>", methods=['GET'])
+@app.route('/movies/', defaults={'path': ''})
+@app.route("/movies/<path:path>", methods=['GET'])
 def get_movies(path):
     mysession = scoped_session(Session)
     params = path.split("/")
@@ -405,8 +399,8 @@ def get_movies(path):
             abort(404)
         abort(400)
 
-@api.route('/songs/', defaults={'path': ''})
-@api.route("/songs/<path:path>", methods=['GET'])
+@app.route('/songs/', defaults={'path': ''})
+@app.route("/songs/<path:path>", methods=['GET'])
 def get_songs(path):
     mysession = scoped_session(Session)
     params = path.split("/")
@@ -465,8 +459,8 @@ def get_songs(path):
             abort(404)
         abort(400)
 
-@api.route('/books/', defaults={'path': ''})
-@api.route("/books/<path:path>", methods=['GET'])
+@app.route('/books/', defaults={'path': ''})
+@app.route("/books/<path:path>", methods=['GET'])
 def get_books(path):
     mysession = scoped_session(Session)
     params = path.split("/")
@@ -525,8 +519,8 @@ def get_books(path):
             abort(404)
         abort(400)
 
-@api.route('/topics/', defaults={'path': ''})
-@api.route("/topics/<path:path>", methods=['GET'])
+@app.route('/topics/', defaults={'path': ''})
+@app.route("/topics/<path:path>", methods=['GET'])
 def get_topics(path):
     mysession = scoped_session(Session)
     params = path.split("/")
@@ -585,11 +579,11 @@ def get_topics(path):
             abort(404)
         abort(400)
 
-@api.route("/git_info/", methods=['GET'])
+@app.route("/git_info/", methods=['GET'])
 def get_git_info():
     return jsonify(get_counts())
 
-app.register_blueprint(api)
+#app.register_blueprint(api)
 
 if __name__ == "__main__":
     app.run()
