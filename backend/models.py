@@ -10,12 +10,13 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from math import ceil
 from cred import getUser
 from flask_cors import CORS
+from main import get_movies
 
 app = Flask(__name__, template_folder='.', static_folder='static')
-app.config['SERVER_NAME'] = 'poptopic.org'
+#app.config['SERVER_NAME'] = 'poptopic.org'
 app.url_map.strict_slashes = False
 CORS(app)
-api = Blueprint('api', 'api', subdomain='api')
+#api = Blueprint('api', 'api', subdomain='api')
 
 con_str = "mysql+pymysql://"+getUser()+"@pt-db-instance.cden9ozljt61.us-west-1.rds.amazonaws.com:3306/poptopic_db"
 engine = create_engine(con_str, convert_unicode=True)
@@ -201,18 +202,12 @@ class Topics(Base):
 Base.metadata.create_all(engine)
 default_items_per_page = 9
 default_items_per_instance_page = 3
-movie_sorts = ["release_year_asc", "release_year_desc", "title_asc", "title_desc", "title_asc"]
+movie_sorts = {"release_year_asc": "release_date", "release_year_desc": "release_date", "title_asc": "movie_name", "title_desc": "movie_name"}
 song_sorts = ["release_year_asc", "artist_asc", "artist_desc", "title_asc", "title_desc"]
 book_sorts = ["author_asc", "author_desc", "title_asc", "title_desc", "release_year_asc"]
 topics_sorts = ["title_asc", "title_desc"]
 
-# Splash page
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def app_index(path):
-    return render_template("index.html")
-
-@api.before_request
+@app.before_request
 def clear_trailing():
     rp = request.full_path.split("?")
     if rp[0] != '/' and rp[0].endswith('/'):
@@ -221,12 +216,12 @@ def clear_trailing():
         else:
             return redirect(rp[0][:-1])
 
-@api.route('/')
+@app.route('/')
 def api_index():
     return redirect("https://daniel9650.gitbooks.io/poptopic-api-documentation/content/", code=302)
 
-@api.route('/movies/', defaults={'path': ''})
-@api.route("/movies/<path:path>", methods=['GET'])
+@app.route('/movies/', defaults={'path': ''})
+@app.route("/movies/<path:path>", methods=['GET'])
 def get_movies(path):
     mysession = scoped_session(Session)
     params = path.split("/")
@@ -243,22 +238,23 @@ def get_movies(path):
         items_per_page = default_items_per_page if (items_per_page_request is None) else eval(items_per_page_request)
         min_instance = 1 + items_per_page * (page - 1)
         max_instance = (items_per_page + 1) + items_per_page * (page - 1)
-        if(page < 1 or not any(sort in s for s in movie_sorts) or items_per_page < 1):
+        if(page < 1 or not sort in movie_sorts or items_per_page < 1):
             abort(400)
         if(query_request is None):
             num_rows = mysession.query(Movies).count()
             max_pages = int(ceil(num_rows/items_per_page))
             page_return = {"num_results": 0, "objects": [], "page": page, "total_pages": max_pages}
-            for instance in mysession.query(Movies).order_by(Movies.movie_name)[min_instance:max_instance]:
+            for instance in mysession.query(Movies).order_by(getattr(Movies, movie_sorts[sort]))[min_instance:max_instance]:
                 page_return["num_results"] += 1
                 page_return["objects"].append(instance.as_dict())
             return jsonify(page_return)
         else:
             col_name = "movie_name" if (filter_request is None) else filter_request
-            num_rows = mysession.query(Movies).filter(getattr(Movies, col_name).like("%"+query_request+"%")).count()
+            query = mysession.query(Movies).filter(getattr(Movies, col_name).like("%"+query_request+"%"))
+            num_rows = query.count()
             max_pages = int(ceil(num_rows/items_per_page))
             page_return = {"num_results": 0, "objects": [], "page": page, "total_pages": max_pages}
-            for instance in mysession.query(Movies).filter(getattr(Movies, col_name).like("%"+query_request+"%"))[min_instance:max_instance]:
+            for instance in query[min_instance:max_instance]:
                 page_return["num_results"] += 1
                 page_return["objects"].append(instance.as_dict())
             return jsonify(page_return)
@@ -286,7 +282,7 @@ def get_movies(path):
                 min_instance = 0 + items_per_page * (page - 1)
                 max_instance = items_per_page + items_per_page * (page - 1)
                 num_related = len(attr_object)
-                max_pages = int(ceil(num_related/items_per_page))
+                max_pages = max(int(ceil(num_related/items_per_page)), 1)
                 page_return = {"num_results": 0, "objects": [], "page": page, "total_pages": max_pages}
                 for i in attr_object[min_instance:max_instance]:
                     page_return["num_results"] += 1
@@ -305,8 +301,8 @@ def get_movies(path):
                 abort(400)
         abort(404)
 
-@api.route('/songs/', defaults={'path': ''})
-@api.route("/songs/<path:path>", methods=['GET'])
+@app.route('/songs/', defaults={'path': ''})
+@app.route("/songs/<path:path>", methods=['GET'])
 def get_songs(path):
     mysession = scoped_session(Session)
     params = path.split("/")
@@ -376,8 +372,8 @@ def get_songs(path):
                 abort(400)
         abort(404)
 
-@api.route('/books/', defaults={'path': ''})
-@api.route("/books/<path:path>", methods=['GET'])
+@app.route('/books/', defaults={'path': ''})
+@app.route("/books/<path:path>", methods=['GET'])
 def get_books(path):
     mysession = scoped_session(Session)
     params = path.split("/")
@@ -447,8 +443,8 @@ def get_books(path):
                 abort(400)
         abort(404)
 
-@api.route('/topics/', defaults={'path': ''})
-@api.route("/topics/<path:path>", methods=['GET'])
+@app.route('/topics/', defaults={'path': ''})
+@app.route("/topics/<path:path>", methods=['GET'])
 def get_topics(path):
     mysession = scoped_session(Session)
     params = path.split("/")
@@ -516,11 +512,11 @@ def get_topics(path):
                 return jsonify(attr_object)
         abort(404)
 
-@api.route("/git_info/", methods=['GET'])
+@app.route("/git_info/", methods=['GET'])
 def get_git_info():
     return jsonify(get_counts())
 
-app.register_blueprint(api)
+#app.register_blueprint(api)
 
 if __name__ == "__main__":
     app.run()
