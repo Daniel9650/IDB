@@ -228,12 +228,10 @@ def get_similar_books(mysession, attr_object, page, sort, items_per_page, query_
     filter_col = "book_name" if (filter_request is None) else filter_request
     min_instance = items_per_page * (page - 1)
     max_instance = items_per_page * page
-    num_related = len(attr_object)
-    max_pages = max(int(ceil(num_related/items_per_page)), 1)
     sort_col = book_sorts[sort][0]
     sort_func = (book_sorts[sort][1] == "desc")
-    page_return = {"num_results": 0, "objects": [], "page": page, "total_pages": max_pages}
-    for i in attr_object[min_instance:max_instance]:
+    objects_list = []
+    for i in attr_object:
         query = None
         try:
             if(query_request != None):
@@ -244,21 +242,21 @@ def get_similar_books(mysession, attr_object, page, sort, items_per_page, query_
             abort(400)
         related_obj = query.first()
         if(related_obj != None):
-            page_return["objects"].append(related_obj.as_dict())
-            page_return["num_results"] += 1
-    page_return["objects"] = sorted(page_return["objects"], key=lambda k: k[sort_col], reverse=sort_func)
+            objects_list.append(related_obj.as_dict())
+    num_related = len(objects_list)
+    max_pages = max(int(ceil(num_related/items_per_page)), 1)
+    objects_list = sorted(objects_list, key=lambda k: k[sort_col], reverse=sort_func)[min_instance:max_instance]
+    page_return = {"num_results": len(objects_list), "objects": objects_list, "page": page, "total_pages": max_pages}
     return jsonify(page_return)
 
 def get_similar_songs(mysession, attr_object, page, sort, items_per_page, query_request, filter_request):
     filter_col = "song_name" if (filter_request is None) else filter_request
     min_instance = items_per_page * (page - 1)
     max_instance = items_per_page * page
-    num_related = len(attr_object)
-    max_pages = max(int(ceil(num_related/items_per_page)), 1)
     sort_col = song_sorts[sort][0]
     sort_func = (song_sorts[sort][1] == "desc")
-    page_return = {"num_results": 0, "objects": [], "page": page, "total_pages": max_pages}
-    for i in attr_object[min_instance:max_instance]:
+    objects_list = []
+    for i in attr_object:
         query = None
         try:
             if(query_request != None):
@@ -269,21 +267,21 @@ def get_similar_songs(mysession, attr_object, page, sort, items_per_page, query_
             abort(400)
         related_obj = query.first()
         if(related_obj != None):
-            page_return["objects"].append(related_obj.as_dict())
-            page_return["num_results"] += 1
-    page_return["objects"] = sorted(page_return["objects"], key=lambda k: k[sort_col], reverse=sort_func)
+            objects_list.append(related_obj.as_dict())
+    num_related = len(objects_list)
+    max_pages = max(int(ceil(num_related/items_per_page)), 1)
+    objects_list = sorted(objects_list, key=lambda k: k[sort_col], reverse=sort_func)[min_instance:max_instance]
+    page_return = {"num_results": len(objects_list), "objects": objects_list, "page": page, "total_pages": max_pages}
     return jsonify(page_return)
 
 def get_similar_movies(mysession, attr_object, page, sort, items_per_page, query_request, filter_request):
     filter_col = "movie_name" if (filter_request is None) else filter_request
     min_instance = items_per_page * (page - 1)
     max_instance = items_per_page * page
-    num_related = len(attr_object)
-    max_pages = max(int(ceil(num_related/items_per_page)), 1)
     sort_col = movie_sorts[sort][0]
     sort_func = (movie_sorts[sort][1] == "desc")
-    page_return = {"num_results": 0, "objects": [], "page": page, "total_pages": max_pages}
-    for i in attr_object[min_instance:max_instance]:
+    objects_list = []
+    for i in attr_object:
         query = None
         try:
             if(query_request != None):
@@ -294,21 +292,21 @@ def get_similar_movies(mysession, attr_object, page, sort, items_per_page, query
             abort(400)
         related_obj = query.first()
         if(related_obj != None):
-            page_return["objects"].append(related_obj.as_dict())
-            page_return["num_results"] += 1
-    page_return["objects"] = sorted(page_return["objects"], key=lambda k: k[sort_col], reverse=sort_func)
+            objects_list.append(related_obj.as_dict())
+    num_related = len(objects_list)
+    max_pages = max(int(ceil(num_related/items_per_page)), 1)
+    objects_list = sorted(objects_list, key=lambda k: k[sort_col], reverse=sort_func)[min_instance:max_instance]
+    page_return = {"num_results": len(objects_list), "objects": objects_list, "page": page, "total_pages": max_pages}
     return jsonify(page_return)
 
 def get_instance_topics(mysession, attr_object, page, sort, items_per_page, query_request, filter_request):
     filter_col = "topic_name" if (filter_request is None) else filter_request
     min_instance = items_per_page * (page - 1)
     max_instance = items_per_page * page
-    num_related = len(attr_object)
-    max_pages = max(int(ceil(num_related/items_per_page)), 1)
     sort_col = topics_sorts[sort][0]
     sort_func = (topics_sorts[sort][1] == "desc")
-    page_return = {"num_results": 0, "objects": [], "page": page, "total_pages": max_pages}
-    for i in attr_object[min_instance:max_instance]:
+    objects_list = []
+    for i in attr_object:
         query = None
         try:
             if(query_request != None):
@@ -319,9 +317,11 @@ def get_instance_topics(mysession, attr_object, page, sort, items_per_page, quer
             abort(400)
         related_obj = query.first()
         if(related_obj != None):
-            page_return["objects"].append(related_obj.as_dict())
-            page_return["num_results"] += 1
-    page_return["objects"] = sorted(page_return["objects"], key=lambda k: k[sort_col], reverse=sort_func)
+            objects_list.append(related_obj.as_dict())
+    num_related = len(objects_list)
+    max_pages = max(int(ceil(num_related/items_per_page)), 1)
+    objects_list = sorted(objects_list, key=lambda k: k[sort_col], reverse=sort_func)[min_instance:max_instance]
+    page_return = {"num_results": len(objects_list), "objects": objects_list, "page": page, "total_pages": max_pages}
     return jsonify(page_return)
 
 @app.before_request
@@ -381,12 +381,15 @@ def get_movies(path):
             instance = mysession.query(Movies).filter(Movies.movie_id == movie_id).first()
             if(instance != None):
                 if(attr_focus != ""):
-                    if(attr_focus == "similar_books" and sort in book_sorts):
-                        return get_similar_books(mysession, ast.literal_eval(instance.similar_books), page, sort, items_per_page, query_request, filter_request)
-                    elif(attr_focus == "similar_songs" and sort in movie_sorts):
-                        return get_similar_songs(mysession, ast.literal_eval(instance.similar_songs), page, sort, items_per_page, query_request, filter_request)
-                    elif(attr_focus == "topics" and sort in topics_sorts):
-                        return get_instance_topics(mysession, ast.literal_eval(instance.topics), page, sort, items_per_page, query_request, filter_request)
+                    if(attr_focus == "similar_books"):
+                        if(sort in book_sorts):
+                            return get_similar_books(mysession, ast.literal_eval(instance.similar_books), page, sort, items_per_page, query_request, filter_request)
+                    elif(attr_focus == "similar_songs"):
+                        if(sort in song_sorts):
+                            return get_similar_songs(mysession, ast.literal_eval(instance.similar_songs), page, sort, items_per_page, query_request, filter_request)
+                    elif(attr_focus == "topics"):
+                        if(sort in topics_sorts):
+                            return get_instance_topics(mysession, ast.literal_eval(instance.topics), page, sort, items_per_page, query_request, filter_request)
                     elif(getattr(instance, attr_focus) != None):
                         return jsonify(getattr(instance, attr_focus))
                     abort(400)
@@ -439,12 +442,15 @@ def get_songs(path):
             instance = mysession.query(Songs).filter(Songs.song_id == song_id).first()
             if(instance != None):
                 if(attr_focus != ""):
-                    if(attr_focus == "similar_books" and sort in book_sorts):
-                        return get_similar_books(mysession, ast.literal_eval(instance.similar_books), page, sort, items_per_page, query_request, filter_request)
-                    elif(attr_focus == "similar_movies" and sort in movie_sorts):
-                        return get_similar_movies(mysession, ast.literal_eval(instance.similar_movies), page, sort, items_per_page, query_request, filter_request)
-                    elif(attr_focus == "topics" and sort in topics_sorts):
-                        return get_instance_topics(mysession, ast.literal_eval(instance.topics), page, sort, items_per_page, query_request, filter_request)
+                    if(attr_focus == "similar_books"):
+                        if(sort in book_sorts):
+                            return get_similar_books(mysession, ast.literal_eval(instance.similar_books), page, sort, items_per_page, query_request, filter_request)
+                    elif(attr_focus == "similar_movies"):
+                        if(sort in movie_sorts):
+                            return get_similar_movies(mysession, ast.literal_eval(instance.similar_movies), page, sort, items_per_page, query_request, filter_request)
+                    elif(attr_focus == "topics"):
+                        if(sort in topics_sorts):
+                            return get_instance_topics(mysession, ast.literal_eval(instance.topics), page, sort, items_per_page, query_request, filter_request)
                     elif(getattr(instance, attr_focus) != None):
                         return jsonify(getattr(instance, attr_focus))
                     abort(400)
@@ -497,12 +503,15 @@ def get_books(path):
             instance = mysession.query(Books).filter(Books.book_id == book_id).first()
             if(instance != None):
                 if(attr_focus != ""):
-                    if(attr_focus == "similar_songs" and sort in book_sorts):
-                        return get_similar_songs(mysession, ast.literal_eval(instance.similar_songs), page, sort, items_per_page, query_request, filter_request)
-                    elif(attr_focus == "similar_movies" and sort in movie_sorts):
-                        return get_similar_movies(mysession, ast.literal_eval(instance.similar_movies), page, sort, items_per_page, query_request, filter_request)
-                    elif(attr_focus == "topics" and sort in topics_sorts):
-                        return get_instance_topics(mysession, ast.literal_eval(instance.topics), page, sort, items_per_page, query_request, filter_request)
+                    if(attr_focus == "similar_songs"):
+                        if(sort in song_sorts):
+                            return get_similar_songs(mysession, ast.literal_eval(instance.similar_songs), page, sort, items_per_page, query_request, filter_request)
+                    elif(attr_focus == "similar_movies"):
+                        if(sort in movie_sorts):
+                            return get_similar_movies(mysession, ast.literal_eval(instance.similar_movies), page, sort, items_per_page, query_request, filter_request)
+                    elif(attr_focus == "topics"):
+                        if(sort in topics_sorts):
+                            return get_instance_topics(mysession, ast.literal_eval(instance.topics), page, sort, items_per_page, query_request, filter_request)
                     elif(getattr(instance, attr_focus) != None):
                         return jsonify(getattr(instance, attr_focus))
                     abort(400)
@@ -555,12 +564,15 @@ def get_topics(path):
             instance = mysession.query(Topics).filter(Topics.topic_id == topic_id).first()
             if(instance != None):
                 if(attr_focus != ""):
-                    if(attr_focus == "similar_books" and sort in book_sorts):
-                        return get_similar_books(mysession, ast.literal_eval(instance.similar_books), page, sort, items_per_page, query_request, filter_request)
-                    elif(attr_focus == "similar_movies" and sort in movie_sorts):
-                        return get_similar_movies(mysession, ast.literal_eval(instance.similar_movies), page, sort, items_per_page, query_request, filter_request)
-                    elif(attr_focus == "similar_songs" and sort in topics_sorts):
-                        return get_similar_songs(mysession, ast.literal_eval(instance.similar_songs), page, sort, items_per_page, query_request, filter_request)
+                    if(attr_focus == "similar_books"):
+                        if(sort in book_sorts):
+                            return get_similar_books(mysession, ast.literal_eval(instance.similar_books), page, sort, items_per_page, query_request, filter_request)
+                    elif(attr_focus == "similar_movies"):
+                        if(sort in movie_sorts):
+                            return get_similar_movies(mysession, ast.literal_eval(instance.similar_movies), page, sort, items_per_page, query_request, filter_request)
+                    elif(attr_focus == "similar_songs"):
+                        if(sort in song_sorts):
+                            return get_similar_songs(mysession, ast.literal_eval(instance.similar_songs), page, sort, items_per_page, query_request, filter_request)
                     elif(getattr(instance, attr_focus) != None):
                         return jsonify(getattr(instance, attr_focus))
                     abort(400)
@@ -569,14 +581,6 @@ def get_topics(path):
             abort(404)
         abort(400)
 
-@app.route("/test/", methods=['GET'])
-def test():
-    mysession = scoped_session(Session)
-    query = mysession.query(Books).order_by(asc("release_date")).all()
-    for i in query:
-        print(i.release_date)
-    abort(404)
-
 @app.route("/git_info/", methods=['GET'])
 def get_git_info():
     return jsonify(get_counts())
@@ -584,4 +588,4 @@ def get_git_info():
 #app.register_blueprint(api)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(threaded=True)
