@@ -231,18 +231,17 @@ def get_similar_books(mysession, attr_object, page, sort, items_per_page, query_
     sort_col = book_sorts[sort][0]
     sort_func = (book_sorts[sort][1] == "desc")
     objects_list = []
-    for i in attr_object:
-        query = None
+    query = None
+    if(query_request == None):
+        query = mysession.query(Books)
+    else:
         try:
-            if(query_request != None):
-                query = mysession.query(Books).filter(and_(Books.book_id == i, getattr(Books, filter_col).like("%"+query_request+"%")))
-            else:
-                query = mysession.query(Books).filter(Books.book_id == i)
+            query = mysession.query(Books).filter(getattr(Books, filter_col).like("%"+query_request+"%"))
         except:
             abort(400)
-        related_obj = query.first()
-        if(related_obj != None):
-            objects_list.append(related_obj.as_dict())
+    for i in query:
+        if(i.book_id in attr_object):
+            objects_list.append(i.as_dict())
     num_related = len(objects_list)
     max_pages = max(int(ceil(num_related/items_per_page)), 1)
     objects_list = sorted(objects_list, key=lambda k: k[sort_col], reverse=sort_func)[min_instance:max_instance]
@@ -256,18 +255,17 @@ def get_similar_songs(mysession, attr_object, page, sort, items_per_page, query_
     sort_col = song_sorts[sort][0]
     sort_func = (song_sorts[sort][1] == "desc")
     objects_list = []
-    for i in attr_object:
-        query = None
+    query = None
+    if(query_request == None):
+        query = mysession.query(Songs)
+    else:
         try:
-            if(query_request != None):
-                query = mysession.query(Songs).filter(and_(Songs.song_id == i, getattr(Songs, filter_col).like("%"+query_request+"%")))
-            else:
-                query = mysession.query(Songs).filter(Songs.song_id == i)
+            query = mysession.query(Songs).filter(getattr(Songs, filter_col).like("%"+query_request+"%"))
         except:
             abort(400)
-        related_obj = query.first()
-        if(related_obj != None):
-            objects_list.append(related_obj.as_dict())
+    for i in query:
+        if(i.song_id in attr_object):
+            objects_list.append(i.as_dict())
     num_related = len(objects_list)
     max_pages = max(int(ceil(num_related/items_per_page)), 1)
     objects_list = sorted(objects_list, key=lambda k: k[sort_col], reverse=sort_func)[min_instance:max_instance]
@@ -281,18 +279,17 @@ def get_similar_movies(mysession, attr_object, page, sort, items_per_page, query
     sort_col = movie_sorts[sort][0]
     sort_func = (movie_sorts[sort][1] == "desc")
     objects_list = []
-    for i in attr_object:
-        query = None
+    query = None
+    if(query_request == None):
+        query = mysession.query(Movies)
+    else:
         try:
-            if(query_request != None):
-                query = mysession.query(Movies).filter(and_(Movies.movie_id == i, getattr(Movies, filter_col).like("%"+query_request+"%")))
-            else:
-                query = mysession.query(Movies).filter(Movies.movie_id == i)
+            query = mysession.query(Movies).filter(getattr(Movies, filter_col).like("%"+query_request+"%"))
         except:
             abort(400)
-        related_obj = query.first()
-        if(related_obj != None):
-            objects_list.append(related_obj.as_dict())
+    for i in query:
+        if(i.movie_id in attr_object):
+            objects_list.append(i.as_dict())
     num_related = len(objects_list)
     max_pages = max(int(ceil(num_related/items_per_page)), 1)
     objects_list = sorted(objects_list, key=lambda k: k[sort_col], reverse=sort_func)[min_instance:max_instance]
@@ -306,18 +303,17 @@ def get_instance_topics(mysession, attr_object, page, sort, items_per_page, quer
     sort_col = topics_sorts[sort][0]
     sort_func = (topics_sorts[sort][1] == "desc")
     objects_list = []
-    for i in attr_object:
-        query = None
+    query = None
+    if(query_request == None):
+        query = mysession.query(Topics)
+    else:
         try:
-            if(query_request != None):
-                query = mysession.query(Topics).filter(and_(Topics.topic_id == i, getattr(Topics, filter_col).like("%"+query_request+"%")))
-            else:
-                query = mysession.query(Topics).filter(Topics.topic_id == i)
+            query = mysession.query(Topics).filter(getattr(Topics, filter_col).like("%"+query_request+"%"))
         except:
             abort(400)
-        related_obj = query.first()
-        if(related_obj != None):
-            objects_list.append(related_obj.as_dict())
+    for i in query:
+        if(i.topic_id in attr_object):
+            objects_list.append(i.as_dict())
     num_related = len(objects_list)
     max_pages = max(int(ceil(num_related/items_per_page)), 1)
     objects_list = sorted(objects_list, key=lambda k: k[sort_col], reverse=sort_func)[min_instance:max_instance]
@@ -390,7 +386,7 @@ def get_movies(path):
                     elif(attr_focus == "topics"):
                         if(sort in topics_sorts):
                             return get_instance_topics(mysession, ast.literal_eval(instance.topics), page, sort, items_per_page, query_request, filter_request)
-                    elif(getattr(instance, attr_focus) != None):
+                    elif(hasattr(instance, attr_focus)):
                         return jsonify(getattr(instance, attr_focus))
                     abort(400)
                 else:
@@ -451,7 +447,7 @@ def get_songs(path):
                     elif(attr_focus == "topics"):
                         if(sort in topics_sorts):
                             return get_instance_topics(mysession, ast.literal_eval(instance.topics), page, sort, items_per_page, query_request, filter_request)
-                    elif(getattr(instance, attr_focus) != None):
+                    elif(hasattr(instance, attr_focus)):
                         return jsonify(getattr(instance, attr_focus))
                     abort(400)
                 else:
@@ -512,7 +508,7 @@ def get_books(path):
                     elif(attr_focus == "topics"):
                         if(sort in topics_sorts):
                             return get_instance_topics(mysession, ast.literal_eval(instance.topics), page, sort, items_per_page, query_request, filter_request)
-                    elif(getattr(instance, attr_focus) != None):
+                    elif(hasattr(instance, attr_focus)):
                         return jsonify(getattr(instance, attr_focus))
                     abort(400)
                 else:
@@ -573,7 +569,7 @@ def get_topics(path):
                     elif(attr_focus == "similar_songs"):
                         if(sort in song_sorts):
                             return get_similar_songs(mysession, ast.literal_eval(instance.similar_songs), page, sort, items_per_page, query_request, filter_request)
-                    elif(getattr(instance, attr_focus) != None):
+                    elif(hasattr(instance, attr_focus)):
                         return jsonify(getattr(instance, attr_focus))
                     abort(400)
                 else:
