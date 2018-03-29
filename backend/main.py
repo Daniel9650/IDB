@@ -594,4 +594,4 @@ def get_git_info():
 app.register_blueprint(api)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(threaded=True)
