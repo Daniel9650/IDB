@@ -104,22 +104,35 @@ class CardGrid extends Component {
           }
          )
       }
+
+
    }
 
    createCard(instance) {
       var name = "";
       var id = "";
+      var actors = [];
+      var director = "";
+      var author = "";
+      var album = "";
+      var artists = [];
+
       if (this.props.type === "Movies") {
          name= instance.movie_name;
          id= instance.movie_id;
+         actors = instance.actors;
+         director = instance.director;
       }
       else if (this.props.type === "Music") {
          name= instance.song_name;
          id= instance.song_id;
+         artists = instance.artists;
+         album = instance.album;
       }
       else if (this.props.type === "Books") {
          name= instance.book_name;
          id= instance.book_id;
+         author = instance.author;
       }
       else {
          name= instance.topic_name;
@@ -134,6 +147,12 @@ class CardGrid extends Component {
          id= {id}
          number={this.count}
          type={this.props.type}
+         date = {instance.release_date}
+         actors = {actors}
+         director = {director}
+         artists = {artists}
+         album = {album}
+         author = {author}
          />;
    }
 

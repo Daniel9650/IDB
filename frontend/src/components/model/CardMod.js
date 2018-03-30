@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Card,
    CardImg,
    CardText,
@@ -6,35 +6,80 @@ import { Card,
    CardTitle,
    CardSubtitle,
    Button } from 'reactstrap';
+import topicDict from '../../data/topic_dictionary.json';
 
-let CardMod = function(props) {
-   var image = props.image;
-   var title = props.title;
-   var model_type = props.type;
-   var name = "card" + props.number;
-   var id =  props.id;
-   var url_model = "/" + model_type.toLowerCase() + "/" + id;
-
-   if(props.type != "Topics") {
-      var topics = props.topics.join(", ");
-      return (
-         <a name={name} href={url_model}>
-            <Card>
-               <CardImg top src={image} />
-               <CardBody>
-                  <CardTitle>{title}</CardTitle>
-               </CardBody>
-            </Card>
-         </a>
-      );
+class CardMod extends Component {
+   constructor(props){
+      super(props);
+      this.render = this.render.bind(this);
+      this.textContent = this.textContent.bind(this);
+      this.getTopicNames = this.getTopicNames.bind(this);
    }
-   else {
+
+   getTopicNames(topics){
+      var names = [];
+      topicDict.pairs.map(function(pair){
+         for(let i = 0; i < topics.length; i ++){
+            if(topics[i] === pair.key){
+               names.push(pair.value);
+               break;
+            }
+         }
+      });
+      return names.join(", ");
+   }
+
+   textContent() {
+      switch (this.props.type) {
+         case "Movies":
+            //var actors = this.props.actors.join(", ");
+            return (
+               <div>
+               <CardText>Topics: {this.getTopicNames(this.props.topics)}</CardText>
+               <CardText>Release: {this.props.date}</CardText>
+               <CardText>Acting: {this.props.acting}</CardText>
+               <CardText>Directing: {this.props.director}</CardText>
+               </div>
+            );
+
+         case "Books":
+            return (
+               <div>
+               <CardText>Topics: {this.getTopicNames(this.props.topics)}</CardText>
+               <CardText>Release: {this.props.date}</CardText>
+               <CardText>Author: {this.props.author}</CardText>
+               </div>
+            );
+
+         case "Music":
+            var artists = this.props.artists.join(", ");
+            return (
+               <div>
+               <CardText>Topics: {this.getTopicNames(this.props.topics)}</CardText>
+               <CardText>Release: {this.props.date}</CardText>
+               <CardText>Artists: {artists}</CardText>
+               <CardText>Album: {this.props.album}</CardText>
+               </div>
+            );
+
+         case "Topics":
+            return null;
+
+      }
+   }
+
+   render() {
+
+      var url_model = "/" + this.props.type.toLowerCase() + "/" + this.props.id;
+      var name = "card" + this.props.number;
+
       return (
          <a name={name} href={url_model}>
             <Card>
-               <CardImg top src={image} />
+               <CardImg top src={this.props.image} />
                <CardBody>
-                  <CardTitle>{title}</CardTitle>
+                  <CardTitle>{this.props.title}</CardTitle>
+                  {this.textContent()}
                </CardBody>
             </Card>
          </a>

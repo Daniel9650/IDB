@@ -128,7 +128,6 @@ class CardGrid extends Component {
          instance_id= instance.topic_id;
 
       }
-      console.log(name);
        this.count++;
       return <RelatedCard
          image={instance.poster_url}

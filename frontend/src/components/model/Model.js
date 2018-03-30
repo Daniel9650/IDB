@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Container } from 'reactstrap';
+import { Container, Row } from 'reactstrap';
 import data from '../../data/mock.json';
 import CardGrid from './CardGrid.js';
 
@@ -28,6 +28,8 @@ class Model extends Component {
          <Container className="spacing-div">
             <h1 name={name} className="general-title">{this.props.type}</h1>
             <hr className="divider"/>
+            <Row>
+            </Row>
             <CardGrid
                instances={instances}
                type={this.props.type}

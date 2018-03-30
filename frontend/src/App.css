@@ -14,6 +14,11 @@
    src: url("Back to Black Demo.ttf");
 }
 
+@font-face {
+   font-family: Sans;
+   src: url("Roboto-Regular.ttf");
+}
+
 .big-title {
    color: var(--warm);
    font-size: 200px;
@@ -30,12 +35,14 @@
 .about-name {
    font-weight: bold;
    color: var(--charcoal);
+   font-family: Sans;
 }
 
 .about-sub {
    font-weight: bold;
    font-size: 30px;
    color: var(--charcoal);
+   font-family: Sans;
 }
 
 .about-title {
@@ -47,12 +54,14 @@
 
 .trending-title {
    font-weight: bold;
+   font-family: Sans;
 }
 
 .home-sub {
    font-weight: bold;
    text-align: center;
    color: var(--charcoal);
+   font-family: Sans;
 }
 
 .general-title {
@@ -65,17 +74,20 @@
 .about-text {
    font-size: 18px;
    color: var(--charcoal);
+   font-family: Sans;
 }
 
 .instance-sub {
    font-weight: bold;
    font-size: 25px;
    color: var(--charcoal);
+   font-family: Sans;
 }
 
 p{
    font-size: 18px;
    color: var(--charcoal);
+   font-family: Sans;
 }
 
 
@@ -98,8 +110,8 @@ p{
 }
 
 .card-title{
-   font-weight: bold;
    font-size: 25px;
+   font-family: Sans;
 }
 
 .card-title:hover{
@@ -111,7 +123,7 @@ p{
    margin: 10px;
    width: 350px;
    color: var(--charcoal);
-   text-align: center;
+
 }
 
 .card:hover{
