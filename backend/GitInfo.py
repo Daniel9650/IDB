@@ -54,7 +54,7 @@ def get_commits_count():
 
 def get_issues_count():
     r = get_cached(
-        "https://api.github.com/repos/Daniel9650/idb/issues?state=all",
+        "https://api.github.com/repos/Daniel9650/idb/issues?state=all&per_page=100",
         "issues-cache")
 
     issues_count = get_default_count()
