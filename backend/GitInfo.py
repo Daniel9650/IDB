@@ -44,7 +44,9 @@ def get_commits_count():
     for contributor in r:
         login_name = contributor["author"]["login"]
         if login_name != "gitbook-bot":
-            commits_count[login_name] = contributor["total"]
+            commits_count[login_name] += contributor["total"]
+        else:
+            commits_count['gerlou'] += contributor["total"]
 
     insert_total(commits_count)
     return commits_count
