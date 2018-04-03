@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-
+import PageMod from './PageMod.js';
 import { Container, Row } from 'reactstrap';
-import data from '../../data/mock.json';
 import CardGrid from './CardGrid.js';
 
 class Model extends Component {
@@ -12,17 +11,6 @@ class Model extends Component {
    }
 
    render() {
-      var instances = [];
-
-      if(this.props.type === "Movies")
-         instances = data.movies;
-      else if(this.props.type === "Books")
-         instances = data.books;
-      else if(this.props.type === "Music")
-         instances = data.music;
-      else
-         instances = data.topics;
-
       var name = this.props.type + " Title";
       return (
          <Container className="spacing-div">
@@ -31,8 +19,8 @@ class Model extends Component {
             <Row>
             </Row>
             <CardGrid
-               instances={instances}
                type={this.props.type}
+               pageNum={this.props.pageNum}
                />
 
 

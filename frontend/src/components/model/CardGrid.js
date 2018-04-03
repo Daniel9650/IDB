@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Row, CardDeck } from 'reactstrap';
 import CardMod from './CardMod.js';
+import PageMod from './PageMod.js';
 
 
 class CardGrid extends Component {
@@ -21,7 +22,7 @@ class CardGrid extends Component {
    }
    componentDidMount() {
       if(this.props.type === "Movies"){
-           fetch("http://api.poptopic.org/movies/")
+           fetch("http://api.poptopic.org/movies?page=" + this.props.pageNum)
            .then(res => res.json())
            .then(
             (result) => {
@@ -42,7 +43,7 @@ class CardGrid extends Component {
            )
       }
       else if(this.props.type === "Books"){
-         fetch("http://api.poptopic.org/books/")
+         fetch("http://api.poptopic.org/books?page=" + this.props.pageNum)
          .then(res => res.json())
          .then(
           (result) => {
@@ -63,7 +64,7 @@ class CardGrid extends Component {
          )
       }
       else if(this.props.type === "Music"){
-         fetch("http://api.poptopic.org/songs/")
+         fetch("http://api.poptopic.org/songs?page=" + this.props.pageNum)
          .then(res => res.json())
          .then(
           (result) => {
@@ -84,7 +85,7 @@ class CardGrid extends Component {
          )
       }
       else{
-         fetch("http://api.poptopic.org/topics/")
+         fetch("http://api.poptopic.org/topics?page=" + this.props.pageNum)
          .then(res => res.json())
          .then(
           (result) => {
@@ -171,11 +172,18 @@ class CardGrid extends Component {
       }
       else {
          return (
+            <div>
                <CardDeck>
 
                   {this.createCards(data)}
 
                </CardDeck>
+               <PageMod
+                  totalPages={data.total_pages}
+                  type={this.props.type}
+                  currentPage={this.props.pageNum}
+               />
+            </div>
             );
       }
    }
