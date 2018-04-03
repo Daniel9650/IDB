@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import NotFound from '../NotFound.js';
+import NotFound from '../global/NotFound.js';
 import data from '../../data/mock_topic.json';
-import RelatedGrid from '../RelatedGrid.js';
+import RelatedGrid from './RelatedGrid.js';
 
 import {
   Container,

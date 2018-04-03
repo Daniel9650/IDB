@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Container, Row, Col } from 'reactstrap';
 import LogoGrid from './LogoGrid.js'
 import BioGrid from './BioGrid.js';
-import NotFound from '../NotFound.js';
+import NotFound from '../global/NotFound.js';
 
 class About extends Component {
    constructor(props) {

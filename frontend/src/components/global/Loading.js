@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import loadingSymbol from '../loading.png';
+import loadingSymbol from '../../loading.png';
 
 class Loading extends Component {
 

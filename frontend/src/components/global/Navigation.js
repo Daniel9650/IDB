@@ -31,7 +31,7 @@ class Navigation extends Component {
       	<div>
       		<Navbar className="navbar navbar-expand-md fixed-top navbar-dark">
       			<NavbarBrand href="/home">
-                  <img  name="home-logo-link" className="brand-logo" src={require('../logo.png')} />
+                  <img  name="home-logo-link" className="brand-logo" src={require('../../logo.png')} />
                </NavbarBrand>
       			<NavbarToggler onClick={this.toggle} />
       			<Collapse isOpen={this.state.isOpen} navbar>

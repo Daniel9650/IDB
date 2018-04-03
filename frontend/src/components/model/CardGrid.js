@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Container, Row, CardDeck } from 'reactstrap';
 import CardMod from './CardMod.js';
 import PageMod from './PageMod.js';
-import Loading from '../Loading.js';
-import APIError from '../APIError.js';
+import Loading from '../global/Loading.js';
+import APIError from '../global/APIError.js';
 
 class CardGrid extends Component {
 

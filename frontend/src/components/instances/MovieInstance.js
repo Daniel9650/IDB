@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-import RelatedGrid from '../RelatedGrid.js';
-import NotFound from '../NotFound.js';
+import RelatedGrid from './RelatedGrid.js';
+import NotFound from '../global/NotFound.js';
 
 import {
   Container,
