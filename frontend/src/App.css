@@ -337,3 +337,15 @@ a:hover {
 .App {
   text-align: center;
 }
+
+.loading-icon {
+   animation: loading-spin infinite 5s linear;
+   width: 500px;
+   height: 500px;
+
+}
+
+@keyframes loading-spin {
+   from { transform: rotate(0deg); }
+   to { transform: rotate(360deg); }
+}

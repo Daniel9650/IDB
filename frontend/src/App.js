@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+
 import './App.css';
 import MovieInstance from './components/movie/MovieInstance.js';
 import MusicInstance from './components/music/MusicInstance.js';

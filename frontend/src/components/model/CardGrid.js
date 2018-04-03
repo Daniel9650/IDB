@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Container, Row, CardDeck } from 'reactstrap';
 import CardMod from './CardMod.js';
 import PageMod from './PageMod.js';
-
+import Loading from '../Loading.js';
+import APIError from '../APIError.js';
 
 class CardGrid extends Component {
 
@@ -165,10 +166,10 @@ class CardGrid extends Component {
       const { error, isLoaded, data } = this.state;
 
       if (error) {
-        return <div>Error: {error.message}</div>;
+        return <APIError />;
       }
       else if (!isLoaded) {
-        return <div>Loading...</div>;
+        return <Loading />;
       }
       else {
          return (
