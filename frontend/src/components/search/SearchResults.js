@@ -113,14 +113,14 @@ class SearchResults extends Component {
       var id = "";
       var actors = [];
       var director = "";
-      var author = "";
+      var authors = [];
       var album = "";
       var artists = [];
 
       if (this.props.type === "Movies") {
          name= instance.movie_name;
          id= instance.movie_id;
-         actors = instance.actors;
+         actors = instance.cast;
          director = instance.director;
       }
       else if (this.props.type === "Music") {
@@ -132,7 +132,7 @@ class SearchResults extends Component {
       else if (this.props.type === "Books") {
          name= instance.book_name;
          id= instance.book_id;
-         author = instance.author;
+         authors = instance.authors;
       }
       else {
          name= instance.topic_name;
@@ -152,7 +152,7 @@ class SearchResults extends Component {
          director = {director}
          artists = {artists}
          album = {album}
-         author = {author}
+         authors = {authors}
          />;
    }
 
@@ -177,7 +177,7 @@ class SearchResults extends Component {
                   {this.createCards(data)}
 
                </CardDeck>
-               
+
             </div>
             );
       }

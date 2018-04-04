@@ -4,6 +4,10 @@ import CardMod from './CardMod.js';
 import PageMod from './PageMod.js';
 import Loading from '../global/Loading.js';
 import APIError from '../global/APIError.js';
+import MovieFilters from './MovieFilters.js';
+import MusicFilters from './MusicFilters.js';
+import BookFilters from './BookFilters.js';
+import TopicFilters from './TopicFilters.js';
 
 class CardGrid extends Component {
 
@@ -12,102 +16,73 @@ class CardGrid extends Component {
       this.createCard = this.createCard.bind(this);
       this.createCards = this.createCards.bind(this);
       this.count = 0;
+      this.fetchData = this.fetchData.bind(this);
+      this.setFilters = this.setFilters.bind(this);
+
+      var qType = "";
+      if(this.props.type === "Music")
+         qType = "songs";
+      else
+         qType= this.props.type.toLowerCase();
 
       this.state = {
       	isOpen: false,
          error: null,
          isLoaded: false,
-         data: []
+         data: [],
+         sort: 'title_asc',
+         filters: [],
+         type: this.props.type,
+         queryType: qType
     	};
 
    }
+
+   setFilters(filters, sort){
+
+      this.setState({filters: filters, sort: sort}, this.fetchData);
+   }
+
+   fetchData(){
+      var filters = this.state.filters.map(function(filter){
+         return "filter=" + filter.filter + "&q=" + filter.query;
+      });
+      var stringQuery = filters.join("&");
+      stringQuery = "sort=" + this.state.sort + "&" + stringQuery;
+
+        fetch("http://api.poptopic.org/" + this.state.queryType + "?" + stringQuery + "&page=" + this.props.pageNum)
+        .then(res => res.json())
+        .then(
+         (result) => {
+            this.setState({
+              isLoaded: true,
+              data: result
+            });
+         },
+         // Note: it's important to handle errors here
+         // instead of a catch() block so that we don't swallow
+         // exceptions from actual bugs in components.
+         (error) => {
+            this.setState({
+              isLoaded: true,
+              error
+            });
+         }
+        )
+   }
    componentDidMount() {
-      if(this.props.type === "Movies"){
-           fetch("http://api.poptopic.org/movies?page=" + this.props.pageNum)
-           .then(res => res.json())
-           .then(
-            (result) => {
-               this.setState({
-                 isLoaded: true,
-                 data: result
-               });
-            },
-            // Note: it's important to handle errors here
-            // instead of a catch() block so that we don't swallow
-            // exceptions from actual bugs in components.
-            (error) => {
-               this.setState({
-                 isLoaded: true,
-                 error
-               });
-            }
-           )
-      }
-      else if(this.props.type === "Books"){
-         fetch("http://api.poptopic.org/books?page=" + this.props.pageNum)
-         .then(res => res.json())
-         .then(
-          (result) => {
-             this.setState({
-               isLoaded: true,
-               data: result
-             });
-          },
-          // Note: it's important to handle errors here
-          // instead of a catch() block so that we don't swallow
-          // exceptions from actual bugs in components.
-          (error) => {
-             this.setState({
-               isLoaded: true,
-               error
-             });
-          }
-         )
-      }
-      else if(this.props.type === "Music"){
-         fetch("http://api.poptopic.org/songs?page=" + this.props.pageNum)
-         .then(res => res.json())
-         .then(
-          (result) => {
-             this.setState({
-               isLoaded: true,
-               data: result
-             });
-          },
-          // Note: it's important to handle errors here
-          // instead of a catch() block so that we don't swallow
-          // exceptions from actual bugs in components.
-          (error) => {
-             this.setState({
-               isLoaded: true,
-               error
-             });
-          }
-         )
-      }
-      else{
-         fetch("http://api.poptopic.org/topics?page=" + this.props.pageNum)
-         .then(res => res.json())
-         .then(
-          (result) => {
-             this.setState({
-               isLoaded: true,
-               data: result
-             });
-          },
-          // Note: it's important to handle errors here
-          // instead of a catch() block so that we don't swallow
-          // exceptions from actual bugs in components.
-          (error) => {
-             this.setState({
-               isLoaded: true,
-               error
-             });
-          }
-         )
-      }
+      this.fetchData();
+   }
 
-
+   addFilters(){
+      if(this.props.type === "Movies")
+         return <MovieFilters setFilters={this.setFilters}/>;
+      else if(this.props.type === "Music")
+         return <MusicFilters setFilters={this.setFilters}/>;
+      else if(this.props.type === "Books")
+         return <BookFilters setFilters={this.setFilters}/>;
+      else
+         return <TopicFilters />;
    }
 
    createCard(instance) {
@@ -115,14 +90,13 @@ class CardGrid extends Component {
       var id = "";
       var actors = [];
       var director = "";
-      var author = "";
+      var authors = [];
       var album = "";
       var artists = [];
-
       if (this.props.type === "Movies") {
          name= instance.movie_name;
          id= instance.movie_id;
-         actors = instance.actors;
+         actors = instance.cast;
          director = instance.director;
       }
       else if (this.props.type === "Music") {
@@ -134,7 +108,7 @@ class CardGrid extends Component {
       else if (this.props.type === "Books") {
          name= instance.book_name;
          id= instance.book_id;
-         author = instance.author;
+         authors = instance.authors;
       }
       else {
          name= instance.topic_name;
@@ -154,7 +128,7 @@ class CardGrid extends Component {
          director = {director}
          artists = {artists}
          album = {album}
-         author = {author}
+         authors = {authors}
          />;
    }
 
@@ -174,6 +148,10 @@ class CardGrid extends Component {
       else {
          return (
             <div>
+               <Row>
+                  {this.addFilters()}
+               </Row>
+               <hr className="divider" />
                <CardDeck>
 
                   {this.createCards(data)}

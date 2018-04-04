@@ -32,22 +32,23 @@ class CardMod extends Component {
    textContent() {
       switch (this.props.type) {
          case "Movies":
-            //var actors = this.props.actors.join(", ");
+            var actors = this.props.actors.join(", ");
             return (
                <div>
                <CardText>Topics: {this.getTopicNames(this.props.topics)}</CardText>
                <CardText>Release: {this.props.date}</CardText>
-               <CardText>Acting: {this.props.acting}</CardText>
+               <CardText>Acting: {actors}</CardText>
                <CardText>Directing: {this.props.director}</CardText>
                </div>
             );
 
          case "Books":
+            var authors = this.props.authors.join(", ");
             return (
                <div>
                <CardText>Topics: {this.getTopicNames(this.props.topics)}</CardText>
                <CardText>Release: {this.props.date}</CardText>
-               <CardText>Author: {this.props.author}</CardText>
+               <CardText>Author: {authors}</CardText>
                </div>
             );
 
