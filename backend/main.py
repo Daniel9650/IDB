@@ -35,6 +35,8 @@ class Movies(Base):
     topics = Column(String())
     similar_books = Column(String())
     similar_songs = Column(String())
+    director = Column(String())
+    cast = Column(String())
 
     def __init__(self, movie):
         self.movie_id = movie.id
@@ -46,11 +48,15 @@ class Movies(Base):
         self.topics = json.dumps(movie.topics)
         self.similar_books = json.dumps(movie.similar_books)
         self.similar_songs = json.dumps(movie.similar_songs)
+        self.director = remove_non_ascii(movie.description)
+        self.cast = remove_non_ascii(json.dumps(movie.cast))
 
     def as_dict(self):
         model_dict = {
             "movie_id": self.movie_id,
             "movie_name": self.movie_name,
+            "director": self.director,
+            "cast": ast.literal_eval(self.cast),
             "description": self.description,
             "release_date": self.release_date,
             "poster_url": self.poster_url,
