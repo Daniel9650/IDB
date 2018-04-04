@@ -11,6 +11,7 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem } from 'reactstrap';
+import SearchBar from '../search/SearchBar.js';
 
 
 class Navigation extends Component {
@@ -36,6 +37,7 @@ class Navigation extends Component {
       			<NavbarToggler onClick={this.toggle} />
       			<Collapse isOpen={this.state.isOpen} navbar>
       				<Nav className="ml-auto" navbar>
+                     <SearchBar />
                      <NavItem>
                         <NavLink name="home-link" className="navbar-link" href="/home">Home</NavLink>
                      </NavItem>

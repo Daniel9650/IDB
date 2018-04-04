@@ -10,6 +10,7 @@ import Navigation from './components/global/Navigation.js';
 import Home from './components/home/Home.js';
 import About from './components/about/About.js';
 import Model from './components/model/Model.js';
+import SearchPage from './components/search/SearchPage.js';
 import { Router, Route, Link, IndexRoute } from 'react-router';
 
 class App extends Component {
@@ -31,6 +32,7 @@ class App extends Component {
          <Route path='/topics/:id' component={TopicInstance} />
          <Route path='/about' component={About}/>
          <Route path='/home' component={Home}/>
+         <Route path='/search&q=:query' component={SearchPage} />
          <Route exact path='/' component={Home} />
       </div>
     );

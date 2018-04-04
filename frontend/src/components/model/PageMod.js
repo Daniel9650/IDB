@@ -71,8 +71,6 @@ class PageMod extends Component {
 
    render() {
       var pages = Array(this.props.totalPages).fill().map((e, i)=>i+1);
-      console.log(this.props.currentPage)
-      console.log(this.props.totalPages)
       return (
          <Pagination>
             {this.createPrev()}
