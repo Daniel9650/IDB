@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
-import AuthorFilter from './AuthorFilter.js';
-import TopicFilter from './TopicFilter.js';
+import { Row, Col } from 'reactstrap';
+import TopicFilter from './filters/TopicFilter.js';
+import CastFilter from './filters/CastFilter.js';
+import DirectorFilter from './filters/DirectorFilter.js';
+import DateFilter from './filters/DateFilter.js';
+import Sort from './filters/Sort.js';
 import topicDict from '../../data/topic_dictionary.json';
 
 class MovieFilters extends Component {
@@ -23,7 +27,15 @@ class MovieFilters extends Component {
       this.setDateFilter = this.setDateFilter.bind(this);
       this.combineFilters = this.combineFilters.bind(this);
       this.getTopicID = this.getTopicID.bind(this);
+      this.setSort = this.setSort.bind(this);
 
+   }
+
+   setSort(option){
+      var sort = "title_asc";
+      if(option != null)
+         sort = option.value;
+      this.setState({sort: sort}, this.combineFilters);
    }
 
    setCastFilter(option){
@@ -85,7 +97,29 @@ class MovieFilters extends Component {
    render(){
       return(
          <div>
-            <TopicFilter setFilter={this.setTopicFilter} />
+            <Row>
+               <Col xs="2">
+                  <h5>Topic:</h5>
+                  <TopicFilter setFilter={this.setTopicFilter} />
+               </Col>
+               <Col xs="3">
+                  <h5>Acting:</h5>
+                  <CastFilter setFilter={this.setCastFilter} />
+               </Col>
+               <Col xs="3">
+                  <h5>Directing:</h5>
+                  <DirectorFilter setFilter={this.setDirectorFilter} />
+               </Col>
+               <Col xs="2">
+                  <h5>Release Year:</h5>
+                  <DateFilter setFilter={this.setDateFilter} />
+               </Col>
+               <Col xs="2">
+                  <h5>Sort By:</h5>
+                  <Sort setFilter={this.setSort} />
+               </Col>
+            </Row>
+            <hr className="divider" />
          </div>
       );
    }

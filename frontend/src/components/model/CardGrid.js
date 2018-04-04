@@ -148,10 +148,8 @@ class CardGrid extends Component {
       else {
          return (
             <div>
-               <Row>
                   {this.addFilters()}
-               </Row>
-               <hr className="divider" />
+               
                <CardDeck>
 
                   {this.createCards(data)}

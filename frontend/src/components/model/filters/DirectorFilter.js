@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
 
-class TopicFilter extends Component {
+class DirectorFilter extends Component {
 
    constructor(props){
       super(props);
@@ -18,21 +18,20 @@ class TopicFilter extends Component {
    render(){
       return(
          <Select
-            name="author-filter"
+            name="director-filter"
             value={this.state.selectedOption}
             onChange={this.handleChange}
             clearable={true}
             searchable={true}
             options={[
-               {value: 'Action', label: 'Action'},
-               {value: 'Adventure', label: 'Adventure'},
-               {value: 'Animation', label: 'Animation'},
-               {value: 'Comedy', label: 'Comedy'},
-               {value: 'Mystery', label: 'Mystery'},
+               {value: 'Joss Whedon', label: 'Joss Whedon'},
+               {value: 'Alex Garland', label: 'Alex Garland'},
+               {value: 'James', label: 'James'},
+               {value: 'Smith', label: 'Smith'},
             ]}
          />
       );
    }
 }
 
-export default TopicFilter;
+export default DirectorFilter;
