@@ -24,6 +24,8 @@ class MovieEntity(declarative_base()):
 
     movie_id = Column(String(), primary_key=True)
     movie_name = Column(String())
+    director = Column(String())
+    cast = Column(String())
     description = Column(String())
     release_date = Column(String())
     poster_url = Column(String())
@@ -35,11 +37,14 @@ class MovieEntity(declarative_base()):
     def __init__(self, movie):
         self.movie_id = movie.id
         self.movie_name = remove_non_ascii(movie.name)
+        self.director = remove_non_ascii(movie.director)
+        self.cast = remove_non_ascii(json.dumps(movie.cast))
         self.description = remove_non_ascii(movie.description)
         self.release_date = movie.release
         self.poster_url = movie.poster_url
         self.trailer_url = movie.trailer_url.split("?v=").pop()
-        self.topics = json.dumps(list(map(TopicEntity.get_topic_id, movie.topics)))
+        self.topics = json.dumps(
+            list(map(TopicEntity.get_topic_id, movie.topics)))
         self.similar_books = json.dumps(movie.similar_books)
         self.similar_songs = json.dumps(movie.similar_songs)
 
@@ -48,6 +53,8 @@ class Movie:
 
     def __init__(self):
         self.name = ""
+        self.director = ""
+        self.cast = []
         self.description = ""
         self.release = ""
         self.poster_url = ""
@@ -60,6 +67,8 @@ class Movie:
     def __str__(self):
         ret = ""
         ret += "Movie name: " + self.name + "\n"
+        ret += "Director: " + self.director + "\n"
+        ret += "Cast: " + str(self.cast) + "\n"
         ret += "Description: " + self.description + "\n"
         ret += "Release date: " + self.release + "\n"
         ret += "Trailer url: " + self.trailer_url + "\n"
@@ -91,7 +100,8 @@ class BookEntity(declarative_base()):
         self.authors = remove_non_ascii(json.dumps(book.authors))
         self.release_date = book.release
         self.poster_url = book.poster_url
-        self.topics = json.dumps(list(map(TopicEntity.get_topic_id, book.topics)))
+        self.topics = json.dumps(
+            list(map(TopicEntity.get_topic_id, book.topics)))
         self.similar_movies = json.dumps(book.similar_movies)
         self.similar_songs = json.dumps(book.similar_songs)
 
@@ -149,7 +159,8 @@ class SongEntity(declarative_base()):
         self.poster_url = song.poster_url
         self.youtube_url = song.youtube_url.split("?v=").pop()
         self.release_date = song.release
-        self.topics = json.dumps(list(map(TopicEntity.get_topic_id, song.topics)))
+        self.topics = json.dumps(
+            list(map(TopicEntity.get_topic_id, song.topics)))
         self.similar_movies = json.dumps(song.similar_movies)
         self.similar_books = json.dumps(song.similar_books)
 
@@ -286,6 +297,27 @@ def extract_movie_info(response, genres_dict):
 
     movie.trailer_url = get_youtube_url(movie.name + " trailer")
 
+    credits = requests.get(
+        "https://api.themoviedb.org/3/movie/" +
+        movie.id +
+        "/credits?api_key=21fed2c614e1de3b61f64b89beb692a5")
+    credits = credits.json()
+    crew = credits["crew"]
+    for person in crew:
+        if person["job"] == "Director":
+            movie.director = person["name"]
+            break
+
+    limit = 5
+    cast = credits["cast"]
+    for person in cast:
+        if limit <= 0:
+            break
+        limit -= 1
+        name = remove_non_ascii(person["name"])
+        if not name.isspace():
+            movie.cast.append(name)
+
     return movie
 
 
@@ -311,7 +343,8 @@ def get_top_movies():
 
         for result in movies["results"]:
             movie = extract_movie_info(result, genres_dict)
-            ret_movies[movie.id] = movie
+            if movie.name != "15+ IQ Krachoot":
+                ret_movies[movie.id] = movie
 
     return ret_movies
 
@@ -326,7 +359,8 @@ def extract_book_info(response, book_topic):
     book.authors = book_dict["authors"]
     if "description" in book_dict:
         book.description = book_dict["description"]
-    book.release = book_dict["publishedDate"]
+    if "publishedDate" in book_dict:
+        book.release = book_dict["publishedDate"]
     book.poster_url = book_dict["imageLinks"]["thumbnail"]
     book.topics.append(book_topic)
     """
@@ -360,11 +394,14 @@ def get_top_books(topics):
 
 
 def extract_song_info(response, song_topic, spotify_api):
-    playlist_href = response["href"]
-
-    track_dict = spotify_api.query(
-        playlist_href)["tracks"]["items"][0]["track"]
     song = Song()
+
+    playlist_href = response["href"]
+    save = spotify_api.query(playlist_href)
+    if "tracks" not in save:
+        return song
+
+    track_dict = save["tracks"]["items"][0]["track"]
     song.name = track_dict["name"]
     song.id = str(track_dict["id"])
     for artist in track_dict["artists"]:
@@ -521,11 +558,13 @@ def get_media_from_db():
     q = session.query(MovieEntity)
     for instance in q:
         print(instance.movie_id, instance.movie_name, instance.trailer_url)
+        print("cast " + instance.cast)
+        print("director " + instance.director)
 
     print("\nPrinting Books: ")
     q = session.query(BookEntity)
     for instance in q:
-        print(instance.book_id, instance.book_name)
+        print(instance.book_id, instance.book_name, instance.authors)
 
     print("\nPrinting Songs: ")
     q = session.query(SongEntity)
