@@ -37,7 +37,9 @@ class Navigation extends Component {
       			<NavbarToggler onClick={this.toggle} />
       			<Collapse isOpen={this.state.isOpen} navbar>
       				<Nav className="ml-auto" navbar>
-                     <SearchBar />
+                     <SearchBar
+                        handleSearch={this.handleSearch}
+                     />
                      <NavItem>
                         <NavLink name="home-link" className="navbar-link" href="/home">Home</NavLink>
                      </NavItem>

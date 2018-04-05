@@ -19,17 +19,13 @@ class App extends Component {
     return (
       <div>
          <Navigation />
-         <Route exact path='/movies' component={MovieModel} />
-         <Route exact path='/movies&page=:pageNum' component={MovieModel} />
+         <Route exact path='/movies' render={()=>{return <Model type="Movies"/>}} />
          <Route path='/movies/:id' component={MovieInstance} />
-         <Route exact path='/books' component={BooksModel} />
-         <Route exact path='/books&page=:pageNum' component={BooksModel} />
+         <Route exact path='/books' render={()=>{return <Model type="Books"/>}} />
          <Route path='/books/:id' component={BookInstance} />
-         <Route exact path='/music' component={MusicModel} />
-         <Route exact path='/music&page=:pageNum' component={MusicModel} />
+         <Route exact path='/music' render={()=>{return <Model type="Music"/>}} />
          <Route path='/music/:id' component={MusicInstance} />
-         <Route exact path='/topics' component={TopicModel} />
-         <Route exact path='/topics&page=:pageNum' component={TopicModel} />
+         <Route exact path='/topics' render={()=>{return <Model type="Topics"/>}} />
          <Route path='/topics/:id' component={TopicInstance} />
          <Route path='/about' component={About}/>
          <Route path='/home' component={Home}/>
@@ -42,56 +38,6 @@ class App extends Component {
   }
 }
 
-let MovieModel = (props)=> {
-   console.log(props);
-   var page = 1;
-   if(props.match.params.pageNum != null)
-      page = props.match.params.pageNum;
-   return (
-      <Model
-         type="Movies"
-         pageNum={page}
-         />
-   );
-};
-
-let BooksModel = (props)=> {
-   console.log(props);
-   var page = 1;
-   if(props.match.params.pageNum != null)
-      page = props.match.params.pageNum;
-   return (
-      <Model
-         type="Books"
-         pageNum={page}
-         />
-   );
-};
-
-let MusicModel = (props)=> {
-   console.log(props);
-   var page = 1;
-   if(props.match.params.pageNum != null)
-      page = props.match.params.pageNum;
-   return (
-      <Model
-         type="Music"
-         pageNum={page}
-         />
-   );
-};
-let TopicModel = (props)=> {
-   console.log(props);
-   var page = 1;
-   if(props.match.params.pageNum != null)
-      page = props.match.params.pageNum;
-   return (
-      <Model
-         type="Topics"
-         pageNum={page}
-         />
-   );
-};
 
 
 export default App;

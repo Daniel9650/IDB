@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { Container, Row, CardDeck } from 'reactstrap';
 import CardMod from './CardMod.js';
-import PageMod from './PageMod.js';
 import Loading from '../global/Loading.js';
 import APIError from '../global/APIError.js';
 import MovieFilters from './MovieFilters.js';
 import MusicFilters from './MusicFilters.js';
 import BookFilters from './BookFilters.js';
-import TopicFilters from './TopicFilters.js';
+import Pagination from './Pagination.js';
 
 class CardGrid extends Component {
 
@@ -18,6 +17,7 @@ class CardGrid extends Component {
       this.count = 0;
       this.fetchData = this.fetchData.bind(this);
       this.setFilters = this.setFilters.bind(this);
+      this.setPage = this.setPage.bind(this);
 
       var qType = "";
       if(this.props.type === "Music")
@@ -33,24 +33,28 @@ class CardGrid extends Component {
          sort: 'title_asc',
          filters: [],
          type: this.props.type,
-         queryType: qType
+         queryType: qType,
+         currentPage: 1
     	};
 
    }
 
    setFilters(filters, sort){
 
-      this.setState({filters: filters, sort: sort}, this.fetchData);
+      this.setState({filters: filters, sort: sort, currentPage: 1}, this.fetchData);
    }
 
    fetchData(){
-      var filters = this.state.filters.map(function(filter){
-         return "filter=" + filter.filter + "&q=" + filter.query;
-      });
-      var stringQuery = filters.join("&");
+      var stringQuery = "";
+      if(this.state.filters.length != 0){
+         var filters = this.state.filters.map(function(filter){
+            return "filter=" + filter.filter + "&q=" + filter.query;
+         });
+      stringQuery = filters.join("&");
+      }
       stringQuery = "sort=" + this.state.sort + "&" + stringQuery;
 
-        fetch("http://api.poptopic.org/" + this.state.queryType + "?" + stringQuery + "&page=" + this.props.pageNum)
+        fetch("http://api.poptopic.org/" + this.state.queryType + "?" + stringQuery + "&page=" + this.state.currentPage)
         .then(res => res.json())
         .then(
          (result) => {
@@ -74,6 +78,11 @@ class CardGrid extends Component {
       this.fetchData();
    }
 
+   setPage(pageNum) {
+      console.log(pageNum);
+      this.setState({currentPage: pageNum, isLoaded: false}, this.fetchData);
+   }
+
    addFilters(){
       if(this.props.type === "Movies")
          return <MovieFilters setFilters={this.setFilters}/>;
@@ -82,7 +91,7 @@ class CardGrid extends Component {
       else if(this.props.type === "Books")
          return <BookFilters setFilters={this.setFilters}/>;
       else
-         return <TopicFilters />;
+         return null;
    }
 
    createCard(instance) {
@@ -149,16 +158,18 @@ class CardGrid extends Component {
          return (
             <div>
                   {this.addFilters()}
-               
+
                <CardDeck>
 
                   {this.createCards(data)}
 
                </CardDeck>
-               <PageMod
+
+               <Pagination
                   totalPages={data.total_pages}
                   type={this.props.type}
-                  currentPage={this.props.pageNum}
+                  onClick={this.setPage}
+                  currentPage={this.state.currentPage}
                />
             </div>
             );

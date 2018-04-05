@@ -3,7 +3,6 @@ import { CardDeck } from 'reactstrap';
 import CardMod from '../model/CardMod.js';
 import Loading from '../global/Loading.js';
 import APIError from '../global/APIError.js';
-import PageMod from '../model/PageMod.js';
 
 class SearchResults extends Component {
 
