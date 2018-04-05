@@ -139,20 +139,18 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "799af34a-2963-450b-aeef-8e964308b833",
+						"id": "7685b3ed-d823-4398-acf8-40c6f44ca0ae",
 						"type": "text/javascript",
 						"exec": [
 							"var jsonData = pm.response.json();",
 							"tests[\"testing total results\"] = jsonData.num_results === 3;",
 							"",
 							"var jsonData = pm.response.json();",
-							"tests[\"testing first book name\"] = jsonData.objects[0].book_name === \"Kalona's Fall\";",
+							"tests[\"testing first book name\"] = jsonData.objects[0].book_name === \"Batman Undercover\";",
 							"",
 							"var jsonData = pm.response.json();",
-							"tests[\"testing second book author\"] = jsonData.objects[1].authors[0] === \"Christopher Paolini\";",
+							"tests[\"testing second book author\"] = jsonData.objects[1].authors[0] === \"Zack Giallongo\";",
 							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"testing second book name\"] = jsonData.objects[1].book_name === \"Eragon\";",
 							"",
 							"",
 							""
@@ -187,17 +185,16 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "0a7a47d9-82d2-4035-b99b-ee9c1cb3b8b3",
+						"id": "51e3a2cb-162f-4dac-84eb-6362192380d2",
 						"type": "text/javascript",
 						"exec": [
 							"var jsonData = pm.response.json();",
-							"tests[\"testing first song name\"] = jsonData.objects[0].song_name === \"Drive My Car - Remastered\";",
+							"tests[\"testing first song name\"] = jsonData.objects[0].song_name === \"Bandeya - From \\\"Dil Juunglee\\\"\";",
 							"",
 							"var jsonData = pm.response.json();",
-							"tests[\"testing first song artists\"] = jsonData.objects[0].artists[0] === \"The Beatles\";",
+							"tests[\"testing first song artists\"] = jsonData.objects[0].artists[0] === \"Sharib Toshi\";",
 							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"testing similar movies\"] = jsonData.objects[0].similar_movies[1] === \"394823\";",
+							"",
 							"",
 							"",
 							"",
@@ -230,93 +227,19 @@
 			"response": []
 		},
 		{
-			"name": "get topics for a movie",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "974c9e22-de7a-41af-90ec-2dba314a08b8",
-						"type": "text/javascript",
-						"exec": [
-							"var jsonData = pm.response.json();",
-							"tests[\"testing similar books\"] = jsonData.objects[0].similar_books[1] === \"qs9omwz0xakC\";",
-							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"testing second object's similar movies\"] = jsonData.objects[1].similar_movies[2] === \"338970\";",
-							"",
-							""
-						]
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"url": {
-					"raw": "api.poptopic.org/movies/10195/topics",
-					"host": [
-						"api",
-						"poptopic",
-						"org"
-					],
-					"path": [
-						"movies",
-						"10195",
-						"topics"
-					]
-				},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "sort topics for movie",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"url": {
-					"raw": "api.poptopic.org/movies/10195/topics?sort=title_desc",
-					"host": [
-						"api",
-						"poptopic",
-						"org"
-					],
-					"path": [
-						"movies",
-						"10195",
-						"topics"
-					],
-					"query": [
-						{
-							"key": "sort",
-							"value": "title_desc\n",
-							"equals": true
-						}
-					]
-				},
-				"description": ""
-			},
-			"response": []
-		},
-		{
 			"name": "test songs on a page",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "feea1fd3-0707-4e18-a004-d7f281e48fd4",
+						"id": "f71ce2e7-cb5e-4574-98b7-be32eb837124",
 						"type": "text/javascript",
 						"exec": [
 							"var jsonData = pm.response.json();",
-							"tests[\"test 1\"] = jsonData.objects[3].artists[1] === \"Arijit Singh\";",
+							"tests[\"test 1\"] = jsonData.objects[0].artists[0] === \"The Legendary Fruitman\";",
 							"",
 							"var jsonData = pm.response.json();",
-							"tests[\"test 2\"] = jsonData.page === 2;",
-							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"test 3\"] = jsonData.objects[0].song_id === \"7ob4BKZ9yFXI06HvQaUXvp\";",
+							"tests[\"test 2\"] = jsonData.objects[0].song_id === \"5F2BYm1CYEtFp4ydcluxBj\";",
 							""
 						]
 					}
@@ -354,17 +277,13 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "22c09428-1aa1-4bcb-b1f6-6f7b9847bd48",
+						"id": "e2bcc4be-ef67-4f40-9ef6-56ade27c4213",
 						"type": "text/javascript",
 						"exec": [
 							"var jsonData = pm.response.json();",
 							"tests[\"test 1\"] = jsonData.album === \"Rubber Soul (Remastered)\";",
 							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"test 2\"] = jsonData.similar_books[1] === \"hG2taPgR_tMC\";",
-							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"test 3\"] = jsonData.topics[0] === \"Family\";"
+							""
 						]
 					}
 				}
@@ -395,7 +314,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "5196000b-7b65-43b6-a95f-640d2e945862",
+						"id": "23b1f0e1-2926-40f2-8f83-a084b1e618de",
 						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
@@ -403,10 +322,9 @@
 							"});",
 							"",
 							"var jsonData = pm.response.json();",
-							"tests[\"test 2\"] = jsonData.objects[1].movie_name === \"Robby and Toby's Fantastic Voyager\";",
+							"tests[\"test 2\"] = jsonData.objects[1].movie_name === \"Zootopia\";",
 							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"test 1\"] = jsonData.objects[2].topics[2] === \"Comedy\";"
+							""
 						]
 					}
 				}
@@ -426,54 +344,6 @@
 						"songs",
 						"06ypiqmILMdVeaiErMFA91",
 						"similar_movies"
-					]
-				},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "get topics for a song",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "1b2a93c6-e5e0-477e-aadd-9d2511d89782",
-						"type": "text/javascript",
-						"exec": [
-							"var jsonData = pm.response.json();",
-							"tests[\"testing similar books\"] = jsonData.objects[0].similar_books[0] === \"svZQnw9mxRwC\";",
-							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"testing topic name\"] = jsonData.objects[0].topic_name === \"Family\";",
-							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"testing similar movies\"] = jsonData.objects[0].similar_movies[1] === \"150540\";",
-							"",
-							"",
-							"",
-							"",
-							"",
-							""
-						]
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"url": {
-					"raw": "api.poptopic.org/songs/06ypiqmILMdVeaiErMFA91/topics",
-					"host": [
-						"api",
-						"poptopic",
-						"org"
-					],
-					"path": [
-						"songs",
-						"06ypiqmILMdVeaiErMFA91",
-						"topics"
 					]
 				},
 				"description": ""
@@ -526,17 +396,16 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "e8988648-ef73-428f-917a-6944d2bad5a3",
+						"id": "ef86d689-17bf-42c7-9dbf-7989126128a3",
 						"type": "text/javascript",
 						"exec": [
 							"var jsonData = pm.response.json();",
-							"tests[\"test 1\"] = jsonData.objects[1].movie_name === \"Zootopia\";",
+							"tests[\"test 1\"] = jsonData.objects[0].movie_name === \"Coco\";",
 							"",
 							"var jsonData = pm.response.json();",
-							"tests[\"test 2\"] = jsonData.objects[0].release_date === 1980;",
+							"tests[\"test 2\"] = jsonData.objects[0].release_date === \"2017-10-27\";",
 							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"test 3\"] = jsonData.objects[2].trailer_url === \"Ga6RYejo6Hk\";"
+							""
 						]
 					}
 				}
@@ -568,17 +437,16 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "8e81ca5a-6293-4e05-ba6f-c8e8607a6aad",
+						"id": "c4effa26-5fcd-4271-82dd-c6af2723bd69",
 						"type": "text/javascript",
 						"exec": [
 							"var jsonData = pm.response.json();",
-							"tests[\"test 1\"] = jsonData.objects[0].authors[0] === \"Jayne Pilling\";",
+							"tests[\"test 1\"] = jsonData.objects[0].authors[0] === \"Carol Symes\";",
 							"",
 							"var jsonData = pm.response.json();",
-							"tests[\"test 2\"] = jsonData.objects[1].book_name === \"The Medusa Effect\";",
+							"tests[\"test 2\"] = jsonData.objects[1].book_name === \"A Midsummer Night's Dream Student Packet\";",
 							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"test 3\"] = jsonData.objects[2].similar_movies[2] === \"127585\";"
+							""
 						]
 					}
 				}
@@ -651,26 +519,19 @@
 			"response": []
 		},
 		{
-			"name": "get topics for a book",
+			"name": "get book's similar movies",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "2bff296f-3723-49bd-b7fa-b4e6872fd9be",
+						"id": "29b2b4dc-2faf-4da7-9928-fde744b8657a",
 						"type": "text/javascript",
 						"exec": [
 							"var jsonData = pm.response.json();",
-							"tests[\"testing similar books\"] = jsonData.objects[0].similar_books[2] === \"ktjKYsmHUGUC\";",
+							"tests[\"test 1\"] = jsonData.objects[0].director === \"Zack Snyder\";",
 							"",
 							"var jsonData = pm.response.json();",
-							"tests[\"testing topic name\"] = jsonData.objects[0].topic_name === \"Action\";",
-							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"testing similar songs\"] = jsonData.objects[0].similar_songs[1] === \"7gDwRzJhLs0fFHaGtMDJVM\";",
-							"",
-							"",
-							"",
-							"",
+							"tests[\"test 2\"] = jsonData.objects[0].similar_books[0] === \"qWG9qdUsFrMC\";",
 							"",
 							""
 						]
@@ -682,7 +543,7 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "api.poptopic.org/books/qWG9qdUsFrMC/topics",
+					"raw": "api.poptopic.org/books/qWG9qdUsFrMC/similar_movies",
 					"host": [
 						"api",
 						"poptopic",
@@ -691,48 +552,6 @@
 					"path": [
 						"books",
 						"qWG9qdUsFrMC",
-						"topics"
-					]
-				},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "get book's similar movies",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "9e768eb5-b53e-42bc-941f-c1478738d6ae",
-						"type": "text/javascript",
-						"exec": [
-							"var jsonData = pm.response.json();",
-							"tests[\"test 1\"] = jsonData.objects[0].movie_name === \"Beauty and the Beast\";",
-							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"test 2\"] = jsonData.objects[0].similar_books[1] === \"tWbVwZjv43kC\";",
-							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"test 3\"] = jsonData.objects[1].movie_id === 460793;"
-						]
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"url": {
-					"raw": "api.poptopic.org/books/srqNwxclV2QC/similar_movies",
-					"host": [
-						"api",
-						"poptopic",
-						"org"
-					],
-					"path": [
-						"books",
-						"srqNwxclV2QC",
 						"similar_movies"
 					]
 				},
@@ -746,17 +565,16 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "f3904c6a-0b9d-4ec8-a482-ecf779538409",
+						"id": "11c7ef87-0968-49a7-9ec6-05360f2be01a",
 						"type": "text/javascript",
 						"exec": [
 							"var jsonData = pm.response.json();",
-							"tests[\"test 1\"] = jsonData.objects[0].album === \"Death at My Door\";",
+							"tests[\"test 1\"] = jsonData.objects[0].album === \"Jules Verne - The Short Stories\";",
 							"",
 							"var jsonData = pm.response.json();",
-							"tests[\"test 2\"] = jsonData.objects[0].artists[0] === \"The Creepshow\";",
+							"tests[\"test 2\"] = jsonData.objects[0].artists[0] === \"Richard Mitchley\";",
 							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"test 3\"] = jsonData.objects[0].similar_movies[0] === \"396422\";"
+							""
 						]
 					}
 				}
@@ -766,7 +584,7 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "api.poptopic.org/books/x5nPG6nwyOQC/similar_songs",
+					"raw": "api.poptopic.org/books/qWG9qdUsFrMC/similar_songs",
 					"host": [
 						"api",
 						"poptopic",
@@ -774,99 +592,8 @@
 					],
 					"path": [
 						"books",
-						"x5nPG6nwyOQC",
+						"qWG9qdUsFrMC",
 						"similar_songs"
-					]
-				},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "get similar books for a topic",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "b33b8e9d-7bce-4f15-b629-03bdda521d23",
-						"type": "text/javascript",
-						"exec": [
-							"var jsonData = pm.response.json();",
-							"tests[\"test 1\"] = jsonData.objects[0].book_name === \"School\";",
-							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"test 2\"] = jsonData.objects[0].similar_movies[1] === \"353486\";",
-							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"test 3\"] = jsonData.objects[0].topics[0] === \"Comedy\";"
-						]
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"url": {
-					"raw": "api.poptopic.org/topics/e6b99f24d056d03f20b4/similar_books",
-					"host": [
-						"api",
-						"poptopic",
-						"org"
-					],
-					"path": [
-						"topics",
-						"e6b99f24d056d03f20b4",
-						"similar_books"
-					]
-				},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "get similar movies for a topic",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "aa44f270-97e8-49e6-9a9b-ca92aaf5c87b",
-						"type": "text/javascript",
-						"exec": [
-							"var jsonData = pm.response.json();",
-							"tests[\"test 1\"] = jsonData.page === 2;",
-							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"test 2\"] = jsonData.objects[0].poster_url === \"http://image.tmdb.org/t/p/w185/tWqifoYuwLETmmasnGHO7xBjEtt.jpg\";",
-							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"test 3\"] = jsonData.objects[0].topics[0] === \"Family\";"
-						]
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"url": {
-					"raw": "api.poptopic.org/topics/081fc8e8bd39e1dc72ca/similar_movies?page=2",
-					"host": [
-						"api",
-						"poptopic",
-						"org"
-					],
-					"path": [
-						"topics",
-						"081fc8e8bd39e1dc72ca",
-						"similar_movies"
-					],
-					"query": [
-						{
-							"key": "page",
-							"value": "2",
-							"equals": true
-						}
 					]
 				},
 				"description": ""
@@ -1138,48 +865,6 @@
 			"response": []
 		},
 		{
-			"name": "get songs for a topic",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "670b529b-a223-422d-87a2-ad344a11589b",
-						"type": "text/javascript",
-						"exec": [
-							"var jsonData = pm.response.json();",
-							"tests[\"test 1\"] = jsonData.objects[0].song_name === \"Death at My Door\";",
-							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"test 2\"] = jsonData.objects[1].similar_books[1] === \"iC3NxeDwLv0C\";",
-							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"test 3\"] = jsonData.objects[2].topics[0] === \"Horror\";"
-						]
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"url": {
-					"raw": "api.poptopic.org/topics/004bf6c9a40003140292/similar_songs",
-					"host": [
-						"api",
-						"poptopic",
-						"org"
-					],
-					"path": [
-						"topics",
-						"004bf6c9a40003140292",
-						"similar_songs"
-					]
-				},
-				"description": ""
-			},
-			"response": []
-		},
-		{
 			"name": "test for invalid attribute for given media type",
 			"event": [
 				{
@@ -1318,17 +1003,15 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "342a96df-8190-4ba4-8d64-eb31d95c06c6",
+						"id": "99d77eb2-92cf-4330-ad13-ac4adf8c308a",
 						"type": "text/javascript",
 						"exec": [
 							"var jsonData = pm.response.json();",
-							"tests[\"testing authors\"] = jsonData.objects[0].authors[0] === \"N. D. Wilson\";",
+							"tests[\"testing authors\"] = jsonData.objects[0].authors[0] === \"Zack Giallongo\";",
 							"",
 							"var jsonData = pm.response.json();",
-							"tests[\"testing book name\"] = jsonData.objects[1].book_name === \"Eragon\";",
+							"tests[\"testing book name\"] = jsonData.objects[1].book_name === \"Batman Undercover\";",
 							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"testing topics\"] = jsonData.objects[2].topics[0] === \"f8e19bfcbc718a84ee8e\";",
 							"",
 							"",
 							"",
@@ -1373,17 +1056,16 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "36053e3c-3828-408a-bd3e-5a22bae7794a",
+						"id": "22e2ec74-20d3-445b-bd80-08ebda91c2c5",
 						"type": "text/javascript",
 						"exec": [
 							"var jsonData = pm.response.json();",
-							"tests[\"test 1\"] = jsonData.objects[0].artists[0] === \"The Score\";",
+							"tests[\"test 1\"] = jsonData.objects[0].artists[0] === \"J.R.R. Tolkien\";",
 							"",
 							"var jsonData = pm.response.json();",
-							"tests[\"test 2\"] = jsonData.objects[0].album === \"Unstoppable\";",
+							"tests[\"test 2\"] = jsonData.objects[0].album === \"Voices of Yesteryear, Vol. 2\";",
 							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"test 3\"] = jsonData.objects[1].topics[0] === \"4f66b2bde693ae66204e\";",
+							"",
 							"",
 							"",
 							"",
@@ -1538,66 +1220,6 @@
 			"response": []
 		},
 		{
-			"name": "test filter for similar songs for a movie",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "84851fe4-c6de-4143-a009-8d78af1571a6",
-						"type": "text/javascript",
-						"exec": [
-							"var jsonData = pm.response.json();",
-							"tests[\"test 1\"] = jsonData.objects[0].artists[0] === \"Alessia Cara\";",
-							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"test 2\"] = jsonData.objects[0].album === \"Wild Things (The Remixes)\";",
-							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"test 3\"] = jsonData.objects[0].song_id === \"4rqXv1KKcTKa3d8nvPJd9z\";",
-							"",
-							"",
-							"",
-							"",
-							"",
-							""
-						]
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"url": {
-					"raw": "api.poptopic.org/movies/181808/similar_songs?filter=album&q=wild",
-					"host": [
-						"api",
-						"poptopic",
-						"org"
-					],
-					"path": [
-						"movies",
-						"181808",
-						"similar_songs"
-					],
-					"query": [
-						{
-							"key": "filter",
-							"value": "album",
-							"equals": true
-						},
-						{
-							"key": "q",
-							"value": "wild",
-							"equals": true
-						}
-					]
-				},
-				"description": ""
-			},
-			"response": []
-		},
-		{
 			"name": "test filter for songs",
 			"event": [
 				{
@@ -1661,7 +1283,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "4389667d-8be9-4e66-83ff-21e790879ed6",
+						"id": "4f10818e-deea-4fbf-95ff-71ca63bf3697",
 						"type": "text/javascript",
 						"exec": [
 							"var jsonData = pm.response.json();",
@@ -1670,8 +1292,7 @@
 							"var jsonData = pm.response.json();",
 							"tests[\"test 2\"] = jsonData.objects[2].artists[0] === \"The Animals\";",
 							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"test 3\"] = jsonData.objects[3].song_name === \"Duel of the Fates\";",
+							"",
 							"",
 							"",
 							"",
@@ -1764,126 +1385,19 @@
 			"response": []
 		},
 		{
-			"name": "sort similar books for a song",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "488ee85a-608a-4154-b15e-0b8190f1a787",
-						"type": "text/javascript",
-						"exec": [
-							"var jsonData = pm.response.json();",
-							"tests[\"test 1\"] = jsonData.objects[0].authors[1] === \"Kathleen McCartney\";",
-							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"test 2\"] = jsonData.objects[1].similar_movies[0] === \"353486\";",
-							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"test 3\"] = jsonData.objects[2].release_date === \"2002\";",
-							"",
-							"",
-							"",
-							"",
-							"",
-							""
-						]
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"url": {
-					"raw": "api.poptopic.org/songs/06ypiqmILMdVeaiErMFA91/similar_books?sort=title_desc",
-					"host": [
-						"api",
-						"poptopic",
-						"org"
-					],
-					"path": [
-						"songs",
-						"06ypiqmILMdVeaiErMFA91",
-						"similar_books"
-					],
-					"query": [
-						{
-							"key": "sort",
-							"value": "title_desc",
-							"equals": true
-						}
-					]
-				},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "test invalid filter for similar books for songs",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "5e6de811-fc25-4e7f-8942-119efefb7f5d",
-						"type": "text/javascript",
-						"exec": [
-							"pm.test(\"Status code is 404\", function () {",
-							"    pm.response.to.have.status(404);",
-							"});"
-						]
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"url": {
-					"raw": "api.poptopic.org/songs/1FGvbfMafLBdymgrtGAZYh/similar_books?filter=movie_name&q=avengers",
-					"host": [
-						"api",
-						"poptopic",
-						"org"
-					],
-					"path": [
-						"songs",
-						"1FGvbfMafLBdymgrtGAZYh",
-						"similar_books"
-					],
-					"query": [
-						{
-							"key": "filter",
-							"value": "movie_name",
-							"equals": true
-						},
-						{
-							"key": "q",
-							"value": "avengers",
-							"equals": true
-						}
-					]
-				},
-				"description": ""
-			},
-			"response": []
-		},
-		{
 			"name": "sort books by title descending",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "b88c7a8a-5cfd-4f67-bc47-2497cea569c0",
+						"id": "fe9f2001-8a5a-4222-8ae5-8eb9c999cc46",
 						"type": "text/javascript",
 						"exec": [
 							"var jsonData = pm.response.json();",
-							"tests[\"test 1\"] = jsonData.objects[0].book_name === \"Woodsong\";",
+							"tests[\"test 1\"] = jsonData.objects[0].book_name === \"You Choose 2: Mayhem at Magic School\";",
 							"",
 							"var jsonData = pm.response.json();",
-							"tests[\"test 2\"] = jsonData.objects[1].similar_songs[1] === \"23ZF7jUOSG5NWeOMiwyJXP\";",
-							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"test 3\"] = jsonData.objects[3].book_name === \"War, Institutions, and Social Change in the Middle East\";",
+							"tests[\"test 2\"] = jsonData.objects[1].similar_songs[1] === \"1yZGK9STRtUZh9SGxoYeqh\";",
 							"",
 							"",
 							"",
@@ -1926,17 +1440,14 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "0bf78c35-2c20-40fe-85eb-b79b3963c8f4",
+						"id": "46f7ecb3-b74a-40c6-9545-4935c13a31be",
 						"type": "text/javascript",
 						"exec": [
 							"var jsonData = pm.response.json();",
 							"tests[\"test 1\"] = jsonData.objects[0].book_name === \"The Apocalypse Door\";",
 							"",
 							"var jsonData = pm.response.json();",
-							"tests[\"test 2\"] = jsonData.objects[1].authors[0] === \"Lawrence James\";",
-							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"test 3\"] = jsonData.objects[1].topics[0] === \"ab4b1482cb2ba3f1ee7f\";",
+							"tests[\"test 2\"] = jsonData.objects[1].authors[0] === \"James Roy\";",
 							"",
 							"",
 							"",
@@ -1984,17 +1495,14 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "b74cacdb-e398-40e8-9a45-87c126b48b1d",
+						"id": "fad26e20-c8e1-4409-aa35-128cb7ad56de",
 						"type": "text/javascript",
 						"exec": [
 							"var jsonData = pm.response.json();",
 							"tests[\"test 1\"] = jsonData.objects[0].artists[0] === \"Aziz Ansari\";",
 							"",
 							"var jsonData = pm.response.json();",
-							"tests[\"test 2\"] = jsonData.objects[0].similar_books[1] === \"pMp919ZmTNwC\";",
-							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"test 3\"] = jsonData.objects[1].song_name === \"The Rug\";",
+							"tests[\"test 2\"] = jsonData.objects[1].song_name === \"Bachelor Party\";",
 							"",
 							"",
 							"",
@@ -2039,17 +1547,14 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "6a222ce2-4d8d-423d-a22d-039673e5b9bd",
+						"id": "286eb041-ca5f-4bc5-85d8-d1f283fb5167",
 						"type": "text/javascript",
 						"exec": [
 							"var jsonData = pm.response.json();",
 							"tests[\"test 1\"] = jsonData.objects[0].song_id === \"3X73JXN4ncXysXrh0u5tHN\";",
 							"",
 							"var jsonData = pm.response.json();",
-							"tests[\"test 2\"] = jsonData.objects[0].similar_movies[0] === \"353486\";",
-							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"test 3\"] = jsonData.objects[0].youtube_url === \"hkUZlaWQkmY\";",
+							"tests[\"test 2\"] = jsonData.objects[0].youtube_url === \"hkUZlaWQkmY\";",
 							"",
 							"",
 							"",
@@ -2099,17 +1604,15 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "44bf1b7c-c46f-420e-9cc0-36466a081e90",
+						"id": "06a858c3-93a0-4280-b598-bd228eba35d0",
 						"type": "text/javascript",
 						"exec": [
 							"var jsonData = pm.response.json();",
-							"tests[\"test 1\"] = jsonData.objects[0].cast[0] === \"Megan Fox\";",
+							"tests[\"test 1\"] = jsonData.objects[0].cast[0] === \"Ginnifer Goodwin\";",
 							"",
 							"var jsonData = pm.response.json();",
-							"tests[\"test 2\"] = jsonData.objects[1].similar_books[1] === \"dxUofGMwickC\";",
+							"tests[\"test 2\"] = jsonData.objects[1].similar_books[1] === \"7vnq1gKnoUMC\";",
 							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"test 3\"] = jsonData.objects[2].director === \"Jake Kasdan\";",
 							"",
 							"",
 							"",
@@ -2134,151 +1637,6 @@
 					"path": [
 						"books",
 						"FlI6qWDYd0UC",
-						"similar_movies"
-					],
-					"query": [
-						{
-							"key": "sort",
-							"value": "title_desc",
-							"equals": true
-						}
-					]
-				},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "test filter for similar movies for a book",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "b708d0df-09bc-4266-b9da-063f25b411ed",
-						"type": "text/javascript",
-						"exec": [
-							"var jsonData = pm.response.json();",
-							"tests[\"test 1\"] = jsonData.objects[0].cast[1] === \"Jack Black\";",
-							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"test 2\"] = jsonData.objects[0].movie_name === \"Jumanji: Welcome to the Jungle\";",
-							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"test 3\"] = jsonData.objects[0].director === \"Jake Kasdan\";",
-							"",
-							"",
-							"",
-							"",
-							"",
-							""
-						]
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"url": {
-					"raw": "api.poptopic.org/books/FlI6qWDYd0UC/similar_movies?filter=description&q=jungle",
-					"host": [
-						"api",
-						"poptopic",
-						"org"
-					],
-					"path": [
-						"books",
-						"FlI6qWDYd0UC",
-						"similar_movies"
-					],
-					"query": [
-						{
-							"key": "filter",
-							"value": "description",
-							"equals": true
-						},
-						{
-							"key": "q",
-							"value": "jungle",
-							"equals": true
-						}
-					]
-				},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "sort songs for a topic",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "490ede1d-d8f8-47ab-afc3-010ffcc9f78f",
-						"type": "text/javascript",
-						"exec": [
-							"var jsonData = pm.response.json();",
-							"tests[\"test 1\"] = jsonData.objects[0].artists[0] === \"Tig Notaro\";",
-							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"test 2\"] = jsonData.objects[1].similar_books[0] === \"pMp919ZmTNwC\";",
-							"",
-							"var jsonData = pm.response.json();",
-							"tests[\"test 3\"] = jsonData.objects[2].album === \"Intimate Moments For A Sensual Evening\";",
-							"",
-							"",
-							"",
-							"",
-							"",
-							""
-						]
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"url": {
-					"raw": "api.poptopic.org/topics/e6b99f24d056d03f20b4/similar_songs?sort=artist_desc",
-					"host": [
-						"api",
-						"poptopic",
-						"org"
-					],
-					"path": [
-						"topics",
-						"e6b99f24d056d03f20b4",
-						"similar_songs"
-					],
-					"query": [
-						{
-							"key": "sort",
-							"value": "artist_desc",
-							"equals": true
-						}
-					]
-				},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "sort movies for a topic",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"url": {
-					"raw": "api.poptopic.org/topics/e6b99f24d056d03f20b4/similar_movies?sort=title_desc",
-					"host": [
-						"api",
-						"poptopic",
-						"org"
-					],
-					"path": [
-						"topics",
-						"e6b99f24d056d03f20b4",
 						"similar_movies"
 					],
 					"query": [
