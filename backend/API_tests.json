@@ -230,6 +230,77 @@
 			"response": []
 		},
 		{
+			"name": "get topics for a movie",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "974c9e22-de7a-41af-90ec-2dba314a08b8",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"tests[\"testing similar books\"] = jsonData.objects[0].similar_books[1] === \"qs9omwz0xakC\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"testing second object's similar movies\"] = jsonData.objects[1].similar_movies[2] === \"338970\";",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "api.poptopic.org/movies/10195/topics",
+					"host": [
+						"api",
+						"poptopic",
+						"org"
+					],
+					"path": [
+						"movies",
+						"10195",
+						"topics"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "sort topics for movie",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "api.poptopic.org/movies/10195/topics?sort=title_desc",
+					"host": [
+						"api",
+						"poptopic",
+						"org"
+					],
+					"path": [
+						"movies",
+						"10195",
+						"topics"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "title_desc\n",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
 			"name": "test songs on a page",
 			"event": [
 				{
@@ -355,6 +426,54 @@
 						"songs",
 						"06ypiqmILMdVeaiErMFA91",
 						"similar_movies"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "get topics for a song",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1b2a93c6-e5e0-477e-aadd-9d2511d89782",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"tests[\"testing similar books\"] = jsonData.objects[0].similar_books[0] === \"svZQnw9mxRwC\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"testing topic name\"] = jsonData.objects[0].topic_name === \"Family\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"testing similar movies\"] = jsonData.objects[0].similar_movies[1] === \"150540\";",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "api.poptopic.org/songs/06ypiqmILMdVeaiErMFA91/topics",
+					"host": [
+						"api",
+						"poptopic",
+						"org"
+					],
+					"path": [
+						"songs",
+						"06ypiqmILMdVeaiErMFA91",
+						"topics"
 					]
 				},
 				"description": ""
@@ -525,6 +644,54 @@
 					"path": [
 						"books",
 						"qWG9qdUsFrMC"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "get topics for a book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2bff296f-3723-49bd-b7fa-b4e6872fd9be",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"tests[\"testing similar books\"] = jsonData.objects[0].similar_books[2] === \"ktjKYsmHUGUC\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"testing topic name\"] = jsonData.objects[0].topic_name === \"Action\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"testing similar songs\"] = jsonData.objects[0].similar_songs[1] === \"7gDwRzJhLs0fFHaGtMDJVM\";",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "api.poptopic.org/books/qWG9qdUsFrMC/topics",
+					"host": [
+						"api",
+						"poptopic",
+						"org"
+					],
+					"path": [
+						"books",
+						"qWG9qdUsFrMC",
+						"topics"
 					]
 				},
 				"description": ""
@@ -996,7 +1163,7 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "api.poptopic.org/topics/6dd1b5ddcf2d141fa924/similar_songs",
+					"raw": "api.poptopic.org/topics/004bf6c9a40003140292/similar_songs",
 					"host": [
 						"api",
 						"poptopic",
@@ -1004,7 +1171,7 @@
 					],
 					"path": [
 						"topics",
-						"6dd1b5ddcf2d141fa924",
+						"004bf6c9a40003140292",
 						"similar_songs"
 					]
 				},
@@ -1084,6 +1251,1040 @@
 						{
 							"key": "page",
 							"value": "0",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "sort movies by title alphabetical order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fba6724f-e103-4fb0-b157-e5a0b2e9aaa4",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"tests[\"testing cast\"] = jsonData.objects[0].cast[4] === \"Octavia Spencer\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"testing director\"] = jsonData.objects[1].director === \"Roar Uthaug\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"testing movie name\"] = jsonData.objects[8].movie_name === \"The Hunger Games: Mockingjay - Part 1\";",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "api.poptopic.org/movies?sort=title_desc",
+					"host": [
+						"api",
+						"poptopic",
+						"org"
+					],
+					"path": [
+						"movies"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "title_desc",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "sort similar books for this movie by author descending order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "342a96df-8190-4ba4-8d64-eb31d95c06c6",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"tests[\"testing authors\"] = jsonData.objects[0].authors[0] === \"N. D. Wilson\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"testing book name\"] = jsonData.objects[1].book_name === \"Eragon\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"testing topics\"] = jsonData.objects[2].topics[0] === \"f8e19bfcbc718a84ee8e\";",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "api.poptopic.org/movies/122917/similar_books?sort=author_desc",
+					"host": [
+						"api",
+						"poptopic",
+						"org"
+					],
+					"path": [
+						"movies",
+						"122917",
+						"similar_books"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "author_desc\n",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "sort similar songs for movie by artist desc",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "36053e3c-3828-408a-bd3e-5a22bae7794a",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"tests[\"test 1\"] = jsonData.objects[0].artists[0] === \"The Score\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"test 2\"] = jsonData.objects[0].album === \"Unstoppable\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"test 3\"] = jsonData.objects[1].topics[0] === \"4f66b2bde693ae66204e\";",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "api.poptopic.org/movies/118340/similar_songs?sort=artist_desc",
+					"host": [
+						"api",
+						"poptopic",
+						"org"
+					],
+					"path": [
+						"movies",
+						"118340",
+						"similar_songs"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "artist_desc",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "test filter for movies",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "196fb442-ae28-44a6-8f7d-8ee2c03acb72",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"tests[\"test 1\"] = jsonData.cast[1] === \"Natalie Portman\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"test 2\"] = jsonData.director === \"Kenneth Branagh\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"test 3\"] = jsonData.topics[0] === \"dc1d2a4d591857f0a0dd\";",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "api.poptopic.org/movies/10195?filter=movie_name&q=avengers",
+					"host": [
+						"api",
+						"poptopic",
+						"org"
+					],
+					"path": [
+						"movies",
+						"10195"
+					],
+					"query": [
+						{
+							"key": "filter",
+							"value": "movie_name",
+							"equals": true
+						},
+						{
+							"key": "q",
+							"value": "avengers",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "test filter for similar books for given movie",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4fe90326-614f-4f76-9164-8c1685613935",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"tests[\"test 1\"] = jsonData.num_results === 0;",
+							"",
+							"",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "api.poptopic.org/movies/181808/similar_books?filter=release_date&q=2015",
+					"host": [
+						"api",
+						"poptopic",
+						"org"
+					],
+					"path": [
+						"movies",
+						"181808",
+						"similar_books"
+					],
+					"query": [
+						{
+							"key": "filter",
+							"value": "release_date",
+							"equals": true
+						},
+						{
+							"key": "q",
+							"value": "2015",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "test filter for similar songs for a movie",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "84851fe4-c6de-4143-a009-8d78af1571a6",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"tests[\"test 1\"] = jsonData.objects[0].artists[0] === \"Alessia Cara\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"test 2\"] = jsonData.objects[0].album === \"Wild Things (The Remixes)\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"test 3\"] = jsonData.objects[0].song_id === \"4rqXv1KKcTKa3d8nvPJd9z\";",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "api.poptopic.org/movies/181808/similar_songs?filter=album&q=wild",
+					"host": [
+						"api",
+						"poptopic",
+						"org"
+					],
+					"path": [
+						"movies",
+						"181808",
+						"similar_songs"
+					],
+					"query": [
+						{
+							"key": "filter",
+							"value": "album",
+							"equals": true
+						},
+						{
+							"key": "q",
+							"value": "wild",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "test filter for songs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a6ae4285-efb7-4409-b0fd-3f9d83eba236",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"tests[\"test 1\"] = jsonData.objects[0].album === \"Call Me By Your Name (Original Motion Picture Soundtrack)\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"test 2\"] = jsonData.objects[0].similar_movies[1] === \"335984\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"test 3\"] = jsonData.objects[0].song_name === \"Mystery of Love\";",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "api.poptopic.org/songs?filter=song_name&q=love",
+					"host": [
+						"api",
+						"poptopic",
+						"org"
+					],
+					"path": [
+						"songs"
+					],
+					"query": [
+						{
+							"key": "filter",
+							"value": "song_name",
+							"equals": true
+						},
+						{
+							"key": "q",
+							"value": "love",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "test sort for songs by release year ascending",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4389667d-8be9-4e66-83ff-21e790879ed6",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"tests[\"test 1\"] = jsonData.objects[0].album === \"Rubber Soul (Remastered)\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"test 2\"] = jsonData.objects[2].artists[0] === \"The Animals\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"test 3\"] = jsonData.objects[3].song_name === \"Duel of the Fates\";",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "api.poptopic.org/songs?sort=release_year_asc",
+					"host": [
+						"api",
+						"poptopic",
+						"org"
+					],
+					"path": [
+						"songs"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "release_year_asc",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "sort similar movies for a song by release year asc",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "194b8c1c-7473-4024-ab0f-ef45d63263ab",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"tests[\"test 1\"] = jsonData.objects[0].cast[0] === \"Ginnifer Goodwin\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"test 2\"] = jsonData.objects[0].director === \"Byron Howard\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"test 3\"] = jsonData.objects[1].movie_name === \"Coco\";",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "api.poptopic.org/songs/06ypiqmILMdVeaiErMFA91/similar_movies?sort=release_year_asc",
+					"host": [
+						"api",
+						"poptopic",
+						"org"
+					],
+					"path": [
+						"songs",
+						"06ypiqmILMdVeaiErMFA91",
+						"similar_movies"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "release_year_asc",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "sort similar books for a song",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "488ee85a-608a-4154-b15e-0b8190f1a787",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"tests[\"test 1\"] = jsonData.objects[0].authors[1] === \"Kathleen McCartney\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"test 2\"] = jsonData.objects[1].similar_movies[0] === \"353486\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"test 3\"] = jsonData.objects[2].release_date === \"2002\";",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "api.poptopic.org/songs/06ypiqmILMdVeaiErMFA91/similar_books?sort=title_desc",
+					"host": [
+						"api",
+						"poptopic",
+						"org"
+					],
+					"path": [
+						"songs",
+						"06ypiqmILMdVeaiErMFA91",
+						"similar_books"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "title_desc",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "test invalid filter for similar books for songs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5e6de811-fc25-4e7f-8942-119efefb7f5d",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "api.poptopic.org/songs/1FGvbfMafLBdymgrtGAZYh/similar_books?filter=movie_name&q=avengers",
+					"host": [
+						"api",
+						"poptopic",
+						"org"
+					],
+					"path": [
+						"songs",
+						"1FGvbfMafLBdymgrtGAZYh",
+						"similar_books"
+					],
+					"query": [
+						{
+							"key": "filter",
+							"value": "movie_name",
+							"equals": true
+						},
+						{
+							"key": "q",
+							"value": "avengers",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "sort books by title descending",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b88c7a8a-5cfd-4f67-bc47-2497cea569c0",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"tests[\"test 1\"] = jsonData.objects[0].book_name === \"Woodsong\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"test 2\"] = jsonData.objects[1].similar_songs[1] === \"23ZF7jUOSG5NWeOMiwyJXP\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"test 3\"] = jsonData.objects[3].book_name === \"War, Institutions, and Social Change in the Middle East\";",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "api.poptopic.org/books?sort=title_desc",
+					"host": [
+						"api",
+						"poptopic",
+						"org"
+					],
+					"path": [
+						"books"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "title_desc",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "test filter for books",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0bf78c35-2c20-40fe-85eb-b79b3963c8f4",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"tests[\"test 1\"] = jsonData.objects[0].book_name === \"The Apocalypse Door\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"test 2\"] = jsonData.objects[1].authors[0] === \"Lawrence James\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"test 3\"] = jsonData.objects[1].topics[0] === \"ab4b1482cb2ba3f1ee7f\";",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "api.poptopic.org/books?filter=authors&q=James",
+					"host": [
+						"api",
+						"poptopic",
+						"org"
+					],
+					"path": [
+						"books"
+					],
+					"query": [
+						{
+							"key": "filter",
+							"value": "authors",
+							"equals": true
+						},
+						{
+							"key": "q",
+							"value": "James",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "sort similar songs for a given book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b74cacdb-e398-40e8-9a45-87c126b48b1d",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"tests[\"test 1\"] = jsonData.objects[0].artists[0] === \"Aziz Ansari\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"test 2\"] = jsonData.objects[0].similar_books[1] === \"pMp919ZmTNwC\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"test 3\"] = jsonData.objects[1].song_name === \"The Rug\";",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "api.poptopic.org/books/FlI6qWDYd0UC/similar_songs?sort=release_year_asc",
+					"host": [
+						"api",
+						"poptopic",
+						"org"
+					],
+					"path": [
+						"books",
+						"FlI6qWDYd0UC",
+						"similar_songs"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "release_year_asc",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "test filter for similar songs for a book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6a222ce2-4d8d-423d-a22d-039673e5b9bd",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"tests[\"test 1\"] = jsonData.objects[0].song_id === \"3X73JXN4ncXysXrh0u5tHN\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"test 2\"] = jsonData.objects[0].similar_movies[0] === \"353486\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"test 3\"] = jsonData.objects[0].youtube_url === \"hkUZlaWQkmY\";",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "api.poptopic.org/books/FlI6qWDYd0UC/similar_songs?filter=album&q=moments",
+					"host": [
+						"api",
+						"poptopic",
+						"org"
+					],
+					"path": [
+						"books",
+						"FlI6qWDYd0UC",
+						"similar_songs"
+					],
+					"query": [
+						{
+							"key": "filter",
+							"value": "album",
+							"equals": true
+						},
+						{
+							"key": "q",
+							"value": "moments",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "sort similar movies to a book by title desc",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "44bf1b7c-c46f-420e-9cc0-36466a081e90",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"tests[\"test 1\"] = jsonData.objects[0].cast[0] === \"Megan Fox\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"test 2\"] = jsonData.objects[1].similar_books[1] === \"dxUofGMwickC\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"test 3\"] = jsonData.objects[2].director === \"Jake Kasdan\";",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "api.poptopic.org/books/FlI6qWDYd0UC/similar_movies?sort=title_desc",
+					"host": [
+						"api",
+						"poptopic",
+						"org"
+					],
+					"path": [
+						"books",
+						"FlI6qWDYd0UC",
+						"similar_movies"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "title_desc",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "test filter for similar movies for a book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b708d0df-09bc-4266-b9da-063f25b411ed",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"tests[\"test 1\"] = jsonData.objects[0].cast[1] === \"Jack Black\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"test 2\"] = jsonData.objects[0].movie_name === \"Jumanji: Welcome to the Jungle\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"test 3\"] = jsonData.objects[0].director === \"Jake Kasdan\";",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "api.poptopic.org/books/FlI6qWDYd0UC/similar_movies?filter=description&q=jungle",
+					"host": [
+						"api",
+						"poptopic",
+						"org"
+					],
+					"path": [
+						"books",
+						"FlI6qWDYd0UC",
+						"similar_movies"
+					],
+					"query": [
+						{
+							"key": "filter",
+							"value": "description",
+							"equals": true
+						},
+						{
+							"key": "q",
+							"value": "jungle",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "sort songs for a topic",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "490ede1d-d8f8-47ab-afc3-010ffcc9f78f",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"tests[\"test 1\"] = jsonData.objects[0].artists[0] === \"Tig Notaro\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"test 2\"] = jsonData.objects[1].similar_books[0] === \"pMp919ZmTNwC\";",
+							"",
+							"var jsonData = pm.response.json();",
+							"tests[\"test 3\"] = jsonData.objects[2].album === \"Intimate Moments For A Sensual Evening\";",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "api.poptopic.org/topics/e6b99f24d056d03f20b4/similar_songs?sort=artist_desc",
+					"host": [
+						"api",
+						"poptopic",
+						"org"
+					],
+					"path": [
+						"topics",
+						"e6b99f24d056d03f20b4",
+						"similar_songs"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "artist_desc",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "sort movies for a topic",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "api.poptopic.org/topics/e6b99f24d056d03f20b4/similar_movies?sort=title_desc",
+					"host": [
+						"api",
+						"poptopic",
+						"org"
+					],
+					"path": [
+						"topics",
+						"e6b99f24d056d03f20b4",
+						"similar_movies"
+					],
+					"query": [
+						{
+							"key": "sort",
+							"value": "title_desc",
 							"equals": true
 						}
 					]
