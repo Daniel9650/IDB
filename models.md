@@ -13,6 +13,8 @@ This is a visual representation of our database layout which stores the data pre
 For the Movies model, we had several attributes, including the following:
 
 * movie unique ID number
+* director
+* cast
 * name
 * description
 * year of release
