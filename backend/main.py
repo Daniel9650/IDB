@@ -209,10 +209,13 @@ movie_sorts = {
     "release_year_asc": ["release_date", "asc"],
     "release_year_desc": ["release_date", "desc"],
     "title_asc": ["movie_name","asc"],
-    "title_desc": ["movie_name","desc"]
+    "title_desc": ["movie_name","desc"],
+    "release_year_asc": ["release_date", "asc"],
+    "release_year_desc": ["release_date", "desc"]
 }
 song_sorts = {
     "release_year_asc": ["release_date", "asc"],
+    "release_year_desc": ["release_date", "desc"],
     "artist_asc": ["artists", "asc"],
     "artist_desc": ["artists","desc"],
     "title_asc": ["song_name", "asc"],
@@ -223,7 +226,8 @@ book_sorts = {
     "author_desc": ["authors", "desc"],
     "title_asc":["book_name","asc"],
     "title_desc":["book_name", "desc"],
-    "release_year_asc":["release_date","asc"]
+    "release_year_asc":["release_date","asc"],
+    "release_year_desc":["release_date","desc"]
 }
 topics_sorts = {
     "title_asc":["topic_name", "asc"],

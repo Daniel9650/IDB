@@ -5,7 +5,7 @@ import time
 from flask import Flask, redirect, jsonify, abort, request, send_from_directory, render_template, url_for, Blueprint
 from GitInfo import get_counts
 from sqlalchemy import Column, String, Integer, Text, Unicode, ForeignKey
-from sqlalchemy import create_engine, and_, or_, desc, asc
+from sqlalchemy import create_engine, and_, or_, desc, asc, inspect
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
 from math import ceil
@@ -229,6 +229,53 @@ book_sorts = {
 topics_sorts = {
     "title_asc":["topic_name", "asc"],
     "title_desc":["topic_name", "desc"]
+}
+all_sorts = {
+    "name_asc": [
+        {
+            "type":"movies",
+            "column":"movie_name",
+            "order":"asc"
+        },
+        {
+            "type":"songs",
+            "column":"song_name",
+            "order":"asc"
+        },
+        {
+            "type":"books",
+            "column":"book_name",
+            "order":"asc"
+        },
+        {
+            "type":"topics",
+            "column":"topic_name",
+            "order":"asc"
+        }
+    ],
+    "name_desc": [
+        {
+            "type":"movies",
+            "column":"movie_name",
+            "order":"desc"
+        },
+        {
+            "type":"songs",
+            "column":"song_name",
+            "order":"desc"
+        },
+        {
+            "type":"books",
+            "column":"book_name",
+            "order":"desc"
+        },
+        {
+            "type":"topics",
+            "column":"topic_name",
+            "order":"desc"
+        }
+    ],
+    "relevance": None
 }
 
 def get_similar_books(mysession, attr_object, page, sort, items_per_page, query_request, filter_request):
@@ -602,6 +649,51 @@ def get_topics(path):
                 else:
                     return jsonify(instance.as_dict())
             abort(404)
+        abort(400)
+
+@app.route('/all/', defaults={'path': ''})
+@app.route("/all/<path:path>", methods=['GET'])
+def get_all(path):
+    mysession = scoped_session(Session)
+    params = path.split("/")
+    num_params = len(params)
+    page_request = request.args.get('page')
+    sort_request = request.args.get('sort')
+    query_request = request.args.get('q')
+    items_per_page_request = request.args.get('items_per_page')
+    all_id = params[0] if (num_params > 0 and len(params[0]) > 0) else ""
+    if(all_id == ""):
+        page = 1 if (page_request is None) else eval(page_request)
+        sort = "relevance" if (sort_request is None) else sort_request
+        items_per_page = default_items_per_page if (items_per_page_request is None) else eval(items_per_page_request)
+        min_instance = items_per_page * (page - 1)
+        max_instance = items_per_page * page
+        if(page >= 1 and sort in all_sorts and items_per_page >= 1):
+            queries = [mysession.query(Movies), mysession.query(Songs), mysession.query(Books), mysession.query(Topics)]
+            instance_objects = []
+            if(query_request != None):
+                if(sort == "relevance"):
+                    for q in queries:
+                        for i in q:
+                            q_count = 0
+                            i_obj = i.to_dict()
+                            for c in i_obj:
+                                
+                            print(q_count)
+                            instance_objects.append({"instance":i,"count":q_count})
+                    instance_objects = sorted(instance_objects, key=lambda item: item['count'], reverse=True)
+                    print(instance_objects)
+                    print(instance_objects[0]["instance"].as_dict())
+                    print(instance_objects[0])
+                    num_rows = len(instance_objects)
+                    max_pages = max(int(ceil(num_rows/items_per_page)),1)
+                    page_return = {"num_results": 0, "objects": [], "page": page, "total_pages": max_pages}
+                    for instance_obj in instance_objects[min_instance:max_instance]:
+                        page_return["num_results"] += 1
+                        page_return["objects"].append(instance_obj["instance"].as_dict())
+                    return jsonify(page_return)
+        abort(400)
+    else:
         abort(400)
 
 @app.route("/git_info/", methods=['GET'])
