@@ -691,8 +691,8 @@ def get_topics(path):
             abort(404)
         abort(400)
 
-@app.route('/all/', defaults={'path': ''})
-@app.route("/all/<path:path>", methods=['GET'])
+@api.route('/all/', defaults={'path': ''})
+@api.route("/all/<path:path>", methods=['GET'])
 def get_all(path):
     mysession = scoped_session(Session)
     params = path.split("/")
