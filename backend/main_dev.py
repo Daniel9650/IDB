@@ -38,6 +38,7 @@ class Movies(Base):
     similar_songs = Column(String())
     director = Column(String())
     cast = Column(String())
+    instance_type = Column(String())
 
     def __init__(self, movie):
         self.movie_id = movie.id
@@ -51,6 +52,7 @@ class Movies(Base):
         self.similar_songs = json.dumps(movie.similar_songs)
         self.director = remove_non_ascii(movie.description)
         self.cast = remove_non_ascii(json.dumps(movie.cast))
+        self.instance_type = movie.instance_type
 
     def as_dict(self):
         model_dict = {
@@ -64,7 +66,25 @@ class Movies(Base):
             "trailer_url": self.trailer_url,
             "topics": ast.literal_eval(self.topics),
             "similar_books": ast.literal_eval(self.similar_books),
-            "similar_songs": ast.literal_eval(self.similar_songs)
+            "similar_songs": ast.literal_eval(self.similar_songs),
+            "instance_type": self.instance_type
+        }
+        return model_dict
+
+    def as_raw_dict(self):
+        model_dict = {
+            "movie_id": self.movie_id,
+            "movie_name": self.movie_name,
+            "director": self.director,
+            "cast": self.cast,
+            "description": self.description,
+            "release_date": self.release_date,
+            "poster_url": self.poster_url,
+            "trailer_url": self.trailer_url,
+            "topics": self.topics,
+            "similar_books": self.similar_books,
+            "similar_songs": self.similar_songs,
+            "instance_type": self.instance_type
         }
         return model_dict
 
@@ -87,6 +107,7 @@ class Books(Base):
     topics = Column(String())
     similar_movies = Column(String())
     similar_songs = Column(String())
+    instance_type = Column(String())
 
     def __init__(self, book):
         self.book_id = book.id
@@ -98,6 +119,7 @@ class Books(Base):
         self.topics = json.dumps(book.topics)
         self.similar_movies = json.dumps(book.similar_movies)
         self.similar_songs = json.dumps(book.similar_songs)
+        self.instance_type = book.instance_type
 
     def as_dict(self):
         model_dict = {
@@ -109,7 +131,23 @@ class Books(Base):
             "poster_url": self.poster_url,
             "topics": ast.literal_eval(self.topics),
             "similar_movies": ast.literal_eval(self.similar_movies),
-            "similar_songs": ast.literal_eval(self.similar_songs)
+            "similar_songs": ast.literal_eval(self.similar_songs),
+            "instance_type": self.instance_type
+        }
+        return model_dict
+
+    def as_raw_dict(self):
+        model_dict = {
+            "book_id": self.book_id,
+            "book_name": self.book_name,
+            "description": self.description,
+            "authors": self.authors,
+            "release_date": self.release_date,
+            "poster_url": self.poster_url,
+            "topics": self.topics,
+            "similar_movies": self.similar_movies,
+            "similar_songs": self.similar_songs,
+            "instance_type": self.instance_type
         }
         return model_dict
 
@@ -133,6 +171,7 @@ class Songs(Base):
     topics = Column(String())
     similar_movies = Column(String())
     similar_books = Column(String())
+    instance_type = Column(String())
 
     def __init__(self, song):
         self.song_id = song.id
@@ -145,6 +184,7 @@ class Songs(Base):
         self.topics = json.dumps(song.topics)
         self.similar_movies = json.dumps(song.similar_movies)
         self.similar_books = json.dumps(song.similar_books)
+        self.instance_type = song.instance_type
 
     def as_dict(self):
         model_dict = {
@@ -157,7 +197,24 @@ class Songs(Base):
             "release_date": self.release_date,
             "topics": ast.literal_eval(self.topics),
             "similar_movies": ast.literal_eval(self.similar_movies),
-            "similar_books": ast.literal_eval(self.similar_books)
+            "similar_books": ast.literal_eval(self.similar_books),
+            "instance_type": self.instance_type
+        }
+        return model_dict
+
+    def as_raw_dict(self):
+        model_dict = {
+            "song_id": self.song_id,
+            "song_name": self.song_name,
+            "artists": self.artists,
+            "album": self.album,
+            "poster_url": self.poster_url,
+            "youtube_url": self.youtube_url,
+            "release_date": self.release_date,
+            "topics": self.topics,
+            "similar_movies": self.similar_movies,
+            "similar_books": self.similar_books,
+            "instance_type": self.instance_type
         }
         return model_dict
 
@@ -177,13 +234,15 @@ class Topics(Base):
     similar_songs = Column(String())
     similar_books = Column(String())
     poster_url = Column(String())
+    instance_type = Column(String())
 
-    def __init__(self, topic_name, movies, books, songs):
+    def __init__(self, topic_name, movies, books, songs, instance_type):
         self.topic_id = TopicEntity.get_topic_id(topic_name)
         self.topic_name = topic_name
         self.similar_movies = json.dumps(movies)
         self.similar_books = json.dumps(books)
         self.similar_songs = json.dumps(songs)
+        self.instance_type = instance_type
 
     def as_dict(self):
         model_dict = {
@@ -192,7 +251,20 @@ class Topics(Base):
             "similar_movies": ast.literal_eval(self.similar_movies),
             "similar_songs": ast.literal_eval(self.similar_songs),
             "similar_books": ast.literal_eval(self.similar_books),
-            "poster_url": self.poster_url
+            "poster_url": self.poster_url,
+            "instance_type": self.instance_type
+        }
+        return model_dict
+
+    def as_raw_dict(self):
+        model_dict = {
+            "topic_id": self.topic_id,
+            "topic_name": self.topic_name,
+            "similar_movies": self.similar_movies,
+            "similar_songs": self.similar_songs,
+            "similar_books": self.similar_books,
+            "poster_url": self.poster_url,
+            "instance_type": self.instance_type
         }
         return model_dict
 
@@ -210,10 +282,13 @@ movie_sorts = {
     "release_year_asc": ["release_date", "asc"],
     "release_year_desc": ["release_date", "desc"],
     "title_asc": ["movie_name","asc"],
-    "title_desc": ["movie_name","desc"]
+    "title_desc": ["movie_name","desc"],
+    "release_year_asc": ["release_date", "asc"],
+    "release_year_desc": ["release_date", "desc"]
 }
 song_sorts = {
     "release_year_asc": ["release_date", "asc"],
+    "release_year_desc": ["release_date", "desc"],
     "artist_asc": ["artists", "asc"],
     "artist_desc": ["artists","desc"],
     "title_asc": ["song_name", "asc"],
@@ -224,59 +299,19 @@ book_sorts = {
     "author_desc": ["authors", "desc"],
     "title_asc":["book_name","asc"],
     "title_desc":["book_name", "desc"],
-    "release_year_asc":["release_date","asc"]
+    "release_year_asc":["release_date","asc"],
+    "release_year_desc":["release_date","desc"]
 }
 topics_sorts = {
     "title_asc":["topic_name", "asc"],
     "title_desc":["topic_name", "desc"]
 }
-all_sorts = {
-    "name_asc": [
-        {
-            "type":"movies",
-            "column":"movie_name",
-            "order":"asc"
-        },
-        {
-            "type":"songs",
-            "column":"song_name",
-            "order":"asc"
-        },
-        {
-            "type":"books",
-            "column":"book_name",
-            "order":"asc"
-        },
-        {
-            "type":"topics",
-            "column":"topic_name",
-            "order":"asc"
-        }
-    ],
-    "name_desc": [
-        {
-            "type":"movies",
-            "column":"movie_name",
-            "order":"desc"
-        },
-        {
-            "type":"songs",
-            "column":"song_name",
-            "order":"desc"
-        },
-        {
-            "type":"books",
-            "column":"book_name",
-            "order":"desc"
-        },
-        {
-            "type":"topics",
-            "column":"topic_name",
-            "order":"desc"
-        }
-    ],
-    "relevance": None
-}
+all_sorts = [
+    "title_asc",
+    "title_desc",
+    "relevance",
+    "type"
+]
 
 def get_similar_books(mysession, attr_object, page, sort, items_per_page, query_request, filter_request):
     filter_request = ["book_name"] if (len(filter_request) <= 0) else filter_request
@@ -672,29 +707,131 @@ def get_all(path):
             queries = [mysession.query(Movies), mysession.query(Songs), mysession.query(Books), mysession.query(Topics)]
             instance_objects = []
             if(query_request != None):
-                if(sort == "relevance"):
-                    for q in queries:
-                        for i in q:
-                            q_count = 0
-                            i_obj = i.to_dict()
-                            for c in i_obj:
-                                
-                            print(q_count)
-                            instance_objects.append({"instance":i,"count":q_count})
-                    instance_objects = sorted(instance_objects, key=lambda item: item['count'], reverse=True)
-                    print(instance_objects)
-                    print(instance_objects[0]["instance"].as_dict())
-                    print(instance_objects[0])
-                    num_rows = len(instance_objects)
-                    max_pages = max(int(ceil(num_rows/items_per_page)),1)
-                    page_return = {"num_results": 0, "objects": [], "page": page, "total_pages": max_pages}
-                    for instance_obj in instance_objects[min_instance:max_instance]:
-                        page_return["num_results"] += 1
-                        page_return["objects"].append(instance_obj["instance"].as_dict())
-                    return jsonify(page_return)
+                for q in queries:
+                    for instance in q:
+                        q_count = 0
+                        i_obj = instance.as_raw_dict()
+                        for c in i_obj:
+                            value = i_obj[c]
+                            if(type(value) is str):
+                                q_count += value.lower().count(query_request.lower())
+                        if(q_count > 0):
+                            instance_objects.append({"instance": instance, "count": q_count})
+            else:
+                for q in queries:
+                    for instance in q:
+                        instance_objects.append({"instance": instance, "count": 0})
+            if(sort == "relevance" and query_request != None):
+                instance_objects = sorted(instance_objects, key=lambda item: item['count'], reverse=True)
+            elif(sort == "title_asc" or sort == "title_desc"):
+                reverse_sort = False if sort == "title_asc" else True
+                name_containers = []
+                for i in instance_objects:
+                    if(i["instance"].instance_type == "movies"):
+                        name_containers.append({"name": i["instance"].movie_name,"instance":i})
+                    elif(i["instance"].instance_type == "songs"):
+                        name_containers.append({"name": i["instance"].song_name,"instance":i})
+                    elif(i["instance"].instance_type == "books"):
+                        name_containers.append({"name": i["instance"].book_name,"instance":i})
+                    elif(i["instance"].instance_type == "topics"):
+                        name_containers.append({"name": i["instance"].topic_name,"instance":i})
+                name_containers = sorted(name_containers, key=lambda item: item['name'], reverse=reverse_sort)
+                instance_objects = []
+                for nc in name_containers:
+                    instance_objects.append(nc["instance"])
+            elif(sort == "type"):
+                instance_objects = sorted(instance_objects, key=lambda item: item['instance'].instance_type)
+            num_rows = len(instance_objects)
+            max_pages = max(int(ceil(num_rows/items_per_page)),1)
+            page_return = {"num_results": 0, "objects": [], "page": page, "total_pages": max_pages}
+            for instance_obj in instance_objects[min_instance:max_instance]:
+                page_return["num_results"] += 1
+                page_return["objects"].append(instance_obj["instance"].as_dict())
+            return jsonify(page_return)
         abort(400)
     else:
         abort(400)
+
+@app.route("/all_actors/", methods=['GET'])
+def get_all_actors():
+    mysession = scoped_session(Session)
+    actor_set = set()
+    query = mysession.query(Movies)
+    for instance in query:
+        instance_cast = ast.literal_eval(instance.cast)
+        for actor in instance_cast:
+            actor_set.add(actor)
+    return jsonify(sorted(list(actor_set)))
+
+@app.route("/all_directors/", methods=['GET'])
+def get_all_directors():
+    mysession = scoped_session(Session)
+    director_set = set()
+    query = mysession.query(Movies)
+    for instance in query:
+        director_set.add(instance.director)
+    return jsonify(sorted(list(director_set)))
+
+@app.route("/all_movie_years/", methods=['GET'])
+def get_all_movie_years():
+    mysession = scoped_session(Session)
+    movie_years = set()
+    query = mysession.query(Movies)
+    for instance in query:
+        year = instance.release_date.split("-")[0]
+        movie_years.add(year)
+    return jsonify(sorted(list(movie_years), reverse=True))
+
+@app.route("/all_artists/", methods=['GET'])
+def get_all_artists():
+    mysession = scoped_session(Session)
+    artist_set = set()
+    query = mysession.query(Songs)
+    for instance in query:
+        instance_artists = ast.literal_eval(instance.artists)
+        for artist in instance_artists:
+            artist_set.add(artist)
+    return jsonify(sorted(list(artist_set)))
+
+@app.route("/all_albums/", methods=['GET'])
+def get_all_albums():
+    mysession = scoped_session(Session)
+    albums_set = set()
+    query = mysession.query(Songs)
+    for instance in query:
+        albums_set.add(instance.album)
+    return jsonify(sorted(list(albums_set)))
+
+@app.route("/all_song_years/", methods=['GET'])
+def get_all_song_years():
+    mysession = scoped_session(Session)
+    song_years = set()
+    query = mysession.query(Songs)
+    for instance in query:
+        year = instance.release_date.split("-")[0]
+        song_years.add(year)
+    return jsonify(sorted(list(song_years), reverse=True))
+
+@app.route("/all_authors/", methods=['GET'])
+def get_all_authors():
+    mysession = scoped_session(Session)
+    author_set = set()
+    query = mysession.query(Books)
+    for instance in query:
+        instance_authors = ast.literal_eval(instance.authors)
+        for author in instance_authors:
+            author_set.add(author)
+    return jsonify(sorted(list(author_set)))
+
+@app.route("/all_book_years/", methods=['GET'])
+def get_all_book_years():
+    mysession = scoped_session(Session)
+    book_years = set()
+    query = mysession.query(Books)
+    for instance in query:
+        year = instance.release_date.split("-")[0]
+        book_years.add(year)
+    return jsonify(sorted(list(book_years), reverse=True))
 
 @app.route("/git_info/", methods=['GET'])
 def get_git_info():
