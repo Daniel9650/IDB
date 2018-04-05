@@ -356,7 +356,7 @@ def extract_book_info(response, book_topic):
     book = Book()
     book.name = book_dict["title"]
     book.id = str(response["id"])
-    book.authors = book_dict["authors"]
+    book.authors = book_dict.get("authors", [])
     if "description" in book_dict:
         book.description = book_dict["description"]
     if "publishedDate" in book_dict:
@@ -388,7 +388,8 @@ def get_top_books(topics):
                 break
 
             book = extract_book_info(response["items"][i], topic)
-            ret_books[book.id] = book
+            if book.authors != []:
+                ret_books[book.id] = book
 
     return ret_books
 
@@ -440,7 +441,7 @@ def get_top_songs(topics):
 
             song = extract_song_info(response["items"][i], topic, spotify_api)
 
-            if remove_non_ascii(song.name) != "":
+            if remove_non_ascii(song.name) != "" and song.name != "Twinkling star":
                 ret_songs[song.id] = song
 
     return ret_songs
@@ -570,6 +571,7 @@ def get_media_from_db():
     q = session.query(SongEntity)
     for instance in q:
         print(instance.song_id, instance.song_name)
+        print(instance.artists)
 
     print("\nPrinting Topics: ")
     q = session.query(TopicEntity)
