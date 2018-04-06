@@ -89,7 +89,7 @@ class About extends Component {
                <p>
                   <a name="api-link" href='https://www.gitbook.com/book/daniel9650/poptopic-api-documentation/details'>PopTopic API</a>
                </p>
-               <br></br>
+
                <h4 className="about-sub">Data</h4>
                <p>
                   The information in poptopic.org comes from four different APIs:

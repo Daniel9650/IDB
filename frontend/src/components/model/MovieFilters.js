@@ -111,13 +111,13 @@ class MovieFilters extends Component {
          <div>
             <Row>
                <Col>
-                  <h5>Title:</h5>
+                  <h5 className="filter-label">Title:</h5>
                   <NameFilter setFilter={this.setNameFilter} />
                </Col>
             </Row>
             <Row>
                <Col xs="2">
-                  <h5>Topic:</h5>
+                  <h5 className="filtet-label">Topic:</h5>
                   <TopicFilter setFilter={this.setTopicFilter} />
                </Col>
                <Col xs="3">
@@ -125,15 +125,15 @@ class MovieFilters extends Component {
                   <CastFilter setFilter={this.setCastFilter} />
                </Col>
                <Col xs="3">
-                  <h5>Directing:</h5>
+                  <h5 className="filter-label">Directing:</h5>
                   <DirectorFilter setFilter={this.setDirectorFilter} />
                </Col>
                <Col xs="2">
-                  <h5>Release Year:</h5>
+                  <h5 className="filter-label">Release Year:</h5>
                   <DateFilter type="movie" setFilter={this.setDateFilter} />
                </Col>
                <Col xs="2">
-                  <h5>Sort By:</h5>
+                  <h5 classLabel="filter-label">Sort By:</h5>
                   <Sort setFilter={this.setSort} />
                </Col>
             </Row>

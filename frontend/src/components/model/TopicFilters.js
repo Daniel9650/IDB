@@ -48,11 +48,11 @@ class TopicFilters extends Component {
          <div>
             <Row>
                <Col xs="10">
-                  <h5>Title:</h5>
+                  <h5 className="filter-label">Title:</h5>
                   <NameFilter setFilter={this.setNameFilter} />
                </Col>
                <Col xs="2">
-                  <h5>Sort By:</h5>
+                  <h5 className="filter-label">Sort By:</h5>
                   <TopicSort setFilter={this.setSort} />
                </Col>
             </Row>

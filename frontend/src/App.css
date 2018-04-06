@@ -157,6 +157,7 @@ a:hover {
    top: 50%;
    left: 50%;
    transform: translate(-50%, 200%);
+   font-family: Sans;
 }
 
 .slide-header {
@@ -340,6 +341,12 @@ a:hover {
    margin-left: 15px;
 }
 
+.filter-label{
+   font-family: Sans;
+   font-size: 20px;
+   color: var(--charcoal);
+}
+
 
 
 .page-button{
@@ -403,8 +410,8 @@ a:hover {
 
 .loading-icon {
    animation: loading-spin infinite 5s linear;
-   width: 500px;
-   height: 500px;
+   width: 40%;
+   height: 40%;
 
 }
 

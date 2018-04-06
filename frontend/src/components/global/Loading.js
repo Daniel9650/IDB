@@ -5,7 +5,9 @@ class Loading extends Component {
 
    render(){
       return(
-         <img className="loading-icon" src={loadingSymbol} />
+         <div className="text-center">
+            <img className="loading-icon" src={loadingSymbol} />
+         </div>
       );
    }
 }

@@ -117,23 +117,23 @@ class MusicFilters extends Component {
             </Row>
             <Row>
                <Col xs="2">
-                  <h5>Topic:</h5>
+                  <h5 className="filter-label">Topic:</h5>
                   <TopicFilter setFilter={this.setTopicFilter} />
                </Col>
                <Col xs="3">
-                  <h5>Artist:</h5>
+                  <h5 className="filter-label">Artist:</h5>
                   <ArtistFilter setFilter={this.setArtistFilter} />
                </Col>
                <Col xs="3">
-                  <h5>Album:</h5>
+                  <h5 className="filter-label">Album:</h5>
                   <AlbumFilter setFilter={this.setAlbumFilter} />
                </Col>
                <Col xs="2">
-                  <h5>Release Year:</h5>
+                  <h5 className="filter-label">Release Year:</h5>
                   <DateFilter type="song" setFilter={this.setDateFilter} />
                </Col>
                <Col xs="2">
-                  <h5>Sort By:</h5>
+                  <h5 className="filter-label">Sort By:</h5>
                   <Sort setFilter={this.setSort} />
                </Col>
             </Row>

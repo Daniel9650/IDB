@@ -97,25 +97,25 @@ class BookFilters extends Component {
          <div>
             <Row>
                <Col>
-                  <h5>Title:</h5>
+                  <h5 className="filter-label">Title:</h5>
                   <NameFilter setFilter={this.setNameFilter} />
                </Col>
             </Row>
             <Row>
                <Col xs="3">
-                  <h5>Topic:</h5>
+                  <h5 className="filter-label">Topic:</h5>
                   <TopicFilter setFilter={this.setTopicFilter} />
                </Col>
                <Col xs="3">
-                  <h5>Author:</h5>
+                  <h5 className="filter-label">Author:</h5>
                   <AuthorFilter setFilter={this.setAuthorFilter} />
                </Col>
                <Col xs="3">
-                  <h5>Release Year:</h5>
+                  <h5 className="filter-label">Release Year:</h5>
                   <DateFilter type="book" setFilter={this.setDateFilter} />
                </Col>
                <Col xs="3">
-                  <h5>Sort By:</h5>
+                  <h5 className="filter-label">Sort By:</h5>
                   <Sort setFilter={this.setSort} />
                </Col>
 

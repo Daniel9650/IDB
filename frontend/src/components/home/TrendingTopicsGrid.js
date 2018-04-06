@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Row } from 'reactstrap';
 import TrendingTopic from './TrendingTopic.js';
+import Loading from '../global/Loading.js';
 
 class TrendingTopicsGrid extends Component {
    constructor(props) {
@@ -60,7 +61,7 @@ class TrendingTopicsGrid extends Component {
         return <div>Error: {error.message}</div>;
       }
       else if (!isLoaded) {
-        return <div>Loading...</div>;
+        return <Loading />;
       }
       else {
       return (
