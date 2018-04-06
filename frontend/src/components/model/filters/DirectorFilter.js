@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
+import { withRouter } from "react-router-dom";
 
 class DirectorFilter extends Component {
 
@@ -24,6 +25,16 @@ class DirectorFilter extends Component {
          return {value: item, label: item};
       });
       this.setState({suggestions: list});
+      var args = new URLSearchParams(this.props.location.search);
+      var query = args.get('director');
+      for (var k in list){
+         if (list.hasOwnProperty(k)) {
+            if(query == list[k].value){
+               this.state.selectedOption = list[k];
+               this.props.setFilter(this.state.selectedOption);
+            }
+         }
+      }
    }
 
    componentDidMount(){
@@ -56,6 +67,12 @@ class DirectorFilter extends Component {
    handleChange(selectedOption) {
       this.setState({selectedOption: selectedOption},
       this.props.setFilter(selectedOption));
+      var args = new URLSearchParams(this.props.location.search);
+      if(selectedOption != null)
+         args.set("director", selectedOption.value);
+      else
+         args.delete("director");
+      this.props.history.push('?'+args.toString());
    }
    render(){
       return(
@@ -71,4 +88,4 @@ class DirectorFilter extends Component {
    }
 }
 
-export default DirectorFilter;
+export default withRouter(DirectorFilter);

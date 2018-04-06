@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { Redirect } from 'react-router-dom';
+import { withRouter } from "react-router-dom";
 
 class SearchBar extends Component {
    constructor(props){
@@ -11,13 +12,24 @@ class SearchBar extends Component {
          curr = this.props.currentFilter;
 
       this.state = {value: curr};
-      console.log(this.props.currentFilter);
+      var args = new URLSearchParams(this.props.location.search);
+      var query = args.get('q');
+      if(query != null && query.length > 0){
+         this.state.value = query;
+         this.setState({value: query},this.props.setFilter(query));
+      }
       this.handleChange = this.handleChange.bind(this);
    }
 
 
    handleChange(event){
       this.setState({value: event.target.value},this.props.setFilter(event.target.value));
+      var args = new URLSearchParams(this.props.location.search);
+      if(event.target.value.length > 0)
+         args.set("q", event.target.value);
+      else
+         args.delete("q");
+      this.props.history.push('?'+args.toString());
    }
 
    render(){
@@ -36,4 +48,4 @@ class SearchBar extends Component {
    }
 }
 
-export default SearchBar;
+export default withRouter(SearchBar);

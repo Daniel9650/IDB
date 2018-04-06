@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
+import { withRouter } from "react-router-dom";
 
 class ArtistFilter extends Component {
 
@@ -24,6 +25,16 @@ class ArtistFilter extends Component {
          return {value: item, label: item};
       });
       this.setState({suggestions: list});
+      var args = new URLSearchParams(this.props.location.search);
+      var query = args.get('artist');
+      for (var k in list){
+         if (list.hasOwnProperty(k)) {
+            if(query == list[k].value){
+               this.state.selectedOption = list[k];
+               this.props.setFilter(this.state.selectedOption);
+            }
+         }
+      }
    }
 
    componentDidMount(){
@@ -56,6 +67,12 @@ class ArtistFilter extends Component {
    handleChange(selectedOption) {
       this.setState({selectedOption: selectedOption},
       this.props.setFilter(selectedOption));
+      var args = new URLSearchParams(this.props.location.search);
+      if(selectedOption != null)
+         args.set("artist", selectedOption.value);
+      else
+         args.delete("artist");
+      this.props.history.push('?'+args.toString());
    }
    render(){
       return(
@@ -71,4 +88,4 @@ class ArtistFilter extends Component {
    }
 }
 
-export default ArtistFilter;
+export default withRouter(ArtistFilter);

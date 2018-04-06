@@ -2,12 +2,20 @@ import React, { Component } from 'react';
 import { Container, Col, Row } from 'reactstrap';
 import SearchBar from './SearchBar.js';
 import SearchResults from './SearchResults.js';
+import { withRouter } from "react-router-dom";
 
 
 class SearchPage extends Component {
 
+   constructor(props){
+      super(props);
+      this.state = {query: ''};
+      var args = new URLSearchParams(this.props.location.search);
+      this.state.query = args.get('q');
+   }
+
    render(){
-      var query = this.props.match.params.query;
+      var query = this.state.query;
       return(
          <div className="spacing-div">
             <Container>
@@ -24,4 +32,4 @@ class SearchPage extends Component {
    }
 }
 
-export default SearchPage;
+export default withRouter(SearchPage);

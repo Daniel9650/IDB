@@ -120,17 +120,17 @@ class SearchResults extends Component {
       else {
          return (
             <div>
-
                <CardDeck>
                   {this.createCards(data)}
                </CardDeck>
+               <div className="text-center">
                <Pagination
                   currentPage={1}
                   totalPages={data.total_pages}
                   onClick={this.setPage}
                   currentPage={this.state.currentPage}
                />
-
+               </div>
             </div>
             );
       }

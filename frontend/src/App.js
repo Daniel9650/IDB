@@ -14,12 +14,15 @@ import Model from './components/model/Model.js';
 import SearchPage from './components/search/SearchPage.js';
 import Footer from './components/global/Footer.js';
 import { Router, Route, Link, IndexRoute } from 'react-router';
+import { BrowserRouter } from 'react-router-dom'
 
 class App extends Component {
   render() {
     return (
       <div>
          <Navigation />
+         <BrowserRouter>
+         <div>
          <Route exact path='/movies' render={()=>{return <Model type="Movies"/>}} />
          <Route path='/movies/:id' component={MovieInstance} />
          <Route exact path='/books' render={()=>{return <Model type="Books"/>}} />
@@ -30,10 +33,11 @@ class App extends Component {
          <Route path='/topics/:id' component={TopicInstance} />
          <Route path='/about' component={About}/>
          <Route path='/home' component={Home}/>
-         <Route path='/search&q=:query' component={SearchPage} />
+         <Route path='/search' component={SearchPage} />
          <Route exact path='/' component={Home} />
+         </div>
+         </BrowserRouter>
          <Footer />
-
       </div>
     );
   }
