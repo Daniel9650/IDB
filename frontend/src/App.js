@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import './App.css';
+import 'font-awesome/css/font-awesome.min.css';
 import MovieInstance from './components/instances/MovieInstance.js';
 import MusicInstance from './components/instances/MusicInstance.js';
 import BookInstance from './components/instances/BookInstance.js';

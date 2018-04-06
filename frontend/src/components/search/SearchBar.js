@@ -29,7 +29,7 @@ class SearchBar extends Component {
                </InputGroup>
                <InputGroupAddon addonType="append">
                   <Button className="search-button" type="submit" href={this.state.urlVal}>
-                     Q
+                     <i class="fa fa-search"></i>
                   </Button>
                </InputGroupAddon>
 

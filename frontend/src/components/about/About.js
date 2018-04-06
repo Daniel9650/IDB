@@ -3,6 +3,8 @@ import { Container, Row, Col } from 'reactstrap';
 import LogoGrid from './LogoGrid.js'
 import BioGrid from './BioGrid.js';
 import NotFound from '../global/NotFound.js';
+import Loading from '../global/Loading.js';
+import APIError from '../global/APIError.js';
 
 class About extends Component {
    constructor(props) {
@@ -47,10 +49,24 @@ class About extends Component {
       const { error, isLoaded, data } = this.state;
 
       if (error) {
-        return <NotFound />;
+        const status = error.response ? error.response.status : 500
+        if(status === 404){
+          return <NotFound />;
+        }
+        else{
+          return(
+            <Container className='spacing-div'>
+            <APIError/>
+            </Container>
+            );
+        }
       }
       else if (!isLoaded) {
-        return <div>Loading...</div>;
+        return (
+          <Container className='spacing-div'>
+          <Loading/>
+          </Container>
+          );
       }
       else {
       return (
