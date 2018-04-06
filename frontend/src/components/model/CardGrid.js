@@ -85,13 +85,13 @@ class CardGrid extends Component {
 
    addFilters(){
       if(this.props.type === "Movies")
-         return <MovieFilters setFilters={this.setFilters}/>;
+         return <MovieFilters currentFilters={this.state.filters} setFilters={this.setFilters}/>;
       else if(this.props.type === "Music")
-         return <MusicFilters setFilters={this.setFilters}/>;
+         return <MusicFilters currentFilters={this.state.filters} setFilters={this.setFilters}/>;
       else if(this.props.type === "Books")
-         return <BookFilters setFilters={this.setFilters}/>;
+         return <BookFilters currentFilters={this.state.filters} setFilters={this.setFilters}/>;
       else
-         return <TopicsFilters setFilters={this.setFilters}/>;
+         return <TopicsFilters currentFilters={this.state.filters} setFilters={this.setFilters}/>;
    }
 
    createCard(instance) {

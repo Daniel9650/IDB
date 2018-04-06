@@ -14,15 +14,21 @@ class MovieFilters extends Component {
    constructor(props){
       super(props);
 
+
       this.state={
          castFilter: {},
          directorFilter: {},
          topicFilter: {},
          dateFilter: {},
          nameFilter:{},
-         sort: 'title_asc'
+         sort: 'title_asc',
+         isLoaded: true,
       }
 
+      this.setCurrentFilters(this.props.currentFilters, this.props.currentSort);
+
+
+      this.setCurrentFilters = this.setCurrentFilters.bind(this);
       this.setCastFilter = this.setCastFilter.bind(this);
       this.setDirectorFilter = this.setDirectorFilter.bind(this);
       this.setTopicFilter = this.setTopicFilter.bind(this);
@@ -31,6 +37,40 @@ class MovieFilters extends Component {
       this.getTopicID = this.getTopicID.bind(this);
       this.setSort = this.setSort.bind(this);
       this.setNameFilter = this.setNameFilter.bind(this);
+
+   }
+
+   setCurrentFilters(filters, currentSort){
+
+      var cast = {};
+      var director = {};
+      var topic = {};
+      var date = {};
+      var name = {};
+      var sort = currentSort;
+      for(let i = 0; i < filters.length; i++){
+         var filterType = filters[i].filter;
+         if(filterType === "cast")
+            cast = filters[i];
+         else if(filterType === "director")
+            director = filters[i];
+         else if(filterType === "topics")
+            topic = filters[i]
+         else if(filterType === "movie_name")
+            name = filters[i]
+      }
+
+      this.setState({
+         castFilter: cast,
+         directorFilter: director,
+         topicFilter: topic,
+         dateFilter: date,
+         nameFilter: name,
+         sort: sort,
+         isLoaded: true
+      }, this.combineFilters);
+
+
 
    }
 
@@ -91,6 +131,7 @@ class MovieFilters extends Component {
    }
 
    combineFilters(){
+      console.log(this.state.nameFilter);
       var allFilters = [];
       if(this.state.castFilter.filter != null)
          allFilters.push(this.state.castFilter);
@@ -107,39 +148,42 @@ class MovieFilters extends Component {
    }
 
    render(){
-      return(
-         <div>
-            <Row>
-               <Col>
-                  <h5 className="filter-label">Title:</h5>
-                  <NameFilter setFilter={this.setNameFilter} />
-               </Col>
-            </Row>
-            <Row>
-               <Col xs="2">
-                  <h5 className="filtet-label">Topic:</h5>
-                  <TopicFilter setFilter={this.setTopicFilter} />
-               </Col>
-               <Col xs="3">
-                  <h5>Acting:</h5>
-                  <CastFilter setFilter={this.setCastFilter} />
-               </Col>
-               <Col xs="3">
-                  <h5 className="filter-label">Directing:</h5>
-                  <DirectorFilter setFilter={this.setDirectorFilter} />
-               </Col>
-               <Col xs="2">
-                  <h5 className="filter-label">Release Year:</h5>
-                  <DateFilter type="movie" setFilter={this.setDateFilter} />
-               </Col>
-               <Col xs="2">
-                  <h5 classLabel="filter-label">Sort By:</h5>
-                  <Sort setFilter={this.setSort} />
-               </Col>
-            </Row>
-            <hr className="divider" />
-         </div>
-      );
+      console.log(this.state.nameFilter);
+      if(this.state.isLoaded){
+         return(
+            <div>
+               <Row>
+                  <Col>
+                     <h5 className="filter-label">Title:</h5>
+                     <NameFilter currentFilter={this.state.nameFilter.query} setFilter={this.setNameFilter} />
+                  </Col>
+               </Row>
+               <Row>
+                  <Col xs="2">
+                     <h5 className="filtet-label">Topic:</h5>
+                     <TopicFilter setFilter={this.setTopicFilter} />
+                  </Col>
+                  <Col xs="3">
+                     <h5>Acting:</h5>
+                     <CastFilter setFilter={this.setCastFilter} />
+                  </Col>
+                  <Col xs="3">
+                     <h5 className="filter-label">Directing:</h5>
+                     <DirectorFilter setFilter={this.setDirectorFilter} />
+                  </Col>
+                  <Col xs="2">
+                     <h5 className="filter-label">Release Year:</h5>
+                     <DateFilter type="movie" setFilter={this.setDateFilter} />
+                  </Col>
+                  <Col xs="2">
+                     <h5 classLabel="filter-label">Sort By:</h5>
+                     <Sort setFilter={this.setSort} />
+                  </Col>
+               </Row>
+               <hr className="divider" />
+            </div>
+         );
+      }
    }
 }
 
