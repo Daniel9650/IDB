@@ -5,8 +5,13 @@ import { Redirect } from 'react-router-dom';
 class SearchBar extends Component {
    constructor(props){
       super(props);
-      this.state = {value: ''};
 
+      var curr = '';
+      if(this.props.currentFilter != null)
+         curr = this.props.currentFilter;
+
+      this.state = {value: curr};
+      console.log(this.props.currentFilter);
       this.handleChange = this.handleChange.bind(this);
    }
 
