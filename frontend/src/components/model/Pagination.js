@@ -12,6 +12,8 @@ class Pagination extends Component{
       this.createButtons = this.createButtons.bind(this);
       this.createButton = this.createButton.bind(this);
       this.handlePageChange = this.handlePageChange.bind(this);
+      this.createPrevious = this.createPrevious.bind(this);
+      this.createNext = this.createNext.bind(this);
    }
 
    handlePageChange(num){
@@ -46,11 +48,44 @@ class Pagination extends Component{
       return pages.map(this.createButton);
    }
 
+   createPrevious(){
+      if(this.state.currentPage - 1  === 0)
+         return null;
+      else{
+         return(
+            <Button
+               className="page-button"
+               onClick={this.handlePageChange.bind(this, this.state.currentPage - 1)}
+            >
+               Prev
+            </Button>
+         );
+      }
+   }
+
+   createNext(){
+      if(this.state.currentPage + 1 > this.state.totalPages)
+         return null;
+      else{
+         return(
+            <Button
+               className="page-button"
+               onClick={this.handlePageChange.bind(this, this.state.currentPage + 1)}
+            >
+               Next
+            </Button>
+         );
+      }
+   }
+
+
    render(){
       var pageList = Array(this.props.totalPages).fill().map((e, i)=>i+1)
       return(
          <ButtonGroup className="page-button-bar">
+            {this.createPrevious()}
             {this.createButtons(pageList)}
+            {this.createNext()}
          </ButtonGroup>
       );
 
