@@ -358,6 +358,10 @@ a:hover {
    font-size: 20px !important;
 }
 
+.page-button-bar{
+  z-index: -1;
+}
+
 .page-button-active{
    background-color:white !important;
    color: var(--charcoal) !important;
