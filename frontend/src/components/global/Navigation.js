@@ -37,8 +37,6 @@ class Navigation extends Component {
       			<NavbarToggler onClick={this.toggle} />
       			<Collapse isOpen={this.state.isOpen} navbar>
       				<Nav className="ml-auto" navbar>
-                     <SearchBar
-                     />
                      <NavItem>
                         <NavLink name="home-link" className="navbar-link" href="/home">Home</NavLink>
                      </NavItem>
@@ -57,6 +55,8 @@ class Navigation extends Component {
                      <NavItem>
                         <NavLink name="about-link" className="navbar-link" href="/about">About</NavLink>
                      </NavItem>
+                     <SearchBar
+                     />
       				</Nav>
       			</Collapse>
       		</Navbar>

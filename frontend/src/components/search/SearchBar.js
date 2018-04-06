@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
-import { Redirect } from 'react-router-dom';
+import { Form, FormGroup, Label, Input, Button, InputGroupAddon, InputGroup } from 'reactstrap';
+
 
 class SearchBar extends Component {
    constructor(props){
@@ -19,17 +19,20 @@ class SearchBar extends Component {
    render(){
       return(
          <Form inline action={this.state.urlVal}>
-            <FormGroup >
-               <Input
-                  type="text"
-                  required
-                  placeholder="Search"
-                  value={this.state.value}
-                  onChange={this.handleChange}/>
-            </FormGroup >
-            <Button type="submit" href={this.state.urlVal}>
-               Q
-            </Button>
+               <InputGroup >
+                  <Input
+                     className="search-field"
+                     type="text"
+                     placeholder="Search"
+                     value={this.state.value}
+                     onChange={this.handleChange}/>
+               </InputGroup>
+               <InputGroupAddon addonType="append">
+                  <Button className="search-button" type="submit" href={this.state.urlVal}>
+                     Q
+                  </Button>
+               </InputGroupAddon>
+
          </Form>
       );
    }

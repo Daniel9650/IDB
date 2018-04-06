@@ -22,6 +22,7 @@ class Pagination extends Component{
       if(num === this.state.currentPage){
          return (
             <Button
+            className="page-button-active"
                active
                onClick={this.handlePageChange.bind(this, num)}
             >
@@ -32,6 +33,7 @@ class Pagination extends Component{
       else{
          return (
             <Button
+               className="page-button"
                onClick={this.handlePageChange.bind(this, num)}
             >
                {num}
@@ -47,7 +49,7 @@ class Pagination extends Component{
    render(){
       var pageList = Array(this.props.totalPages).fill().map((e, i)=>i+1)
       return(
-         <ButtonGroup>
+         <ButtonGroup className="page-button-bar">
             {this.createButtons(pageList)}
          </ButtonGroup>
       );

@@ -165,12 +165,14 @@ class CardGrid extends Component {
 
                </CardDeck>
 
-               <Pagination
-                  totalPages={data.total_pages}
-                  type={this.props.type}
-                  onClick={this.setPage}
-                  currentPage={this.state.currentPage}
-               />
+               <div className="text-center">
+                  <Pagination
+                     totalPages={data.total_pages}
+                     type={this.props.type}
+                     onClick={this.setPage}
+                     currentPage={this.state.currentPage}
+                  />
+               </div>
             </div>
             );
       }

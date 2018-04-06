@@ -11,8 +11,8 @@ class SearchPage extends Component {
       return(
          <div className="spacing-div">
             <Container>
-               <SearchBar />
-               <h1>Search Results for "{query}"</h1>
+               <h1 className="search-title">Search Results for "{query}"</h1>
+               <hr className = "divider"/>
                <Row>
                   <Col>
                      <SearchResults query={query} pageNum={1} />

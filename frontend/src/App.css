@@ -193,6 +193,8 @@ a:hover {
 }
 
 .trending-btn {
+   background-color: var(--charcoal) !important;
+   font-family: Sans
 
 }
 
@@ -238,10 +240,11 @@ a:hover {
    height: 80px;
    color: white !important;
    background-color: var(--charcoal);
+   font-family: Sans;
 }
 
 .navbar-dark {
-   color: whtie !important;
+   color: white !important;
 }
 
 .navbar-link {
@@ -309,6 +312,57 @@ a:hover {
    width: 100%;
 }
 
+
+
+/*************************  Search and Filter Styles  *************************/
+
+.search-title{
+   font-family: Sans;
+   font-size: 38px;
+}
+
+.search-button{
+   background-color: var(--charcoal) !important;
+   color: white !important;
+   border-color: white !important;
+   border-width: medium !important;
+   border-radius: 0px 10px 10px 0px !important;
+   font-family: Sans
+}
+
+
+.search-field{
+   border-radius: 10px 0px 0px 10px !important;
+   border-right: none !important;
+   border-color: white !important;
+   border-width: medium !important;
+   font-family: Sans;
+   margin-left: 15px;
+}
+
+
+
+.page-button{
+   background-color: var(--charcoal) !important;
+   border-color: white !important;
+   border-width: !important;
+   font-family: Sans;
+   font-size: 20px !important;
+}
+
+.page-button-active{
+   background-color:white !important;
+   color: var(--charcoal) !important;
+   border-color: var(--charcoal);
+
+}
+
+.filter-field{
+   border-color: var(--charcoal) !important;
+   border-width: thin !important;
+}
+
+
 /***************************  Misc. Styles  ***********************************/
 
 .home-spacing-div {
@@ -341,9 +395,10 @@ a:hover {
 .footer{
    width: 100%;
    height: 100px;
-   background-color: var(--accent);
+   background-color: white;
    margin-top: 20px;
    opacity: 0.3;
+   bottom: 0;
 }
 
 .loading-icon {

@@ -60,6 +60,7 @@ class CastFilter extends Component {
    render(){
       return(
          <Select
+            className="filter-field"
             name="cast-filter"
             value={this.state.selectedOption}
             onChange={this.handleChange}
