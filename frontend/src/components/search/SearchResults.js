@@ -3,6 +3,8 @@ import { CardDeck } from 'reactstrap';
 import CardMod from '../model/CardMod.js';
 import Loading from '../global/Loading.js';
 import APIError from '../global/APIError.js';
+import Pagination from '../model/Pagination.js';
+import SearchBar from '../search/SearchBar.js';
 
 class SearchResults extends Component {
 
@@ -12,99 +14,45 @@ class SearchResults extends Component {
       	isOpen: false,
          error: null,
          isLoaded: false,
-         data: []
+         data: [],
+         currentPage: 1
     	};
 
       this.createCard = this.createCard.bind(this);
       this.createCards = this.createCards.bind(this);
+      this.fetchData = this.fetchData.bind(this);
+      this.setPage = this.setPage.bind(this);
+   }
+
+   setPage(pageNum){
+      this.setState({currentPage: pageNum, isLoaded: false}, this.fetchData);
+
    }
 
    componentDidMount(){
-      if(this.props.type === "Movies"){
-           fetch("http://api.poptopic.org/movies?items_per_page=3&filter=movie_name&q=" + this.props.query +"&page=" + this.props.pageNum)
-           .then(res => res.json())
-           .then(
-            (result) => {
-               this.setState({
-                 isLoaded: true,
-                 data: result
-               });
-            },
-            // Note: it's important to handle errors here
-            // instead of a catch() block so that we don't swallow
-            // exceptions from actual bugs in components.
-            (error) => {
-               this.setState({
-                 isLoaded: true,
-                 error
-               });
-            }
-           )
-      }
-      else if(this.props.type === "Music"){
-           fetch("http://api.poptopic.org/songs?items_per_page=3&filter=song_name&q=" + this.props.query +"&page=" + this.props.pageNum)
-           .then(res => res.json())
-           .then(
-            (result) => {
-               this.setState({
-                 isLoaded: true,
-                 data: result
-               });
-            },
-            // Note: it's important to handle errors here
-            // instead of a catch() block so that we don't swallow
-            // exceptions from actual bugs in components.
-            (error) => {
-               this.setState({
-                 isLoaded: true,
-                 error
-               });
-            }
-           )
-      }
-      else if(this.props.type === "Books"){
-           fetch("http://api.poptopic.org/books?items_per_page=3&filter=book_name&q=" + this.props.query +"&page=" + this.props.pageNum)
-           .then(res => res.json())
-           .then(
-            (result) => {
-               this.setState({
-                 isLoaded: true,
-                 data: result
-               });
-            },
-            // Note: it's important to handle errors here
-            // instead of a catch() block so that we don't swallow
-            // exceptions from actual bugs in components.
-            (error) => {
-               this.setState({
-                 isLoaded: true,
-                 error
-               });
-            }
-           )
-      }
-      else{
-         fetch("http://api.poptopic.org/topics?items_per_page=3&filter=topic_name&q=" + this.props.query +"&page=" + this.props.pageNum)
-           .then(res => res.json())
-           .then(
-            (result) => {
-               this.setState({
-                 isLoaded: true,
-                 data: result
-               });
-            },
-            // Note: it's important to handle errors here
-            // instead of a catch() block so that we don't swallow
-            // exceptions from actual bugs in components.
-            (error) => {
-               this.setState({
-                 isLoaded: true,
-                 error
-               });
-            }
-           )
-      }
+      this.fetchData();
+   }
 
+   fetchData(){
+        fetch("http://api.poptopic.org/all?q=" + this.props.query +"&page=" + this.state.currentPage)
+        .then(res => res.json())
+        .then(
+         (result) => {
+            this.setState({
+              isLoaded: true,
+              data: result
+            });
+         },
+         // Note: it's important to handle errors here
+         // instead of a catch() block so that we don't swallow
+         // exceptions from actual bugs in components.
+         (error) => {
+            this.setState({
+              isLoaded: true,
+              error
+            });
+         }
+        )
    }
 
    createCard(instance) {
@@ -115,20 +63,22 @@ class SearchResults extends Component {
       var authors = [];
       var album = "";
       var artists = [];
+      var type = instance.instance_type.charAt(0).toUpperCase() + instance.instance_type.slice(1);
 
-      if (this.props.type === "Movies") {
+      if (type === "Movies") {
          name= instance.movie_name;
          id= instance.movie_id;
          actors = instance.cast;
          director = instance.director;
       }
-      else if (this.props.type === "Music") {
+      else if (type === "Songs") {
+         type="Music";
          name= instance.song_name;
          id= instance.song_id;
          artists = instance.artists;
          album = instance.album;
       }
-      else if (this.props.type === "Books") {
+      else if (type === "Books") {
          name= instance.book_name;
          id= instance.book_id;
          authors = instance.authors;
@@ -137,7 +87,6 @@ class SearchResults extends Component {
          name= instance.topic_name;
          id= instance.topic_id;
       }
-
       this.count ++;
       return <CardMod
          image={instance.poster_url}
@@ -145,7 +94,7 @@ class SearchResults extends Component {
          topics={instance.topics}
          id= {id}
          number={this.count}
-         type={this.props.type}
+         type={type}
          date = {instance.release_date}
          actors = {actors}
          director = {director}
@@ -171,11 +120,16 @@ class SearchResults extends Component {
       else {
          return (
             <div>
+
                <CardDeck>
-
                   {this.createCards(data)}
-
                </CardDeck>
+               <Pagination
+                  currentPage={1}
+                  totalPages={data.total_pages}
+                  onClick={this.setPage}
+                  currentPage={this.state.currentPage}
+               />
 
             </div>
             );

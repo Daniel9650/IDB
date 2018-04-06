@@ -92,15 +92,30 @@ class About extends Component {
                <br></br>
                <h4 className="about-sub">Data</h4>
                <p>
-                  Our data concerning movies is scraped from The Movie Database
-                  using their API.
+                  The information in poptopic.org comes from four different APIs:
                </p>
                <p>
-                  Our data concerning music is found using the Spotify API and the
-                  AudioSparx API.
+                  <a href="https://developers.themoviedb.org/3/getting-started/introduction" >
+                  MovieDb
+                  </a>
                </p>
                <p>
-                  Our data concerning books is found using the Google Books API.
+                  <a href="https://developers.google.com/books/">
+                  Google Books
+                  </a>
+               </p>
+               <p>
+                  <a href="https://developer.spotify.com/web-api/">
+                  Spotify
+                  </a>
+               </p>
+               <p>
+                  <a href="https://developers.google.com/youtube/">
+                  Youtube
+                  </a>
+               </p>
+               <p>
+                  We get topic names and movies from MovieDb and then we query Google Books and Spotify for books and songs respectively with that topic. Then, we use the Youtube API to find the trailer for each movie, and the video for each song.
                </p>
                <h4 className="about-sub">Tools</h4>
                <LogoGrid />

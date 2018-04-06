@@ -6,6 +6,7 @@ import APIError from '../global/APIError.js';
 import MovieFilters from './MovieFilters.js';
 import MusicFilters from './MusicFilters.js';
 import BookFilters from './BookFilters.js';
+import TopicsFilters from './TopicFilters.js';
 import Pagination from './Pagination.js';
 
 class CardGrid extends Component {
@@ -79,7 +80,6 @@ class CardGrid extends Component {
    }
 
    setPage(pageNum) {
-      console.log(pageNum);
       this.setState({currentPage: pageNum, isLoaded: false}, this.fetchData);
    }
 
@@ -91,7 +91,7 @@ class CardGrid extends Component {
       else if(this.props.type === "Books")
          return <BookFilters setFilters={this.setFilters}/>;
       else
-         return null;
+         return <TopicsFilters setFilters={this.setFilters}/>;
    }
 
    createCard(instance) {

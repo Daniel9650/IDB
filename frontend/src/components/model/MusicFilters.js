@@ -5,6 +5,7 @@ import TopicFilter from './filters/TopicFilter.js';
 import ArtistFilter from './filters/ArtistFilter.js';
 import AlbumFilter from './filters/AlbumFilter.js';
 import DateFilter from './filters/DateFilter.js';
+import NameFilter from './filters/NameFilter.js';
 import Sort from './filters/Sort.js';
 
 import topicDict from '../../data/topic_dictionary.json';
@@ -19,6 +20,7 @@ class MusicFilters extends Component {
          albumFilter: {},
          topicFilter: {},
          dateFilter: {},
+         nameFilter: {},
          sort: 'title_asc'
       }
 
@@ -29,8 +31,17 @@ class MusicFilters extends Component {
       this.combineFilters = this.combineFilters.bind(this);
       this.getTopicID = this.getTopicID.bind(this);
       this.setSort = this.setSort.bind(this);
+      this.setNameFilter = this.setNameFilter.bind(this);
 
    }
+
+   setNameFilter(query){
+      var filter = {};
+      if(query != null)
+         filter = {filter:"song_name", query:query};
+      this.setState({nameFilter: filter}, this.combineFilters);
+   }
+
 
    setSort(option){
       var sort = "title_asc";
@@ -89,6 +100,8 @@ class MusicFilters extends Component {
          allFilters.push(this.state.dateFilter);
       if(this.state.topicFilter.filter != null)
          allFilters.push(this.state.topicFilter);
+      if(this.state.nameFilter.filter != null)
+         allFilters.push(this.state.nameFilter);
 
       this.props.setFilters(allFilters, this.state.sort);
    }
@@ -96,6 +109,12 @@ class MusicFilters extends Component {
    render(){
       return(
          <div>
+            <Row>
+               <Col>
+                  <h5>Song Title:</h5>
+                  <NameFilter setFilter={this.setNameFilter} />
+               </Col>
+            </Row>
             <Row>
                <Col xs="2">
                   <h5>Topic:</h5>
@@ -111,7 +130,7 @@ class MusicFilters extends Component {
                </Col>
                <Col xs="2">
                   <h5>Release Year:</h5>
-                  <DateFilter setFilter={this.setDateFilter} />
+                  <DateFilter type="song" setFilter={this.setDateFilter} />
                </Col>
                <Col xs="2">
                   <h5>Sort By:</h5>

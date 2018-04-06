@@ -4,6 +4,7 @@ import { Row, Col } from 'reactstrap';
 import AuthorFilter from './filters/AuthorFilter.js';
 import TopicFilter from './filters/TopicFilter.js';
 import DateFilter from './filters/DateFilter.js';
+import NameFilter from './filters/NameFilter.js';
 import Sort from './filters/Sort.js';
 import topicDict from '../../data/topic_dictionary.json';
 
@@ -16,6 +17,7 @@ class BookFilters extends Component {
          authorFilter: {},
          topicFilter: {},
          dateFilter: {},
+         nameFilter: {},
          sort: 'title_asc'
       }
 
@@ -25,6 +27,7 @@ class BookFilters extends Component {
       this.combineFilters = this.combineFilters.bind(this);
       this.getTopicID = this.getTopicID.bind(this);
       this.setSort = this.setSort.bind(this);
+      this.setNameFilter = this.setNameFilter.bind(this);
 
    }
 
@@ -69,6 +72,12 @@ class BookFilters extends Component {
       this.setState({dateFilter: filter}, this.combineFilters);
    }
 
+   setNameFilter(query){
+      var filter = {};
+      if(query != null)
+         filter = {filter:"book_name", query:query};
+      this.setState({nameFilter: filter}, this.combineFilters);
+   }
    combineFilters(){
       var allFilters = [];
       if(this.state.authorFilter.filter != null)
@@ -77,6 +86,8 @@ class BookFilters extends Component {
          allFilters.push(this.state.dateFilter);
       if(this.state.topicFilter.filter != null)
          allFilters.push(this.state.topicFilter);
+      if(this.state.nameFilter.filter != null)
+         allFilters.push(this.state.nameFilter);
 
       this.props.setFilters(allFilters, this.state.sort);
    }
@@ -84,6 +95,12 @@ class BookFilters extends Component {
    render(){
       return(
          <div>
+            <Row>
+               <Col>
+                  <h5>Title:</h5>
+                  <NameFilter setFilter={this.setNameFilter} />
+               </Col>
+            </Row>
             <Row>
                <Col xs="3">
                   <h5>Topic:</h5>
@@ -95,7 +112,7 @@ class BookFilters extends Component {
                </Col>
                <Col xs="3">
                   <h5>Release Year:</h5>
-                  <DateFilter setFilter={this.setDateFilter} />
+                  <DateFilter type="book" setFilter={this.setDateFilter} />
                </Col>
                <Col xs="3">
                   <h5>Sort By:</h5>

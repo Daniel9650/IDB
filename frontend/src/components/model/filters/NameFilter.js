@@ -5,31 +5,27 @@ import { Redirect } from 'react-router-dom';
 class SearchBar extends Component {
    constructor(props){
       super(props);
-      this.state = {value: '', urlVal: ''};
+      this.state = {value: ''};
+
       this.handleChange = this.handleChange.bind(this);
    }
 
-   handleChange(event){
-      console.log(event.target.value);
-      var val = "/search&q=" + event.target.value;
-      this.setState({value: event.target.value, urlVal: val});
 
+   handleChange(event){
+      this.setState({value: event.target.value},this.props.setFilter(event.target.value));
    }
 
    render(){
       return(
-         <Form inline action={this.state.urlVal}>
+         <Form>
             <FormGroup >
                <Input
                   type="text"
                   required
-                  placeholder="Search"
+                  placeholder="Search..."
                   value={this.state.value}
                   onChange={this.handleChange}/>
             </FormGroup >
-            <Button type="submit" href={this.state.urlVal}>
-               Q
-            </Button>
          </Form>
       );
    }

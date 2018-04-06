@@ -78,6 +78,8 @@ class MovieInstance extends Component {
         var songCards = [];
         var topics = [];
         var first = true;
+        var cast = data.cast.join(", ");
+        var director = data.director;
 
         var {id} = this.props.match.params;
         return (
@@ -104,6 +106,10 @@ class MovieInstance extends Component {
                     <Col xs="4" >
                        <h6 className="instance-sub">Release Date</h6>
                        <p>{date}</p>
+                       <h6 className="instance-sub">Acting</h6>
+                       <p>{cast}</p>
+                       <h6 className="instance-sub">Directing</h6>
+                       <p>{director}</p>
                     </Col>
                  </Row>
                  <br />
