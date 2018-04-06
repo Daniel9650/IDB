@@ -3,6 +3,7 @@ import { Container, Row, CardDeck } from 'reactstrap';
 import CardMod from './CardMod.js';
 import Loading from '../global/Loading.js';
 import APIError from '../global/APIError.js';
+import NotFound from '../global/NotFound.js';
 import MovieFilters from './MovieFilters.js';
 import MusicFilters from './MusicFilters.js';
 import BookFilters from './BookFilters.js';
@@ -149,10 +150,24 @@ class CardGrid extends Component {
       const { error, isLoaded, data } = this.state;
 
       if (error) {
-        return <APIError />;
+        const status = error.response ? error.response.status : 500
+        if(status === 404){
+          return <NotFound />;
+        }
+        else{
+          return(
+            <Container className='spacing-div'>
+            <APIError/>
+            </Container>
+            );
+        }
       }
       else if (!isLoaded) {
-        return <Loading />;
+        return (
+          <Container className='spacing-div'>
+          <Loading/>
+          </Container>
+          );
       }
       else {
          return (

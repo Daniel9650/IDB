@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import APIError from '../global/APIError.js';
+import Loading from '../global/Loading.js';
 import NotFound from '../global/NotFound.js';
 import RelatedGrid from './RelatedGrid.js';
 
@@ -58,14 +60,28 @@ class BookInstance extends Component {
    }
 	render () {
 
-      const {id} = this.props.match.params
+      const { id } = this.props.match.params;
       const { error, isLoaded, data } = this.state;
 
       if (error) {
-        return <NotFound />;
+        const status = error.response ? error.response.status : 500
+        if(status === 404){
+          return <NotFound />;
+        }
+        else{
+          return(
+            <Container className='spacing-div'>
+            <APIError/>
+            </Container>
+            );
+        }
       }
       else if (!isLoaded) {
-        return <div>Loading...</div>;
+        return (
+          <Container className='spacing-div'>
+          <Loading/>
+          </Container>
+          );
       }
       else{
          var authors = data.authors.join(", ")
