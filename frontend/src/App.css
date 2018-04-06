@@ -405,6 +405,7 @@ a:hover {
    padding-bottom: 3rem;
    background-color: var(--footer);
    margin-top: 1rem;
+   box-shadow: 0px 20vh 0px 0vh var(--footer)
 }
 
 .loading-icon {
