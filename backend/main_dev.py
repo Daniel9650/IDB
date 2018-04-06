@@ -282,9 +282,7 @@ movie_sorts = {
     "release_year_asc": ["release_date", "asc"],
     "release_year_desc": ["release_date", "desc"],
     "title_asc": ["movie_name","asc"],
-    "title_desc": ["movie_name","desc"],
-    "release_year_asc": ["release_date", "asc"],
-    "release_year_desc": ["release_date", "desc"]
+    "title_desc": ["movie_name","desc"]
 }
 song_sorts = {
     "release_year_asc": ["release_date", "asc"],
