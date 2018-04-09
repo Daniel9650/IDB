@@ -36,14 +36,14 @@ class CardGrid extends Component {
          filters: [],
          type: this.props.type,
          queryType: qType,
-         currentPage: 1
+         currentPage: this.props.pageNum
     	};
 
    }
 
    setFilters(filters, sort){
 
-      this.setState({filters: filters, sort: sort, currentPage: 1}, this.fetchData);
+      this.setState({filters: filters, sort: sort, currentPage: this.state.currentPage}, this.fetchData);
    }
 
    fetchData(){

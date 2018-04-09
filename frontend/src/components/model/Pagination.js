@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, ButtonGroup } from 'reactstrap';
+import { withRouter } from "react-router-dom";
 
 class Pagination extends Component{
    constructor(props){
@@ -18,6 +19,9 @@ class Pagination extends Component{
 
    handlePageChange(num){
       this.setState({currentPage: num}, this.props.onClick(num));
+      var args = new URLSearchParams(this.props.location.search);
+      args.set("page", num);
+      this.props.history.push('?'+args.toString());
    }
 
    createButton(num){
@@ -93,4 +97,4 @@ class Pagination extends Component{
 
 }
 
-export default Pagination;
+export default withRouter(Pagination);

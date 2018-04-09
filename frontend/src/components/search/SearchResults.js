@@ -15,7 +15,7 @@ class SearchResults extends Component {
          error: null,
          isLoaded: false,
          data: [],
-         currentPage: 1
+         currentPage: this.props.pageNum
     	};
 
       this.createCard = this.createCard.bind(this);
@@ -125,7 +125,6 @@ class SearchResults extends Component {
                </CardDeck>
                <div className="text-center">
                <Pagination
-                  currentPage={1}
                   totalPages={data.total_pages}
                   onClick={this.setPage}
                   currentPage={this.state.currentPage}

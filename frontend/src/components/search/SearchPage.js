@@ -9,13 +9,21 @@ class SearchPage extends Component {
 
    constructor(props){
       super(props);
-      this.state = {query: ''};
+      this.state = {query: '', page: 1};
       var args = new URLSearchParams(this.props.location.search);
-      this.state.query = args.get('q');
+      var pageArg = args.get('page');
+      var qArg = args.get('q');
+      if(qArg != null && qArg != "")
+         this.state.query = args.get('q');
+      if(pageArg != null && pageArg != ""){
+         try{ this.state.page = eval(args.get('page')); }
+         catch(e){}
+      }
    }
 
    render(){
       var query = this.state.query;
+      var page = this.state.page;
       return(
          <div className="spacing-div">
             <Container>
@@ -23,7 +31,7 @@ class SearchPage extends Component {
                <hr className = "divider"/>
                <Row>
                   <Col>
-                     <SearchResults query={query} pageNum={1} />
+                     <SearchResults query={query} pageNum={page} />
                   </Col>
                </Row>
             </Container>
