@@ -19,6 +19,11 @@ class SearchBar extends Component {
          this.setState({value: query},this.props.setFilter(query));
       }
       this.handleChange = this.handleChange.bind(this);
+      this.handleFormSubmit = this.handleFormSubmit.bind(this);
+   }
+
+   handleFormSubmit(event){
+      event.preventDefault();
    }
 
 
@@ -34,7 +39,7 @@ class SearchBar extends Component {
 
    render(){
       return(
-         <Form>
+         <Form onSubmit={this.handleFormSubmit}>
             <FormGroup >
                <Input
                   type="text"
