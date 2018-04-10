@@ -126,7 +126,7 @@ class MovieFilters extends Component {
    setDateFilter(option){
       var filter = {};
       if(option != null)
-         filter = {filter:"release_date", query:option};
+         filter = {filter:"release_date", query:option.value};
       this.setState({dateFilter: filter}, this.combineFilters);
    }
 
