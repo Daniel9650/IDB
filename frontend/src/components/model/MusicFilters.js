@@ -21,7 +21,8 @@ class MusicFilters extends Component {
          topicFilter: {},
          dateFilter: {},
          nameFilter: {},
-         sort: 'title_asc'
+         sort: 'title_asc',
+         isPreLoading: false
       }
 
       this.setArtistFilter = this.setArtistFilter.bind(this);
@@ -35,42 +36,42 @@ class MusicFilters extends Component {
 
    }
 
-   setNameFilter(query){
+   setNameFilter(query, isPreLoading = false){
       var filter = {};
       if(query != null)
          filter = {filter:"song_name", query:query};
-      this.setState({nameFilter: filter}, this.combineFilters);
+      this.setState({nameFilter: filter, isPreLoading: isPreLoading}, this.combineFilters);
    }
 
 
-   setSort(option){
+   setSort(option, isPreLoading = false){
       var sort = "title_asc";
       if(option != null)
          sort = option.value;
-      this.setState({sort: sort}, this.combineFilters);
+      this.setState({sort: sort, isPreLoading: isPreLoading}, this.combineFilters);
    }
 
-   setArtistFilter(option){
+   setArtistFilter(option, isPreLoading = false){
       var filter = {};
       if(option != null)
          filter = {filter:"artists", query:option.value};
-      this.setState({artistFilter: filter}, this.combineFilters);
+      this.setState({artistFilter: filter, isPreLoading: isPreLoading}, this.combineFilters);
    }
 
-   setAlbumFilter(option){
+   setAlbumFilter(option, isPreLoading = false){
       var filter = {};
       if(option != null)
          filter = {filter:"album", query:option.value};
-      this.setState({albumFilter: filter}, this.combineFilters);
+      this.setState({albumFilter: filter, isPreLoading: isPreLoading}, this.combineFilters);
    }
 
-   setTopicFilter(option){
+   setTopicFilter(option, isPreLoading = false){
       var filter = {};
       if(option != null){
          var id = this.getTopicID(option.value);
          filter = {filter:"topics", query:id};
       }
-      this.setState({topicFilter: filter}, this.combineFilters);
+      this.setState({topicFilter: filter, isPreLoading: isPreLoading}, this.combineFilters);
    }
 
    getTopicID(topicName){
@@ -83,11 +84,11 @@ class MusicFilters extends Component {
       return id[0];
    }
 
-   setDateFilter(option){
+   setDateFilter(option, isPreLoading = false){
       var filter = {};
       if(option != null)
          filter = {filter:"release_date", query:option.value};
-      this.setState({dateFilter: filter}, this.combineFilters);
+      this.setState({dateFilter: filter, isPreLoading: isPreLoading}, this.combineFilters);
    }
 
    combineFilters(){
@@ -103,7 +104,8 @@ class MusicFilters extends Component {
       if(this.state.nameFilter.filter != null)
          allFilters.push(this.state.nameFilter);
 
-      this.props.setFilters(allFilters, this.state.sort);
+      this.props.setFilters(allFilters, this.state.sort, this.state.isPreLoading);
+      this.setState({isPreLoading: false});
    }
 
    render(){

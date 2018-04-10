@@ -32,7 +32,7 @@ class TopicFilter extends Component {
          if (list.hasOwnProperty(k)) {
             if(query == list[k].value){
                this.state.selectedOption = list[k];
-               this.props.setFilter(this.state.selectedOption);
+               this.props.setFilter(this.state.selectedOption, true);
             }
          }
       }

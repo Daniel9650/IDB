@@ -12,7 +12,8 @@ class TopicFilters extends Component {
 
       this.state={
          nameFilter:{},
-         sort: 'title_asc'
+         sort: 'title_asc',
+         isPreLoading: false
       }
 
       this.setSort = this.setSort.bind(this);
@@ -20,18 +21,18 @@ class TopicFilters extends Component {
 
    }
 
-   setNameFilter(query){
+   setNameFilter(query, isPreLoading = false){
       var filter = {};
       if(query != null)
          filter = {filter:"topic_name", query:query};
-      this.setState({nameFilter: filter}, this.combineFilters);
+      this.setState({nameFilter: filter, isPreLoading: isPreLoading}, this.combineFilters);
    }
 
-   setSort(option){
+   setSort(option, isPreLoading = false){
       var sort = "title_asc";
       if(option != null)
          sort = option.value;
-      this.setState({sort: sort}, this.combineFilters);
+      this.setState({sort: sort, isPreLoading: isPreLoading}, this.combineFilters);
    }
 
 
@@ -40,7 +41,8 @@ class TopicFilters extends Component {
       if(this.state.nameFilter.filter != null)
          allFilters.push(this.state.nameFilter);
 
-      this.props.setFilters(allFilters, this.state.sort);
+      this.props.setFilters(allFilters, this.state.sort, this.state.isPreLoading);
+      this.setState({isPreLoading: false});
    }
 
    render(){

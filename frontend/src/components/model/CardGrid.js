@@ -41,9 +41,14 @@ class CardGrid extends Component {
 
    }
 
-   setFilters(filters, sort){
-
-      this.setState({filters: filters, sort: sort, currentPage: this.state.currentPage}, this.fetchData);
+   setFilters(filters, sort, isPreLoading = false){
+      console.log("PreLoading: "+isPreLoading);
+      if(!isPreLoading){
+        this.setState({filters: filters, sort: sort, currentPage: 1}, this.fetchData);
+      }
+      else{
+        this.setState({filters: filters, sort: sort}, this.fetchData);
+      }
    }
 
    fetchData(){

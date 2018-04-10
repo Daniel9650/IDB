@@ -23,6 +23,7 @@ class MovieFilters extends Component {
          nameFilter:{},
          sort: 'title_asc',
          isLoaded: true,
+         isPreLoading: false
       }
 
       this.setCurrentFilters(this.props.currentFilters, this.props.currentSort);
@@ -70,47 +71,45 @@ class MovieFilters extends Component {
          isLoaded: true
       }, this.combineFilters);
 
-
-
    }
 
-   setNameFilter(query){
+   setNameFilter(query, isPreLoading = false){
       var filter = {};
       if(query != null)
          filter = {filter:"movie_name", query:query};
-      this.setState({nameFilter: filter}, this.combineFilters);
+      this.setState({nameFilter: filter, isPreLoading: isPreLoading}, this.combineFilters);
    }
 
-   setSort(option){
+   setSort(option, isPreLoading = false){
       var sort = "title_asc";
       if(option != null)
          sort = option.value;
-      this.setState({sort: sort}, this.combineFilters);
+      this.setState({sort: sort, isPreLoading: isPreLoading}, this.combineFilters);
    }
 
-   setCastFilter(option){
+   setCastFilter(option, isPreLoading = false){
       console.log(option);
       var filter = {};
       if(option != null)
          filter = {filter:"cast", query:option.value};
-      this.setState({castFilter: filter}, this.combineFilters);
+      this.setState({castFilter: filter, isPreLoading: isPreLoading}, this.combineFilters);
    }
 
-   setDirectorFilter(option){
+   setDirectorFilter(option, isPreLoading = false){
       console.log(option);
       var filter = {};
       if(option != null)
          filter = {filter:"director", query:option.value};
-      this.setState({directorFilter: filter}, this.combineFilters);
+      this.setState({directorFilter: filter, isPreLoading: isPreLoading}, this.combineFilters);
    }
 
-   setTopicFilter(option){
+   setTopicFilter(option, isPreLoading = false){
       var filter = {};
       if(option != null){
          var id = this.getTopicID(option.value);
          filter = {filter:"topics", query:id};
       }
-      this.setState({topicFilter: filter}, this.combineFilters);
+      this.setState({topicFilter: filter, isPreLoading: isPreLoading}, this.combineFilters);
    }
 
    getTopicID(topicName){
@@ -123,11 +122,11 @@ class MovieFilters extends Component {
       return id[0];
    }
 
-   setDateFilter(option){
+   setDateFilter(option, isPreLoading = false){
       var filter = {};
       if(option != null)
          filter = {filter:"release_date", query:option.value};
-      this.setState({dateFilter: filter}, this.combineFilters);
+      this.setState({dateFilter: filter, isPreLoading: isPreLoading}, this.combineFilters);
    }
 
    combineFilters(){
@@ -144,7 +143,8 @@ class MovieFilters extends Component {
       if(this.state.nameFilter.filter != null)
          allFilters.push(this.state.nameFilter);
 
-      this.props.setFilters(allFilters, this.state.sort);
+      this.props.setFilters(allFilters, this.state.sort, this.state.isPreLoading);
+      this.setState({isPreLoading: false});
    }
 
    render(){
@@ -160,11 +160,11 @@ class MovieFilters extends Component {
                </Row>
                <Row>
                   <Col xs="2">
-                     <h5 className="filtet-label">Topic:</h5>
+                     <h5 className="filter-label">Topic:</h5>
                      <TopicFilter setFilter={this.setTopicFilter} />
                   </Col>
                   <Col xs="3">
-                     <h5>Acting:</h5>
+                     <h5 className="filter-label">Acting:</h5>
                      <CastFilter setFilter={this.setCastFilter} />
                   </Col>
                   <Col xs="3">
