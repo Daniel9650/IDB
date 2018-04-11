@@ -30,7 +30,7 @@ class AuthorFilter extends Component {
          if (list.hasOwnProperty(k)) {
             if(query == list[k].value){
                this.state.selectedOption = list[k];
-               this.props.setFilter(this.state.selectedOptio, true);
+               this.props.setFilter(this.state.selectedOption, true);
             }
          }
       }

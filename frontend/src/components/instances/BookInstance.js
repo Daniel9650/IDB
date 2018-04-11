@@ -37,7 +37,7 @@ class BookInstance extends Component {
     	});
   	}
    componentDidMount() {
-     const { id } = this.props.match.params
+     const { id } = this.props.match.params;
      fetch("http://api.poptopic.org/books/"+id)
      .then(res => res.json())
      .then(
@@ -59,8 +59,6 @@ class BookInstance extends Component {
      )
    }
 	render () {
-
-      const { id } = this.props.match.params;
       const { error, isLoaded, data } = this.state;
 
       if (error) {
@@ -84,6 +82,7 @@ class BookInstance extends Component {
           );
       }
       else{
+         var googleBooksLink = "https://books.google.com/books?id=" + data.book_id;
          var authors = data.authors.join(", ")
          return (
             <div className="spacing-div">
@@ -102,6 +101,12 @@ class BookInstance extends Component {
                         <p>{authors}</p>
                         <h6 className="instance-sub">Release Date</h6>
                         <p>{data.release_date}</p>
+                        <h6 className="instance-sub">Find on Google Books</h6>
+                        <p>
+                           <a href={googleBooksLink}>
+                              {googleBooksLink}
+                           </a>
+                        </p>
                      </Col>
                   </Row>
                   <br />
@@ -109,21 +114,21 @@ class BookInstance extends Component {
                   <RelatedGrid
                      caller_type="books"
                      request_type="Topics"
-                     id={id}
+                     id={data.book_id}
                   />
                   <br/>
                   <h6 className="instance-sub">Related Movies</h6>
                   <RelatedGrid
                      caller_type="books"
                      request_type="Movies"
-                     id={id}
+                     id={data.book_id}
                   />
                   <br/>
                   <h6 className="instance-sub">Related Music</h6>
                   <RelatedGrid
                      caller_type="books"
                      request_type="Music"
-                     id={id}
+                     id={data.book_id}
                   />
             </Container>
             </div>
