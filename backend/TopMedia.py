@@ -33,6 +33,7 @@ class MovieEntity(declarative_base()):
     topics = Column(String())
     similar_books = Column(String())
     similar_songs = Column(String())
+    instance_type = Column(String())
 
     def __init__(self, movie):
         self.movie_id = movie.id
@@ -47,6 +48,7 @@ class MovieEntity(declarative_base()):
             list(map(TopicEntity.get_topic_id, movie.topics)))
         self.similar_books = json.dumps(movie.similar_books)
         self.similar_songs = json.dumps(movie.similar_songs)
+        self.instance_type = "movies"
 
 
 class Movie:
@@ -92,6 +94,7 @@ class BookEntity(declarative_base()):
     topics = Column(String())
     similar_movies = Column(String())
     similar_songs = Column(String())
+    instance_type = Column(String())
 
     def __init__(self, book):
         self.book_id = book.id
@@ -104,6 +107,7 @@ class BookEntity(declarative_base()):
             list(map(TopicEntity.get_topic_id, book.topics)))
         self.similar_movies = json.dumps(book.similar_movies)
         self.similar_songs = json.dumps(book.similar_songs)
+        self.instance_type = "books"
 
 
 class Book:
@@ -150,6 +154,7 @@ class SongEntity(declarative_base()):
     topics = Column(String())
     similar_movies = Column(String())
     similar_books = Column(String())
+    instance_type = Column(String())
 
     def __init__(self, song):
         self.song_id = song.id
@@ -163,6 +168,7 @@ class SongEntity(declarative_base()):
             list(map(TopicEntity.get_topic_id, song.topics)))
         self.similar_movies = json.dumps(song.similar_movies)
         self.similar_books = json.dumps(song.similar_books)
+        self.instance_type = "songs"
 
 
 class Song:
@@ -207,6 +213,7 @@ class TopicEntity(declarative_base()):
     similar_songs = Column(String())
     similar_books = Column(String())
     poster_url = Column(String())
+    instance_type = Column(String())
 
     def __init__(self, topic_name, movies, books, songs):
         self.topic_id = TopicEntity.get_topic_id(topic_name)
@@ -214,6 +221,7 @@ class TopicEntity(declarative_base()):
         self.similar_movies = json.dumps(movies)
         self.similar_books = json.dumps(books)
         self.similar_songs = json.dumps(songs)
+        self.instance_type = "topics"
 
         poster_urls = {
             "Action":
@@ -302,14 +310,14 @@ def extract_movie_info(response, genres_dict):
         movie.id +
         "/credits?api_key=21fed2c614e1de3b61f64b89beb692a5")
     credits = credits.json()
-    crew = credits["crew"]
+    crew = credits.get("crew", [])
     for person in crew:
         if person["job"] == "Director":
             movie.director = person["name"]
             break
 
     limit = 5
-    cast = credits["cast"]
+    cast = credits.get("cast", [])
     for person in cast:
         if limit <= 0:
             break
@@ -336,7 +344,7 @@ def get_top_movies():
         genres_dict[gen["id"]] = gen["name"]
 
     # iterate over pages of movies
-    for page in range(1, 3):
+    for page in range(1, 4):
         movies = requests.get(
             "https://api.themoviedb.org/3/discover/movie?api_key=21fed2c614e1de3b61f64b89beb692a5&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=" +
             str(page)).json()
@@ -383,12 +391,12 @@ def get_top_books(topics):
             save_topic +
             "&langRestrict=en&key=AIzaSyDsZoCLSczdtuT0Y5mGCdR2BhT4kpQ_kXA").json()
 
-        for i in range(3):  # 3 books per topic
+        for i in range(5):  # 5 books per topic
             if i >= len(response["items"]):
                 break
 
             book = extract_book_info(response["items"][i], topic)
-            if book.authors != []:
+            if book.authors != [] and "Lily Xiao Hong Lee" not in book.authors:
                 ret_books[book.id] = book
 
     return ret_books
@@ -435,7 +443,7 @@ def get_top_songs(topics):
             "&type=playlist&market=US")
         response = response["playlists"]
 
-        for i in range(3):  # 3 songs per topic
+        for i in range(5):  # 5 songs per topic
             if i >= len(response["items"]):
                 break
 
@@ -511,6 +519,9 @@ def create_session():
         "@pt-db-instance.cden9ozljt61.us-west-1.rds.amazonaws.com:3306/poptopic_db"
     engine = create_engine(con_str)
 
+    # MovieEntity.__table__.drop(engine)
+    # sys.exit()
+
     # create a configured "Session" class
     Session = sessionmaker(bind=engine)
 
@@ -572,6 +583,7 @@ def get_media_from_db():
     for instance in q:
         print(instance.song_id, instance.song_name)
         print(instance.artists)
+        print(instance.album)
 
     print("\nPrinting Topics: ")
     q = session.query(TopicEntity)
