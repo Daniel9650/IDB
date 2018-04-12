@@ -86,6 +86,7 @@ class MusicInstance extends Component {
       //get movie instance data
       var video = "https://www.youtube.com/embed/"+data.youtube_url+"?origin=http://poptopic.org";
       var {id} = this.props.match.params;
+      var spotifyLink = "https://open.spotify.com/track/" + data.song_id;
       return (
          <div className="spacing-div">
 
@@ -112,6 +113,12 @@ class MusicInstance extends Component {
                   <Col xs="4" >
                      <h6 className="instance-sub">Release Date</h6>
                      <p>{data.release_date}</p>
+                     <h6 className="instance-sub">Find on Spotify</h6>
+                     <p>
+                       <a href={spotifyLink}>
+                           {spotifyLink}
+                       </a>
+                     </p>
                   </Col>
                </Row>
                <br />

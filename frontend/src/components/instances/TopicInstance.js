@@ -63,7 +63,6 @@ class TopicInstance extends Component {
 
       const {id} = this.props.match.params;
       const { error, isLoaded, data } = this.state;
-
       if (error) {
         const status = error.response ? error.response.status : 500
         if(status === 404){
@@ -86,6 +85,7 @@ class TopicInstance extends Component {
       }
       else {
          var name = data.topic_name;
+         var wikiLink = "https://en.wikipedia.org/wiki/" + data.topic_name;
 
          return (
             <div className="spacing-div">
@@ -94,6 +94,14 @@ class TopicInstance extends Component {
                   <h1 name="topic-instance-name" className="general-title">{name}</h1>
                   <hr className="divider"/>
                   <img className="topic-poster" src={data.poster_url} />
+                  <br/>
+                  <br/>
+                  <h6 className="instance-sub">Find on Wikipedia</h6>
+                  <p>
+                    <a href={wikiLink}>
+                        {wikiLink}
+                    </a>
+                  </p>
                   <br />
                   <h6 className="instance-sub">Related Movies</h6>
                   <RelatedGrid

@@ -96,6 +96,8 @@ class MovieInstance extends Component {
         var first = true;
         var cast = data.cast.join(", ");
         var director = data.director;
+        var movieDBLink = "https://www.themoviedb.org/movie/" + data.movie_id;
+
 
         var {id} = this.props.match.params;
         return (
@@ -126,6 +128,12 @@ class MovieInstance extends Component {
                        <p>{cast}</p>
                        <h6 className="instance-sub">Directing</h6>
                        <p>{director}</p>
+                       <h6 className="instance-sub">Find on The Movie Database</h6>
+                       <p>
+                          <a href={movieDBLink}>
+                             {movieDBLink}
+                          </a>
+                       </p>
                     </Col>
                  </Row>
                  <br />
