@@ -1,96 +1,52 @@
 import React from 'react';
-import { expect } from 'chai';
-import { shallow, mount } from 'enzyme';
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-import fetch from 'isomorphic-fetch';
+import About from './src/components/about/About.js';
+import BookInstance from './src/components/instances/BookInstance.js';
+import MovieInstance from './src/components/instances/MovieInstance.js';
+import MusicInstance from './src/components/instances/MusicInstance.js';
+import TopicInstance from './src/components/instances/TopicInstance.js';
+import Model from './src/components/model/Model.js';
+import { Router, Route, Link, IndexRoute } from 'react-router';
+import { BrowserRouter } from 'react-router-dom'
+import {URLSearchParams} from 'url';
 
-Enzyme.configure({adapter: new Adapter()});
-
-import About from '../src/components/about/About.js';
-import BookInstance from '../src/components/book/BookInstance.js';
-import MovieInstance from '../src/components/movie/MovieInstance.js';
-import MusicInstance from '../src/components/music/MusicInstance.js';
-import TopicInstance from '../src/components/topic/TopicInstance.js';
-import Model from '../src/components/model/Model.js';
+global.URLSearchParams = URLSearchParams
 
 //Mocha Tests
 describe('Test About Component', () => {
-
-    before(function() {
-      this.jsdom = require('jsdom-global')();
-    })
-
-    after(function() {
-      this.jsdom();
-    })
-
-    const wrapper = shallow(<About />);
-    it('exists', () => {
-      expect(wrapper.find('#about').exists()).to.eql(true);
-    });
+  const wrapper = shallow(<About />);
+  it('exists', () => {
+    expect(wrapper.find('.spacing-div').exists()).to.eql(true);
+  });
 });
 
 describe('Test BookInstance Component', () => {
-
-    before(function() {
-      this.jsdom = require('jsdom-global')();
-    })
-
-    after(function() {
-      this.jsdom();
-    })
-
-    const wrapper = shallow(<BookInstance />);
-    it('exists', () => {
-      expect(wrapper.find('#bookInstance').exists()).to.eql(true);
-    });
+  const wrapper = shallow(<BookInstance match={{isExact: true, params: {id: "YiHHnV08ebkC"}, path: "/books/:id", url: "/books/YiHHnV08ebkC"}}/>);
+  it('exists', () => {
+    expect(wrapper.find('.spacing-div').exists()).to.eql(true);
+  });
 });
 
 describe('Test MovieInstance Component', () => {
-
-    before(function() {
-      this.jsdom = require('jsdom-global')();
-    })
-
-    after(function() {
-      this.jsdom();
-    })
-
-    const wrapper = shallow(<MovieInstance />);
-    it('exists', () => {
-      expect(wrapper.find('#movieInstance').exists()).to.eql(true);
-    });
+  const wrapper = shallow(<MovieInstance match={{isExact: true, params: {id: "300668"}, path: "/movies/:id", url: "/movies/300668"}}/>);
+  it('exists', () => {
+    expect(wrapper.find('.spacing-div').exists()).to.eql(true);
+  });
 });
 
 describe('Test MusicInstance Component', () => {
-
-    before(function() {
-      this.jsdom = require('jsdom-global')();
-    })
-
-    after(function() {
-      this.jsdom();
-    })
-
-    const wrapper = shallow(<MusicInstance />);
-    it('exists', () => {
-      expect(wrapper.find('#musicInstance').exists()).to.eql(true);
-    });
+  const wrapper = shallow(<MusicInstance match={{isExact: true, params: {id: "08YEGpKt2LHJ0URCXKHEie"}, path: "/music/:id", url: "/music/08YEGpKt2LHJ0URCXKHEie"}}/>);
+  it('exists', () => {
+    expect(wrapper.find('.spacing-div').exists()).to.eql(true);
+  });
 });
 
 describe('Test Model Component', () => {
-
-    before(function() {
-      this.jsdom = require('jsdom-global')();
-    })
-
-    after(function() {
-      this.jsdom();
-    })
-
-    const wrapper = shallow(<Model />);
-    it('exists', () => {
-      expect(wrapper.find('#model').exists()).to.eql(true);
-    });
+  const wrapper = mount(
+      <BrowserRouter>
+        <Model type="Movies"/>
+      </BrowserRouter>,
+    );
+  it('exists', () => {
+    expect(wrapper.find('.spacing-div').exists()).to.eql(true);
+  });
 });

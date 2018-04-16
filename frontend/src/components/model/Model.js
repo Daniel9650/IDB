@@ -3,7 +3,6 @@ import { Container, Row, ButtonGroup, Button } from 'reactstrap';
 import CardGrid from './CardGrid.js';
 import { withRouter } from "react-router-dom";
 
-
 class Model extends Component {
 
    constructor(props) {
