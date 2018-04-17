@@ -101,6 +101,8 @@ class SearchResults extends Component {
          artists = {artists}
          album = {album}
          authors = {authors}
+         highlight = {this.props.query}
+         description = {instance.description}
          />;
    }
 

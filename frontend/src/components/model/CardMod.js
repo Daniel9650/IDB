@@ -14,6 +14,8 @@ class CardMod extends Component {
       this.render = this.render.bind(this);
       this.textContent = this.textContent.bind(this);
       this.getTopicNames = this.getTopicNames.bind(this);
+
+
    }
 
    getTopicNames(topics){
@@ -30,15 +32,43 @@ class CardMod extends Component {
    }
 
    textContent() {
+     var Highlight = require('react-highlighter');
+
       switch (this.props.type) {
          case "Movies":
             var actors = this.props.actors.join(", ");
             return (
                <div>
-               <CardText>Topics: {this.getTopicNames(this.props.topics)}</CardText>
-               <CardText>Release: {this.props.date}</CardText>
-               <CardText>Acting: {actors}</CardText>
-               <CardText>Directing: {this.props.director}</CardText>
+               <CardTitle>
+                  <Highlight search={this.props.highlight}>
+                  {this.props.title}
+                  </Highlight>
+               </CardTitle>
+               <CardText>
+                  <span>Topics: </span>
+                  <Highlight search={this.props.highlight}>
+                  {this.getTopicNames(this.props.topics)}
+                  </Highlight>
+               </CardText>
+               <CardText>
+                  <span>Release: </span>
+                  <Highlight search={this.props.highlight}>
+                  {this.props.date}
+                  </Highlight>
+               </CardText>
+               <CardText>
+                  <span>Acting: </span>
+                  <Highlight search={this.props.highlight}>
+                  {actors}
+                  </Highlight>
+               </CardText>
+               <CardText>
+                  <span>Directing: </span>
+                  <Highlight search={this.props.highlight}>
+                  {this.props.director}
+                  </Highlight>
+                </CardText>
+                {this.getDescription()}
                </div>
             );
 
@@ -46,9 +76,31 @@ class CardMod extends Component {
             var authors = this.props.authors.join(", ");
             return (
                <div>
-               <CardText>Topics: {this.getTopicNames(this.props.topics)}</CardText>
-               <CardText>Release: {this.props.date}</CardText>
-               <CardText>Author: {authors}</CardText>
+               <CardTitle>
+                  <Highlight search={this.props.highlight}>
+                  {this.props.title}
+                  </Highlight>
+               </CardTitle>
+               <CardText>
+                  <span>Topics: </span>
+                  <Highlight search={this.props.highlight}>
+                  {this.getTopicNames(this.props.topics)}
+                  </Highlight>
+               </CardText>
+               <CardText>
+                  <span>Release: </span>
+                  <Highlight search={this.props.highlight}>
+                  {this.props.date}
+                  </Highlight>
+               </CardText>
+               <CardText>
+                  <span>Author: </span>
+                  <Highlight search={this.props.highlight}>
+                  {authors}
+                  </Highlight>
+               </CardText>
+               {this.getDescription()}
+
                </div>
             );
 
@@ -56,30 +108,106 @@ class CardMod extends Component {
             var artists = this.props.artists.join(", ");
             return (
                <div>
-               <CardText>Topics: {this.getTopicNames(this.props.topics)}</CardText>
-               <CardText>Release: {this.props.date}</CardText>
-               <CardText>Artists: {artists}</CardText>
-               <CardText>Album: {this.props.album}</CardText>
+               <CardTitle>
+                  <Highlight search={this.props.highlight}>
+                  {this.props.title}
+                  </Highlight>
+               </CardTitle>
+               <CardText>
+                  <span>Topics: </span>
+                  <Highlight search={this.props.highlight}>
+                  {this.getTopicNames(this.props.topics)}
+                  </Highlight>
+               </CardText>
+               <CardText>
+                  <span>Release: </span>
+                  <Highlight search={this.props.highlight}>
+                  {this.props.date}
+                  </Highlight>
+               </CardText>
+               <CardText>
+                  <span>Artists: </span>
+                  <Highlight search={this.props.highlight}>
+                  {artists}
+                  </Highlight>
+               </CardText>
+               <CardText>
+                  <span>Album: </span>
+                  <Highlight search={this.props.highlight}>
+                  {this.props.album}
+                  </Highlight>
+               </CardText>
                </div>
             );
 
          case "Topics":
-            return null;
+            return (
+              <div>
+              <CardTitle>
+                <Highlight search={this.props.highlight}>
+                {this.props.title}
+                </Highlight>
+              </CardTitle>
+              </div>
+            );
 
       }
+   }
+
+   getDescription(){
+     var Highlight = require('react-highlighter');
+
+     if(this.props.description != null){
+       var desc = "";
+       if(this.props.description.includes(this.props.highlight)){
+          var index = this.props.description.indexOf(this.props.highlight);
+          var starting  = 0;
+          if(index - 30 > 0){
+            starting = index - 30;
+            desc = desc + "...";
+          }
+          var ending = index + ( 30 - this.props.highlight.length );
+          if(ending > this.props.description.length){
+            ending = this.props.description.length;
+            desc = desc +this.props.description.slice(starting, ending);
+          }
+          else {
+            desc = desc +this.props.description.slice(starting, ending) + "...";
+
+          }
+       }
+       else{
+
+         desc = this.props.description.slice(0, 60) + "...";
+       }
+       return(
+         <div>
+         <CardText>
+            <span>Description: </span>
+            <Highlight search={this.props.highlight}>
+            {desc}
+            </Highlight>
+         </CardText>
+         </div>
+       );
+     }
+     else {
+       return null;
+     }
    }
 
    render() {
 
       var url_model = "/" + this.props.type.toLowerCase() + "/" + this.props.id;
       var name = "card" + this.props.number;
+            console.log(this.props.highlight);
+
 
       return (
          <a name={name} href={url_model}>
             <Card>
                <CardImg top src={this.props.image} />
                <CardBody>
-                  <CardTitle>{this.props.title}</CardTitle>
                   {this.textContent()}
                </CardBody>
             </Card>

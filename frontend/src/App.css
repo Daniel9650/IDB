@@ -91,6 +91,11 @@ p{
    font-family: Sans;
 }
 
+.highlighted {
+  background-color: var(--accent);
+  font-weight: bold;
+}
+
 
 /***************************  Model Grid Styles  ******************************/
 
@@ -240,10 +245,13 @@ a:hover {
 
 .navbar {
    height: 80px;
+   max-height: 200px;
    color: white !important;
    background-color: var(--charcoal);
    font-family: Sans;
 }
+
+
 
 .navbar-dark {
    color: white !important;

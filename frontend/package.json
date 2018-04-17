@@ -37,6 +37,7 @@
     "enzyme-adapter-react-16": "^1.1.1",
     "mocha": "^5.1.0",
     "react-addons-test-utils": "^15.6.2",
+    "react-highlighter": "^0.4.2",
     "require-hacker": "^3.0.1",
     "sinon": "^4.5.0"
   }
