@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import NotFound from '../global/NotFound.js';
-import data from '../../data/mock_topic.json';
 import RelatedGrid from './RelatedGrid.js';
 import APIError from '../global/APIError.js';
 import Loading from '../global/Loading.js';

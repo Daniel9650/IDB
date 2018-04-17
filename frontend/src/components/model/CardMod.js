@@ -162,11 +162,11 @@ class CardMod extends Component {
        if(this.props.description.includes(this.props.highlight)){
           var index = this.props.description.indexOf(this.props.highlight);
           var starting  = 0;
-          if(index - 30 > 0){
-            starting = index - 30;
+          if(index - 50 > 0){
+            starting = index - 50;
             desc = desc + "...";
           }
-          var ending = index + ( 30 - this.props.highlight.length );
+          var ending = index + 50 ;
           if(ending > this.props.description.length){
             ending = this.props.description.length;
             desc = desc +this.props.description.slice(starting, ending);
@@ -178,7 +178,7 @@ class CardMod extends Component {
        }
        else{
 
-         desc = this.props.description.slice(0, 60) + "...";
+         desc = this.props.description.slice(0, 101) + "...";
        }
        return(
          <div>
@@ -200,7 +200,6 @@ class CardMod extends Component {
 
       var url_model = "/" + this.props.type.toLowerCase() + "/" + this.props.id;
       var name = "card" + this.props.number;
-            console.log(this.props.highlight);
 
 
       return (

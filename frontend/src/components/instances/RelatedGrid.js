@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Container, Row, CardDeck } from 'reactstrap';
-import RelatedCard from './RelatedCard.js';
 import Pagination from '../model/Pagination.js';
+import CardMod from '../model/CardMod.js';
 
-class CardGrid extends Component {
+class RelatedGrid extends Component {
 
    constructor(props) {
       super(props);
@@ -62,36 +62,50 @@ class CardGrid extends Component {
    }
 
    createCard(instance) {
-      var name = "";
-      var instance_id = "";
-      if (this.props.request_type === "Movies") {
-         name= instance.movie_name;
-         instance_id= instance.movie_id;
+     var name = "";
+     var id = "";
+     var actors = [];
+     var director = "";
+     var authors = [];
+     var album = "";
+     var artists = [];
+     if (this.props.request_type === "Movies") {
+        name= instance.movie_name;
+        id= instance.movie_id;
+        actors = instance.cast;
+        director = instance.director;
+     }
+     else if (this.props.request_type === "Music") {
+        name= instance.song_name;
+        id= instance.song_id;
+        artists = instance.artists;
+        album = instance.album;
+     }
+     else if (this.props.request_type === "Books") {
+        name= instance.book_name;
+        id= instance.book_id;
+        authors = instance.authors;
+     }
+     else {
+        name= instance.topic_name;
+        id= instance.topic_id;
+     }
 
-      }
-      else if (this.props.request_type === "Music") {
-         name= instance.song_name;
-         instance_id= instance.song_id;
-
-      }
-      else if (this.props.request_type === "Books") {
-         name= instance.book_name;
-         instance_id= instance.book_id;
-
-      }
-      else {
-         name= instance.topic_name;
-         instance_id= instance.topic_id;
-
-      }
-       this.count++;
-      return <RelatedCard
-         image={instance.poster_url}
-         title={name}
-         id= {instance_id}
-         type={this.props.request_type}
-         number={this.count}
-         />;
+     this.count ++;
+     return <CardMod
+        image={instance.poster_url}
+        title={name}
+        topics={instance.topics}
+        id= {id}
+        number={this.count}
+        type={this.props.request_type}
+        date = {instance.release_date}
+        actors = {actors}
+        director = {director}
+        artists = {artists}
+        album = {album}
+        authors = {authors}
+        />;
    }
 
    createCards(instances) {
@@ -107,6 +121,7 @@ class CardGrid extends Component {
       else if (!isLoaded) {
         return <div>Loading...</div>;
       }
+
       else {
          var deckname = this.props.type + " Deck";
          return (
@@ -114,16 +129,17 @@ class CardGrid extends Component {
                <CardDeck name={deckname}>
                   {this.createCards(data)}
                </CardDeck>
-
+               <div className="text-center">
                <Pagination
                   totalPages={data.total_pages}
                   onClick={this.setPage}
                   currentPage={this.state.currentPage}
                />
+               </div>
             </div>
          );
       }
    }
 }
 
-export default CardGrid;
+export default RelatedGrid;
