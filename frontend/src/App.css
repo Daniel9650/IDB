@@ -91,9 +91,8 @@ p{
    font-family: Sans;
 }
 
-.highlighted {
-  background-color: var(--accent);
-  font-weight: bold;
+.highlighter {
+  
 }
 
 

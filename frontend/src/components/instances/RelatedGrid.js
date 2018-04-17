@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Container, Row, CardDeck } from 'reactstrap';
 import Pagination from '../model/Pagination.js';
 import CardMod from '../model/CardMod.js';
+import Loading from '../global/Loading.js';
+import NotFound from '../global/NotFound.js';
+import APIError from '../global/APIError.js';
 
 class RelatedGrid extends Component {
 
@@ -69,6 +72,7 @@ class RelatedGrid extends Component {
      var authors = [];
      var album = "";
      var artists = [];
+     var relatedMedia = 0;
      if (this.props.request_type === "Movies") {
         name= instance.movie_name;
         id= instance.movie_id;
@@ -89,6 +93,7 @@ class RelatedGrid extends Component {
      else {
         name= instance.topic_name;
         id= instance.topic_id;
+        relatedMedia = instance.similar_books.length + instance.similar_movies.length + instance.similar_songs.length;
      }
 
      this.count ++;
@@ -105,6 +110,7 @@ class RelatedGrid extends Component {
         artists = {artists}
         album = {album}
         authors = {authors}
+        relatedMedia = {relatedMedia}
         />;
    }
 
@@ -116,12 +122,25 @@ class RelatedGrid extends Component {
       const { error, isLoaded, data } = this.state;
 
       if (error) {
-        return <div>Error: {error.message}</div>;
+        const status = error.response ? error.response.status : 500
+        if(status === 404){
+          return <NotFound />;
+        }
+        else{
+          return(
+            <Container className='spacing-div'>
+            <APIError/>
+            </Container>
+            );
+        }
       }
       else if (!isLoaded) {
-        return <div>Loading...</div>;
+        return (
+          <Container className='spacing-div'>
+          <Loading/>
+          </Container>
+          );
       }
-
       else {
          var deckname = this.props.type + " Deck";
          return (

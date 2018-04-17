@@ -33,38 +33,43 @@ class CardMod extends Component {
 
    textContent() {
      var Highlight = require('react-highlighter');
-
+     var highlightStyle = {
+       backgroundColor: "#359dba",
+       color: "white",
+       opacity: 0.75,
+       fontWeight: "bold",
+     };
       switch (this.props.type) {
          case "Movies":
             var actors = this.props.actors.join(", ");
             return (
                <div>
                <CardTitle>
-                  <Highlight search={this.props.highlight}>
+                  <Highlight matchStyle={highlightStyle}  search={this.props.highlight}>
                   {this.props.title}
                   </Highlight>
                </CardTitle>
                <CardText>
                   <span>Topics: </span>
-                  <Highlight search={this.props.highlight}>
+                  <Highlight matchStyle={highlightStyle}  search={this.props.highlight}>
                   {this.getTopicNames(this.props.topics)}
                   </Highlight>
                </CardText>
                <CardText>
                   <span>Release: </span>
-                  <Highlight search={this.props.highlight}>
+                  <Highlight matchStyle={highlightStyle}  search={this.props.highlight}>
                   {this.props.date}
                   </Highlight>
                </CardText>
                <CardText>
                   <span>Acting: </span>
-                  <Highlight search={this.props.highlight}>
+                  <Highlight matchStyle={highlightStyle}  search={this.props.highlight}>
                   {actors}
                   </Highlight>
                </CardText>
                <CardText>
                   <span>Directing: </span>
-                  <Highlight search={this.props.highlight}>
+                  <Highlight matchStyle={highlightStyle}  search={this.props.highlight}>
                   {this.props.director}
                   </Highlight>
                 </CardText>
@@ -77,25 +82,25 @@ class CardMod extends Component {
             return (
                <div>
                <CardTitle>
-                  <Highlight search={this.props.highlight}>
+                  <Highlight matchStyle={highlightStyle}  search={this.props.highlight}>
                   {this.props.title}
                   </Highlight>
                </CardTitle>
                <CardText>
                   <span>Topics: </span>
-                  <Highlight search={this.props.highlight}>
+                  <Highlight matchStyle={highlightStyle}  search={this.props.highlight}>
                   {this.getTopicNames(this.props.topics)}
                   </Highlight>
                </CardText>
                <CardText>
                   <span>Release: </span>
-                  <Highlight search={this.props.highlight}>
+                  <Highlight matchStyle={highlightStyle}  search={this.props.highlight}>
                   {this.props.date}
                   </Highlight>
                </CardText>
                <CardText>
                   <span>Author: </span>
-                  <Highlight search={this.props.highlight}>
+                  <Highlight matchStyle={highlightStyle}  search={this.props.highlight}>
                   {authors}
                   </Highlight>
                </CardText>
@@ -109,31 +114,31 @@ class CardMod extends Component {
             return (
                <div>
                <CardTitle>
-                  <Highlight search={this.props.highlight}>
+                  <Highlight matchStyle={highlightStyle}  search={this.props.highlight}>
                   {this.props.title}
                   </Highlight>
                </CardTitle>
                <CardText>
                   <span>Topics: </span>
-                  <Highlight search={this.props.highlight}>
+                  <Highlight matchStyle={highlightStyle}  search={this.props.highlight}>
                   {this.getTopicNames(this.props.topics)}
                   </Highlight>
                </CardText>
                <CardText>
                   <span>Release: </span>
-                  <Highlight search={this.props.highlight}>
+                  <Highlight matchStyle={highlightStyle}  search={this.props.highlight}>
                   {this.props.date}
                   </Highlight>
                </CardText>
                <CardText>
                   <span>Artists: </span>
-                  <Highlight search={this.props.highlight}>
+                  <Highlight matchStyle={highlightStyle}  search={this.props.highlight}>
                   {artists}
                   </Highlight>
                </CardText>
                <CardText>
                   <span>Album: </span>
-                  <Highlight search={this.props.highlight}>
+                  <Highlight matchStyle={highlightStyle}  search={this.props.highlight}>
                   {this.props.album}
                   </Highlight>
                </CardText>
@@ -144,10 +149,13 @@ class CardMod extends Component {
             return (
               <div>
               <CardTitle>
-                <Highlight search={this.props.highlight}>
+                <Highlight matchStyle={highlightStyle}  search={this.props.highlight}>
                 {this.props.title}
                 </Highlight>
               </CardTitle>
+              <CardText>
+                {this.props.relatedMedia} Media Entries
+              </CardText>
               </div>
             );
 
@@ -156,7 +164,12 @@ class CardMod extends Component {
 
    getDescription(){
      var Highlight = require('react-highlighter');
-
+     var highlightStyle = {
+       backgroundColor: "#359dba",
+       color: "white",
+       opacity: 0.75,
+       fontWeight: "bold",
+     };
      if(this.props.description != null){
        var desc = "";
        if(this.props.description.includes(this.props.highlight)){
@@ -184,7 +197,7 @@ class CardMod extends Component {
          <div>
          <CardText>
             <span>Description: </span>
-            <Highlight search={this.props.highlight}>
+            <Highlight matchStyle={highlightStyle}  search={this.props.highlight}>
             {desc}
             </Highlight>
          </CardText>
