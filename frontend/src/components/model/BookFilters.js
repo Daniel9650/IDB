@@ -15,7 +15,7 @@ class BookFilters extends Component {
 
       this.state={
          authorFilter: {},
-         topicFilter: {},
+         topicFilters: [],
          dateFilter: {},
          nameFilter: {},
          sort: 'title_asc',
@@ -48,12 +48,14 @@ class BookFilters extends Component {
    }
 
    setTopicFilter(option, isPreLoading = false){
-      var filter = {};
+      var filters = [];
       if(option != null){
-         var id = this.getTopicID(option.value);
-         filter = {filter:"topics", query:id};
+          for(var i = 0; i < option.length; i++){
+            var id = this.getTopicID(option[i].value);
+            filters.push({filter:"topics", query:id});
+          }
       }
-      this.setState({topicFilter: filter, isPreLoading: isPreLoading}, this.combineFilters);
+      this.setState({topicFilters: filters, isPreLoading: isPreLoading}, this.combineFilters);
    }
 
    getTopicID(topicName){
@@ -85,8 +87,10 @@ class BookFilters extends Component {
          allFilters.push(this.state.authorFilter);
       if(this.state.dateFilter.filter != null)
          allFilters.push(this.state.dateFilter);
-      if(this.state.topicFilter.filter != null)
-         allFilters.push(this.state.topicFilter);
+      if(this.state.topicFilters.length != 0){
+         for(var i = 0; i < this.state.topicFilters.length; i++)
+           allFilters.push(this.state.topicFilters[i]);
+      }
       if(this.state.nameFilter.filter != null)
          allFilters.push(this.state.nameFilter);
 
@@ -98,25 +102,26 @@ class BookFilters extends Component {
       return(
          <div>
             <Row>
-               <Col>
+               <Col xs="7">
                   <h5 className="filter-label">Title:</h5>
                   <NameFilter setFilter={this.setNameFilter} />
                </Col>
-            </Row>
-            <Row>
-               <Col xs="3">
+               <Col xs="5">
                   <h5 className="filter-label">Topic:</h5>
                   <TopicFilter setFilter={this.setTopicFilter} />
                </Col>
-               <Col xs="3">
+            </Row>
+            <Row>
+
+               <Col xs="5">
                   <h5 className="filter-label">Author:</h5>
                   <AuthorFilter setFilter={this.setAuthorFilter} />
                </Col>
-               <Col xs="3">
+               <Col xs="5">
                   <h5 className="filter-label">Release Year:</h5>
                   <DateFilter type="book" setFilter={this.setDateFilter} />
                </Col>
-               <Col xs="3">
+               <Col xs="2">
                   <h5 className="filter-label">Sort By:</h5>
                   <Sort setFilter={this.setSort} />
                </Col>

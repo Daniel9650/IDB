@@ -18,7 +18,7 @@ class MovieFilters extends Component {
       this.state={
          castFilter: {},
          directorFilter: {},
-         topicFilter: {},
+         topicFilters: [],
          dateFilter: {},
          nameFilter:{},
          sort: 'title_asc',
@@ -104,12 +104,16 @@ class MovieFilters extends Component {
    }
 
    setTopicFilter(option, isPreLoading = false){
-      var filter = {};
+      var filters = [];
+      console.log(option);
       if(option != null){
-         var id = this.getTopicID(option.value);
-         filter = {filter:"topics", query:id};
+          for(var i = 0; i < option.length; i++){
+            console.log(option[i]);
+            var id = this.getTopicID(option[i].value);
+            filters.push({filter:"topics", query:id});
+          }
       }
-      this.setState({topicFilter: filter, isPreLoading: isPreLoading}, this.combineFilters);
+      this.setState({topicFilters: filters, isPreLoading: isPreLoading}, this.combineFilters);
    }
 
    getTopicID(topicName){
@@ -130,7 +134,7 @@ class MovieFilters extends Component {
    }
 
    combineFilters(){
-      console.log(this.state.nameFilter);
+      console.log(this.state.topicFilters);
       var allFilters = [];
       if(this.state.castFilter.filter != null)
          allFilters.push(this.state.castFilter);
@@ -138,8 +142,10 @@ class MovieFilters extends Component {
          allFilters.push(this.state.directorFilter);
       if(this.state.dateFilter.filter != null)
          allFilters.push(this.state.dateFilter);
-      if(this.state.topicFilter.filter != null)
-         allFilters.push(this.state.topicFilter);
+      if(this.state.topicFilters.length != 0){
+          for(var i = 0; i < this.state.topicFilters.length; i++)
+            allFilters.push(this.state.topicFilters[i]);
+       }
       if(this.state.nameFilter.filter != null)
          allFilters.push(this.state.nameFilter);
 
@@ -148,26 +154,26 @@ class MovieFilters extends Component {
    }
 
    render(){
-      console.log(this.state.nameFilter);
       if(this.state.isLoaded){
          return(
             <div>
                <Row>
-                  <Col>
+                  <Col xs="7">
                      <h5 className="filter-label">Title:</h5>
                      <NameFilter currentFilter={this.state.nameFilter.query} setFilter={this.setNameFilter} />
                   </Col>
-               </Row>
-               <Row>
-                  <Col xs="2">
+                  <Col xs="5">
                      <h5 className="filter-label">Topic:</h5>
                      <TopicFilter setFilter={this.setTopicFilter} />
                   </Col>
-                  <Col xs="3">
+               </Row>
+               <Row>
+
+                  <Col xs="4">
                      <h5 className="filter-label">Acting:</h5>
                      <CastFilter setFilter={this.setCastFilter} />
                   </Col>
-                  <Col xs="3">
+                  <Col xs="4">
                      <h5 className="filter-label">Directing:</h5>
                      <DirectorFilter setFilter={this.setDirectorFilter} />
                   </Col>

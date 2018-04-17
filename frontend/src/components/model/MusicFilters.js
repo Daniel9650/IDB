@@ -18,7 +18,7 @@ class MusicFilters extends Component {
       this.state={
          artistFilter: {},
          albumFilter: {},
-         topicFilter: {},
+         topicFilters: [],
          dateFilter: {},
          nameFilter: {},
          sort: 'title_asc',
@@ -66,13 +66,16 @@ class MusicFilters extends Component {
    }
 
    setTopicFilter(option, isPreLoading = false){
-      var filter = {};
+      var filters = [];
       if(option != null){
-         var id = this.getTopicID(option.value);
-         filter = {filter:"topics", query:id};
+          for(var i = 0; i < option.length; i++){
+            var id = this.getTopicID(option[i].value);
+            filters.push({filter:"topics", query:id});
+          }
       }
-      this.setState({topicFilter: filter, isPreLoading: isPreLoading}, this.combineFilters);
+      this.setState({topicFilters: filters, isPreLoading: isPreLoading}, this.combineFilters);
    }
+
 
    getTopicID(topicName){
       var id = [];
@@ -99,8 +102,10 @@ class MusicFilters extends Component {
          allFilters.push(this.state.albumFilter);
       if(this.state.dateFilter.filter != null)
          allFilters.push(this.state.dateFilter);
-      if(this.state.topicFilter.filter != null)
-         allFilters.push(this.state.topicFilter);
+      if(this.state.topicFilters.length != 0){
+         for(var i = 0; i < this.state.topicFilters.length; i++)
+           allFilters.push(this.state.topicFilters[i]);
+      }
       if(this.state.nameFilter.filter != null)
          allFilters.push(this.state.nameFilter);
 
@@ -112,21 +117,22 @@ class MusicFilters extends Component {
       return(
          <div>
             <Row>
-               <Col>
+               <Col xs="7">
                   <h5>Song Title:</h5>
                   <NameFilter setFilter={this.setNameFilter} />
                </Col>
-            </Row>
-            <Row>
-               <Col xs="2">
+               <Col xs="5">
                   <h5 className="filter-label">Topic:</h5>
                   <TopicFilter setFilter={this.setTopicFilter} />
                </Col>
-               <Col xs="3">
+            </Row>
+            <Row>
+
+               <Col xs="4">
                   <h5 className="filter-label">Artist:</h5>
                   <ArtistFilter setFilter={this.setArtistFilter} />
                </Col>
-               <Col xs="3">
+               <Col xs="4">
                   <h5 className="filter-label">Album:</h5>
                   <AlbumFilter setFilter={this.setAlbumFilter} />
                </Col>
