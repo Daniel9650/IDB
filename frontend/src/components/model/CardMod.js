@@ -172,14 +172,19 @@ class CardMod extends Component {
      };
      if(this.props.description != null){
        var desc = "";
-       if(this.props.description.includes(this.props.highlight)){
-          var index = this.props.description.indexOf(this.props.highlight);
+       var index = this.props.description.indexOf(this.props.highlight);
+       if(index < 0)
+        index = this.props.description.indexOf(this.props.highlight.toLowerCase());
+        
+       if(index >= 0){
+
           var starting  = 0;
           if(index - 50 > 0){
             starting = index - 50;
             desc = desc + "...";
           }
           var ending = index + 50 ;
+
           if(ending > this.props.description.length){
             ending = this.props.description.length;
             desc = desc +this.props.description.slice(starting, ending);
@@ -190,7 +195,7 @@ class CardMod extends Component {
           }
        }
        else{
-
+         console.log(this.props.description.includes(this.props.highlight));
          desc = this.props.description.slice(0, 101) + "...";
        }
        return(
