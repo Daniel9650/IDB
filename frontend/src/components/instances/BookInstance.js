@@ -85,7 +85,7 @@ class BookInstance extends Component {
          var googleBooksLink = "https://books.google.com/books?id=" + data.book_id;
          var authors = data.authors.join(", ")
          return (
-            <div className="spacing-div">
+            <div className="spacing-div-instance">
 
                <Container>
                   <h1 name="book-instance-name" className="general-title">{data.book_name}</h1>

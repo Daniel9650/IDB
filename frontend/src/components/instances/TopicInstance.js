@@ -87,7 +87,7 @@ class TopicInstance extends Component {
          var wikiLink = "https://en.wikipedia.org/wiki/" + data.topic_name;
 
          return (
-            <div className="spacing-div">
+            <div className="spacing-div-instance">
 
                <Container>
                   <h1 name="topic-instance-name" className="general-title">{name}</h1>

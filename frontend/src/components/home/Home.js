@@ -12,7 +12,7 @@ class Home extends Component {
             <CarouselMod />
             <br />
             <Container>
-               <h1 name="trending-topics" className="home-sub">Trending Topics</h1>
+               <h1 name="trending-topics" className="home-sub">Popular Topics</h1>
                <TrendingTopicsGrid/>
             </Container>
           </div>

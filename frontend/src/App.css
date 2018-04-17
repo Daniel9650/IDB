@@ -109,7 +109,7 @@ p{
 }
 
 .card img{
-  height: 200px;
+  height: 350px;
   width: 350px;
   object-fit: cover;
 }
@@ -393,6 +393,14 @@ a:hover {
 
 .spacing-div {
    padding-top: 130px;
+}
+
+.spacing-div-model {
+   padding-top: 170px;
+}
+
+.spacing-div-instance {
+   padding-top: 170px;
 }
 
 .model-spacing {

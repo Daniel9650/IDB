@@ -88,7 +88,7 @@ class MusicInstance extends Component {
       var {id} = this.props.match.params;
       var spotifyLink = "https://open.spotify.com/track/" + data.song_id;
       return (
-         <div className="spacing-div">
+         <div className="spacing-div-instance">
 
             <Container>
                <h1 name="music-instance-name" className="general-title">{data.song_name}</h1>

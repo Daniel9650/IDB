@@ -101,7 +101,7 @@ class MovieInstance extends Component {
 
         var {id} = this.props.match.params;
         return (
-           <div className="spacing-div">
+           <div className="spacing-div-instance">
 
               <Container>
                  <h1 name="movie-instance-name" className="general-title">{name}</h1>

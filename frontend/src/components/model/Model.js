@@ -21,7 +21,7 @@ class Model extends Component {
    render() {
       var name = this.props.type + " Title";
       return (
-         <Container className="spacing-div">
+         <Container className="spacing-div-model">
             <h1 name={name} className="general-title">{this.props.type}</h1>
             <hr className="divider"/>
             <CardGrid

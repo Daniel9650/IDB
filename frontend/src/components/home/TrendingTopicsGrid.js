@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Row } from 'reactstrap';
 import TrendingTopic from './TrendingTopic.js';
 import Loading from '../global/Loading.js';
+import CardMod from '../model/CardMod.js';
 
 class TrendingTopicsGrid extends Component {
    constructor(props) {
@@ -17,7 +18,7 @@ class TrendingTopicsGrid extends Component {
     	};
    }
    componentDidMount() {
-     fetch("http://api.poptopic.org/topics?items_per_page=3")
+     fetch("http://api.poptopic.org/topics?items_per_page=100")
      .then(res => res.json())
      .then(
       (result) => {
@@ -42,16 +43,25 @@ class TrendingTopicsGrid extends Component {
    createTrendingTopic(topic){
       this.count++;
       return (
-         <TrendingTopic
+         <CardMod
             image={topic.poster_url}
-            topic={topic.topic_name}
+            title={topic.topic_name}
             id={topic.topic_id}
             number={this.count}
+            relatedMedia={topic.similar_books.length + topic.similar_songs.length + topic.similar_movies.length}
+            type="Topics"
          />);
    }
 
    createTrendingTopics(topics){
-      return topics.objects.map(this.createTrendingTopic);
+      //Find top 3 popular Topics
+      var ordered = topics.objects.sort(function(topicA, topicB){
+        var topicAMedia = topicA.similar_books.length + topicA.similar_songs.length + topicA.similar_movies.length;
+        var topicBMedia = topicB.similar_books.length + topicB.similar_songs.length + topicB.similar_movies.length;
+        return topicBMedia - topicAMedia;
+      });
+      ordered = ordered.slice(0, 3);
+      return ordered.map(this.createTrendingTopic);
    }
 
    render(){

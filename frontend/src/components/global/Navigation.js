@@ -30,12 +30,10 @@ class Navigation extends Component {
 	render () {
       return (
       	<div>
-        <img  name="home-logo-link" className="brand-logo" src={require('../../logo.png')} />
-
+          <a href="/home">
+            <img  name="home-logo-link" className="brand-logo" src={require('../../logo.png')} />
+          </a>
       		<Navbar className="navbar navbar-expand-md fixed-top navbar-dark">
-      			<NavbarBrand href="/home">
-
-               </NavbarBrand>
       			<NavbarToggler onClick={this.toggle} />
       			<Collapse isOpen={this.state.isOpen} navbar>
       				<Nav className="ml-auto" navbar>
