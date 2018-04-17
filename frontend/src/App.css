@@ -92,7 +92,7 @@ p{
 }
 
 .highlighter {
-  
+
 }
 
 
@@ -243,11 +243,13 @@ a:hover {
 /***************************  Navbar Styles  **********************************/
 
 .navbar {
-   height: 80px;
-   max-height: 200px;
+  min-height: 80px;
    color: white !important;
    background-color: var(--charcoal);
    font-family: Sans;
+}
+
+.navbar-nav{
 }
 
 
@@ -265,7 +267,8 @@ a:hover {
 }
 
 .brand-logo{
-   margin-top: 75px;
+  z-index: 1031 !important;
+  position: fixed;
    height: 150px;
    width: 150px;
 }

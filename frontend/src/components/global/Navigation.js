@@ -30,9 +30,10 @@ class Navigation extends Component {
 	render () {
       return (
       	<div>
+        <img  name="home-logo-link" className="brand-logo" src={require('../../logo.png')} />
+
       		<Navbar className="navbar navbar-expand-md fixed-top navbar-dark">
       			<NavbarBrand href="/home">
-            <img  name="home-logo-link" className="brand-logo" src={require('../../logo.png')} />
 
                </NavbarBrand>
       			<NavbarToggler onClick={this.toggle} />
