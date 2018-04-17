@@ -30,12 +30,13 @@ class SearchBar extends Component {
                      placeholder="Search"
                      value={this.state.value}
                      onChange={this.handleChange}/>
-               </InputGroup>
-               <InputGroupAddon addonType="append">
+                     <InputGroupAddon addonType="append">
                   <Button className="search-button" type="submit">
                      <i className="fa fa-search"></i>
                   </Button>
                </InputGroupAddon>
+               </InputGroup>
+               
          </Form>
       );
    }
