@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Row } from 'reactstrap';
+import { Row, Container } from 'reactstrap';
 import TrendingTopic from './TrendingTopic.js';
 import Loading from '../global/Loading.js';
 import CardMod from '../model/CardMod.js';
+import APIError from '../global/APIError.js';
+import NotFound from '../global/NotFound.js';
 
 class TrendingTopicsGrid extends Component {
    constructor(props) {
@@ -65,14 +67,28 @@ class TrendingTopicsGrid extends Component {
    }
 
    render(){
-      const { error, isLoaded, data } = this.state;
+     const { error, isLoaded, data } = this.state;
 
-      if (error) {
-        return <div>Error: {error.message}</div>;
-      }
-      else if (!isLoaded) {
-        return <Loading />;
-      }
+     if (error) {
+       const status = error.response ? error.response.status : 500
+       if(status === 404){
+         return <NotFound />;
+       }
+       else{
+         return(
+           <Container className='spacing-div'>
+           <APIError/>
+           </Container>
+           );
+       }
+     }
+     else if (!isLoaded) {
+       return (
+         <Container className='spacing-div'>
+         <Loading/>
+         </Container>
+         );
+     }
       else {
       return (
          <Row>

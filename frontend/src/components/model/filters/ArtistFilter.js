@@ -30,8 +30,8 @@ class ArtistFilter extends Component {
       for (var k in list){
          if (list.hasOwnProperty(k)) {
             if(query == list[k].value){
-               this.state.selectedOption = list[k];
-               this.props.setFilter(this.state.selectedOption, true);
+               this.setState({selectedOption: list[k]},
+               this.props.setFilter(this.state.selectedOption, true));
             }
          }
       }

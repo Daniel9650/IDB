@@ -64,7 +64,7 @@ class SearchResults extends Component {
       var album = "";
       var artists = [];
       var type = instance.instance_type.charAt(0).toUpperCase() + instance.instance_type.slice(1);
-
+      var relatedMedia = 0;
       if (type === "Movies") {
          name= instance.movie_name;
          id= instance.movie_id;
@@ -86,6 +86,7 @@ class SearchResults extends Component {
       else {
          name= instance.topic_name;
          id= instance.topic_id;
+         relatedMedia= instance.similar_books.length + instance.similar_songs.length + instance.similar_movies.length;
       }
       this.count ++;
       return <CardMod
@@ -103,6 +104,7 @@ class SearchResults extends Component {
          authors = {authors}
          highlight = {this.props.query}
          description = {instance.description}
+         relatedMedia = {relatedMedia}
          />;
    }
 

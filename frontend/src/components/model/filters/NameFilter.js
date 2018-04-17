@@ -15,7 +15,6 @@ class SearchBar extends Component {
       var args = new URLSearchParams(this.props.location.search);
       var query = args.get('q');
       if(query != null && query.length > 0){
-         this.state.value = query;
          this.setState({value: query},this.props.setFilter(query, true));
       }
       this.handleChange = this.handleChange.bind(this);
