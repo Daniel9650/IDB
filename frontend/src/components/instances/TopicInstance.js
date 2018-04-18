@@ -71,14 +71,13 @@ class TopicInstance extends Component {
           );
       }
       else {
-         var name = data.topic_name;
          var wikiLink = "https://en.wikipedia.org/wiki/" + data.topic_name;
 
          return (
             <div className="spacing-div-instance">
 
                <Container>
-                  <h1 name="topic-instance-name" className="general-title">{name}</h1>
+                  <h1 name="topic-instance-name" className="general-title">{data.topic_name}</h1>
                   <hr className="divider"/>
                   <img className="topic-poster" alt="topic poster" src={data.poster_url} />
                   <br/>

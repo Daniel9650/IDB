@@ -76,12 +76,8 @@ class MovieInstance extends Component {
       }
       else {
         //get movie instance data
-        var name = data.movie_name;
         var video = "https://www.youtube.com/embed/"+data.trailer_url+"?origin=http://poptopic.org";
-        var desc = data.description;
-        var date = data.release_date;
         var cast = data.cast.join(", ");
-        var director = data.director;
         var movieDBLink = "https://www.themoviedb.org/movie/" + data.movie_id;
 
 
@@ -90,7 +86,7 @@ class MovieInstance extends Component {
            <div className="spacing-div-instance">
 
               <Container>
-                 <h1 name="movie-instance-name" className="general-title">{name}</h1>
+                 <h1 name="movie-instance-name" className="general-title">{data.movie_name}</h1>
                  <hr className="divider"/>
                  <Row>
                     <Col xs="auto">
@@ -105,15 +101,15 @@ class MovieInstance extends Component {
                  <Row>
                     <Col>
                        <h6 className="instance-sub">Description</h6>
-                       <p>{desc}</p>
+                       <p>{data.description}</p>
                     </Col>
                     <Col xs="4" >
                        <h6 className="instance-sub">Release Date</h6>
-                       <p>{date}</p>
+                       <p>{data.release_date}</p>
                        <h6 className="instance-sub">Acting</h6>
                        <p>{cast}</p>
                        <h6 className="instance-sub">Directing</h6>
-                       <p>{director}</p>
+                       <p>{data.director}</p>
                        <h6 className="instance-sub">Find on The Movie Database</h6>
                        <p>
                           <a href={movieDBLink}>
