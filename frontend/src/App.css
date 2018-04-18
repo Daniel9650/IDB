@@ -154,29 +154,41 @@ a:hover {
 .relative-pos {
    position: relative;
 }
+
+.carousel-caption {
+  bottom: 30% !important;
+  top: 10% !important;
+}
+
 .slide-caption {
    text-align:center;
    font-weight: bold;
    color: white;
-   position: absolute;
-   top: 50%;
-   left: 50%;
-   transform: translate(-50%, 200%);
    font-family: Sans;
+   text-shadow: 2px 2px var(--charcoal);
 }
 
 .slide-header {
    text-align: center;
    color: white;
-   position: absolute;
    font-weight: bold;
    font-size: 80px;
-   top: 50%;
-   left: 50%;
-   transform: translate(-50%, -50%);
    font-family: Accent;
-
+   text-shadow: 2px 2px var(--charcoal);
 }
+
+@media screen and (max-width: 737px){
+  .slide-header {
+    font-size: 75px;
+  }
+}
+
+@media screen and (max-width: 402px){
+  .slide-header {
+    font-size: 60px;
+  }
+}
+
 .carousel {
    height: 500px;
    width: 100%;
@@ -434,22 +446,27 @@ a:hover {
 
 .home-spacing-div {
    padding-top: 80px;
+   min-width: 370px;
 }
 
 .spacing-div {
    padding-top: 130px;
+   min-width: 370px;
 }
 
 .spacing-div-model {
    padding-top: 170px;
+   min-width: 370px;
 }
 
 .spacing-div-instance {
    padding-top: 170px;
+   min-width: 370px;
 }
 
 .model-spacing {
    padding-top: 30px;
+   min-width: 370px;
 }
 
 .divider {
