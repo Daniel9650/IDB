@@ -6,22 +6,28 @@ class Sort extends Component {
 
    constructor(props){
       super(props);
-      this.state ={
-         selectedOption:'',
-         suggestions: this.props.options
-      };
       var list = this.props.options;
-      console.log(list);
       var args = new URLSearchParams(this.props.location.search);
       var query = args.get('sort');
-      for (var k in list){
-         if (list.hasOwnProperty(k)) {
-            if(query === list[k].value){
-               this.setState({selectedOption: list[k]},
-               this.props.setFilter(list[k], true));
-            }
-         }
+      if(query != null){
+        var select = '';
+        for (var k in list){
+           if (list.hasOwnProperty(k)) {
+              if(query === list[k].value){
+                select=list[k];
+
+              }
+           }
+        }
+
+        this.props.setFilter(select , true);
       }
+
+      this.state ={
+         selectedOption: select,
+         suggestions: this.props.options
+      };
+
       this.handleChange = this.handleChange.bind(this);
    }
 

@@ -6,32 +6,32 @@ class MultiFilter extends Component {
 
    constructor(props){
       super(props);
+
+      var list = this.props.options;
+      var args = new URLSearchParams(this.props.location.search);
+      var queries = args.getAll(this.props.arg);
+      console.log(queries);
+      var allTopics =[];
+      for(var i = 0; i < queries.length; i++){
+        console.log(queries[i]);
+        for (var k in list){
+           if (list.hasOwnProperty(k)) {
+              if(queries[i] === list[k].value){
+                 allTopics.push(list[k]);
+              }
+           }
+         }
+      }
+
+      this.props.setFilter(allTopics, true);
+
       this.state ={
-         selectedOptions: [],
+         selectedOptions: allTopics,
          suggestions: this.props.options
       };
 
-      this.populateFilters = this.populateFilters.bind(this);
       this.handleChange = this.handleChange.bind(this);
 
-      this.populateFilters();
-   }
-
-   populateFilters(){
-     var list = this.state.suggestions;
-     console.log(this.props.options);
-     var args = new URLSearchParams(this.props.location.search);
-     var query = args.get(this.props.arg);
-     var allTopics =[];
-     for (var k in list){
-        if (list.hasOwnProperty(k)) {
-           if(query === list[k].value){
-              allTopics.push(list[k]);
-           }
-        }
-     }
-     this.setState({selectedOptions: allTopics},
-     this.props.setFilter(this.state.selectedOption, true));
    }
 
    handleChange(selectedOptions) {
@@ -39,14 +39,16 @@ class MultiFilter extends Component {
       this.setState({selectedOptions: selectedOptions},
       this.props.setFilter(selectedOptions));
 
-      for(var i = 0; i < selectedOptions.length; i++){
-        var args = new URLSearchParams(this.props.location.search);
-        if(selectedOptions != null)
-           args.set(this.props.arg, selectedOptions[i].value);
-        else
-           args.delete(this.props.arg);
-        this.props.history.push('?'+args.toString());
+      var args = new URLSearchParams(this.props.location.search);
+      if(selectedOptions[0] != null)
+         args.set(this.props.arg, selectedOptions[0].value);
+      else
+         args.delete(this.props.arg);
+      for(var i = 1; i < selectedOptions.length; i++){
+         if(selectedOptions[i] != null)
+            args.append(this.props.arg, selectedOptions[i].value);
       }
+      this.props.history.push('?'+args.toString());
 
    }
 

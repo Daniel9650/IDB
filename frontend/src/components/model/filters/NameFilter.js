@@ -2,20 +2,19 @@ import React, { Component } from 'react';
 import { Form, FormGroup, Input } from 'reactstrap';
 import { withRouter } from "react-router-dom";
 
-class SearchBar extends Component {
+class NameFilter extends Component {
    constructor(props){
       super(props);
 
-      var curr = '';
-      if(this.props.currentFilter != null)
-         curr = this.props.currentFilter;
-
-      this.state = {value: curr};
       var args = new URLSearchParams(this.props.location.search);
       var query = args.get('q');
-      if(query != null && query.length > 0){
-         this.setState({value: query},this.props.setFilter(query, true));
+      if(query == null || query.length <= 0){
+        query = "";
       }
+
+      this.props.setFilter(query, true);
+      this.state = {value: query};
+
       this.handleChange = this.handleChange.bind(this);
       this.handleFormSubmit = this.handleFormSubmit.bind(this);
    }
@@ -51,4 +50,4 @@ class SearchBar extends Component {
    }
 }
 
-export default withRouter(SearchBar);
+export default withRouter(NameFilter);
