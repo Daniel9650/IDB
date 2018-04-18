@@ -8,12 +8,7 @@ class Sort extends Component {
       super(props);
       this.state ={
          selectedOption:'',
-         suggestions: [
-               {value: 'title_asc', label: 'Title A-Z'},
-               {value: 'title_desc', label: 'Title Z-A'},
-               {value: 'release_year_desc', label: 'Year 2018-1900'},
-               {value: 'release_year_asc', label: 'Year 1900--2018'}
-            ]
+         suggestions: this.props.options
       };
       var list = this.state.suggestions;
       var args = new URLSearchParams(this.props.location.search);

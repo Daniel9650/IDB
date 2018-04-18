@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
 import { Row, Col } from 'reactstrap';
-import TopicFilter from './filters/TopicFilter.js';
-import CastFilter from './filters/CastFilter.js';
-import DirectorFilter from './filters/DirectorFilter.js';
-import DateFilter from './filters/DateFilter.js';
+import GeneralFilter from './filters/GeneralFilter.js';
 import NameFilter from './filters/NameFilter.js';
+import MultiFilter from './filters/MultiFilter.js';
 import Sort from './filters/Sort.js';
-import topicDict from '../../data/topic_dictionary.json';
+import topicSuggestions from '../../data/topicSuggestions.js';
+
 
 class MovieFilters extends Component {
 
@@ -35,7 +34,6 @@ class MovieFilters extends Component {
       this.setTopicFilter = this.setTopicFilter.bind(this);
       this.setDateFilter = this.setDateFilter.bind(this);
       this.combineFilters = this.combineFilters.bind(this);
-      this.getTopicID = this.getTopicID.bind(this);
       this.setSort = this.setSort.bind(this);
       this.setNameFilter = this.setNameFilter.bind(this);
 
@@ -105,25 +103,12 @@ class MovieFilters extends Component {
 
    setTopicFilter(option, isPreLoading = false){
       var filters = [];
-      console.log(option);
       if(option != null){
           for(var i = 0; i < option.length; i++){
-            console.log(option[i]);
-            var id = this.getTopicID(option[i].value);
-            filters.push({filter:"topics", query:id});
+            filters.push({filter:"topics", query:option[i].value});
           }
       }
       this.setState({topicFilters: filters, isPreLoading: isPreLoading}, this.combineFilters);
-   }
-
-   getTopicID(topicName){
-      var id = [];
-      topicDict.pairs.map(function(pair){
-         if(topicName === pair.value){
-            id.push(pair.key);
-         }
-      });
-      return id[0];
    }
 
    setDateFilter(option, isPreLoading = false){
@@ -154,6 +139,12 @@ class MovieFilters extends Component {
    }
 
    render(){
+     var sortOptions = [
+           {value: 'title_asc', label: 'Title A-Z'},
+           {value: 'title_desc', label: 'Title Z-A'},
+           {value: 'release_year_desc', label: 'Year 2018-1900'},
+           {value: 'release_year_asc', label: 'Year 1900--2018'}
+      ];
       if(this.state.isLoaded){
          return(
             <div>
@@ -164,26 +155,26 @@ class MovieFilters extends Component {
                   </Col>
                   <Col xs="5">
                      <h5 className="filter-label">Topic:</h5>
-                     <TopicFilter setFilter={this.setTopicFilter} />
+                     <MultiFilter setFilter={this.setTopicFilter} options={topicSuggestions} arg="topic"/>
                   </Col>
                </Row>
                <Row>
 
                   <Col xs="4">
                      <h5 className="filter-label">Acting:</h5>
-                     <CastFilter setFilter={this.setCastFilter} />
+                     <GeneralFilter setFilter={this.setCastFilter} arg="acting" apiCall="actors" />
                   </Col>
                   <Col xs="4">
                      <h5 className="filter-label">Directing:</h5>
-                     <DirectorFilter setFilter={this.setDirectorFilter} />
+                     <GeneralFilter setFilter={this.setDirectorFilter} arg="director" apiCall="directors"/>
                   </Col>
                   <Col xs="2">
                      <h5 className="filter-label">Release Year:</h5>
-                     <DateFilter type="movie" setFilter={this.setDateFilter} />
+                     <GeneralFilter setFilter={this.setDateFilter} arg="year" apiCall="movie_years"/>
                   </Col>
                   <Col xs="2">
                      <h5 classLabel="filter-label">Sort By:</h5>
-                     <Sort setFilter={this.setSort} />
+                     <Sort setFilter={this.setSort} options={sortOptions}/>
                   </Col>
                </Row>
                <hr className="divider" />

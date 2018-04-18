@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Select from 'react-select';
 import { withRouter } from "react-router-dom";
 
-class DirectorFilter extends Component {
+class GeneralFilter extends Component {
 
    constructor(props){
       super(props);
@@ -26,7 +26,7 @@ class DirectorFilter extends Component {
       });
       this.setState({suggestions: list});
       var args = new URLSearchParams(this.props.location.search);
-      var query = args.get('director');
+      var query = args.get(this.props.arg);
       for (var k in list){
          if (list.hasOwnProperty(k)) {
             if(query == list[k].value){
@@ -42,7 +42,7 @@ class DirectorFilter extends Component {
    }
 
    fetchData(){
-      fetch("http://api.poptopic.org/all_directors")
+      fetch("http://api.poptopic.org/all_" + this.props.apiCall)
       .then(res => res.json())
       .then(
        (result) => {
@@ -69,15 +69,17 @@ class DirectorFilter extends Component {
       this.props.setFilter(selectedOption));
       var args = new URLSearchParams(this.props.location.search);
       if(selectedOption != null)
-         args.set("director", selectedOption.value);
+         args.set(this.props.arg, selectedOption.value);
       else
-         args.delete("director");
+         args.delete(this.props.arg);
       this.props.history.push('?'+args.toString());
    }
    render(){
+
+     var name = this.props.arg + "-filter";
       return(
          <Select
-            name="director-filter"
+            name={name}
             value={this.state.selectedOption}
             onChange={this.handleChange}
             clearable={true}
@@ -88,4 +90,4 @@ class DirectorFilter extends Component {
    }
 }
 
-export default withRouter(DirectorFilter);
+export default withRouter(GeneralFilter);

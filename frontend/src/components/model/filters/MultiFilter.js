@@ -2,33 +2,18 @@ import React, { Component } from 'react';
 import Select from 'react-select';
 import { withRouter } from "react-router-dom";
 
-class TopicFilter extends Component {
+class MultiFilter extends Component {
 
    constructor(props){
       super(props);
       this.state ={
          selectedOptions: [],
-         suggestions: [{value: 'Action', label: 'Action'},
-               {value: 'Adventure', label: 'Adventure'},
-               {value: 'Animation', label: 'Animation'},
-               {value: 'Comedy', label: 'Comedy'},
-               {value: 'Crime', label: 'Crime'},
-               {value: 'Drama', label: 'Drama'},
-               {value: 'Family', label: 'Family'},
-               {value: 'Fantasy', label: 'Fantasy'},
-               {value: 'History', label: 'History'},
-               {value: 'Music', label: 'Music'},
-               {value: 'Mystery', label: 'Mystery'},
-               {value: 'Romance', label: 'Romance'},
-               {value: 'Science Fiction', label: 'Science Fiction'},
-               {value: 'Thriller', label: 'Thriller'},
-               {value: 'War', label: 'War'}
-            ]
+         suggestions: this.props.options
       };
       var list = this.state.suggestions;
-
+      console.log(this.props.options);
       var args = new URLSearchParams(this.props.location.search);
-      var query = args.get('topic');
+      var query = args.get(this.props.arg);
       var allTopics =[];
       for (var k in list){
          if (list.hasOwnProperty(k)) {
@@ -51,19 +36,20 @@ class TopicFilter extends Component {
       for(var i = 0; i < selectedOptions.length; i++){
         var args = new URLSearchParams(this.props.location.search);
         if(selectedOptions != null)
-           args.set("topic", selectedOptions[i].value);
+           args.set(this.props.arg, selectedOptions[i].value);
         else
-           args.delete("topic");
+           args.delete(this.props.arg);
         this.props.history.push('?'+args.toString());
       }
 
    }
 
    render(){
+     var name = this.props.arg + "-filter";
       return(
          <Select
             multi
-            name="topic-filter"
+            name={name}
             value={this.state.selectedOptions}
             onChange={this.handleChange}
             clearable={true}
@@ -74,4 +60,4 @@ class TopicFilter extends Component {
    }
 }
 
-export default withRouter(TopicFilter);
+export default withRouter(MultiFilter);

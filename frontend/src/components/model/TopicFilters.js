@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Select from 'react-select';
 import { Row, Col } from 'reactstrap';
 import NameFilter from './filters/NameFilter.js';
-import TopicSort from './filters/TopicSort.js';
+import Sort from './filters/Sort.js';
 import topicDict from '../../data/topic_dictionary.json';
 
 class TopicFilters extends Component {
@@ -46,6 +46,10 @@ class TopicFilters extends Component {
    }
 
    render(){
+     var sortOptions = [
+           {value: 'title_asc', label: 'Title A-Z'},
+           {value: 'title_desc', label: 'Title Z-A'}
+      ];
       return(
          <div>
             <Row>
@@ -55,7 +59,7 @@ class TopicFilters extends Component {
                </Col>
                <Col xs="2">
                   <h5 className="filter-label">Sort By:</h5>
-                  <TopicSort setFilter={this.setSort} />
+                  <Sort setFilter={this.setSort} options={sortOptions}/>
                </Col>
             </Row>
             <hr className="divider" />

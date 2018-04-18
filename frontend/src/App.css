@@ -390,9 +390,43 @@ a:hover {
 
 }
 
-.filter-field{
-   border-color: var(--charcoal) !important;
-   border-width: thin !important;
+
+.Select-control{
+
+}
+
+.Select-arrow{
+  border-color: var(--charcoal) transparent transparent !important;
+}
+
+.Select-placeholder{
+  color: var(--charcoal) !important;
+}
+
+.Select--multi .Select-value{
+  color: white !important;
+  background-color: var(--accent) !important;
+  opacity: 0.75 !important;
+  border-color: white !important;
+  border-radius: 7px !important;
+}
+
+.Select--multi .Select-value-icon{
+  border-right: 1px solid white !important;
+}
+
+.Select .is-focused:not(is.open) > .Select-control {
+
+}
+
+.Select-value-icon:hover{
+  color: var(--charcoal) !important;
+}
+
+.Select-control:focus{
+  outline: none !important;
+  border-color: var(--charcoal) !important;
+
 }
 
 
