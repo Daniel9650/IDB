@@ -3,6 +3,7 @@ import RelatedGrid from './RelatedGrid.js';
 import NotFound from '../global/NotFound.js';
 import APIError from '../global/APIError.js';
 import Loading from '../global/Loading.js';
+import $ from "jquery";
 
 import {
   Container,
@@ -20,8 +21,10 @@ class MovieInstance extends Component {
       		isOpen: false,
           error: null,
           isLoaded: false,
-          data: []
+          data: [],
+          load_attempts: 0
     	};
+      this.request_data = this.request_data.bind(this);
   	}
   	toggle() {
     	this.setState({
@@ -29,27 +32,44 @@ class MovieInstance extends Component {
     	});
   	}
     componentDidMount() {
+      this.request_data(2);
+    }
+
+    request_data(max_attempts){
       const { id } = this.props.match.params
-      fetch("http://api.poptopic.org/movies/"+id)
-      .then(res => res.json())
-      .then(
-        (result) => {
-          this.setState({
+      var self = this;
+      this.setState({load_attempts: this.state.load_attempts + 1});
+      $.ajax({
+        url: "http://api.poptopic.org/movies/"+id,
+        method: "GET",
+        success: function(data, textStatus, jqXHR){
+          console.log("success");
+          self.setState({
             isLoaded: true,
-            data: result
+            data: data
           });
         },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
+        error: function(jqXHR, textStatus, errorThrown){
+          console.log("in error" + max_attempts);
+          if(self.state.load_attempts >= max_attempts){
+            self.setState({
+              isLoaded: true,
+              error: errorThrown
+            });
+          }
+        },
+        timeout: 1500,
+        complete: function(jqXHR, textStatus){
+          if(textStatus == "timeout"){
+            if(self.state.load_attempts < max_attempts){
+              self.setState({load_attempts: self.state.load_attempts + 1});
+              self.request_data(max_attempts);
+            }
+          }
         }
-      )
+      });
     }
+
     render () {
 
       const { error, isLoaded, data } = this.state;
