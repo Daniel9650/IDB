@@ -4,6 +4,7 @@ import CardMod from './CardMod.js';
 import Loading from '../global/Loading.js';
 import APIError from '../global/APIError.js';
 import NotFound from '../global/NotFound.js';
+import NoResults from '../global/NoResults.js';
 import MovieFilters from './MovieFilters.js';
 import MusicFilters from './MusicFilters.js';
 import BookFilters from './BookFilters.js';
@@ -165,9 +166,7 @@ class CardGrid extends Component {
         }
         else{
           return(
-            <Container className='spacing-div'>
-            <APIError/>
-            </Container>
+            <APIError size="medium"/>
             );
         }
       }
@@ -175,6 +174,14 @@ class CardGrid extends Component {
         return (
           <Loading size="medium"/>
           );
+      }
+      else if(data.num_results < 1){
+        return (
+          <div>
+            {this.addFilters()}
+            <NoResults size="medium" />)
+          </div>
+        );
       }
       else {
          return (

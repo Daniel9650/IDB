@@ -14,6 +14,7 @@ import SearchPage from './components/search/SearchPage.js';
 import Footer from './components/global/Footer.js';
 import { Route } from 'react-router';
 import { BrowserRouter } from 'react-router-dom'
+import NotFound from './components/global/NotFound.js';
 
 class App extends Component {
   render() {
@@ -34,6 +35,7 @@ class App extends Component {
          <Route path='/home' component={Home}/>
          <Route path='/search' component={SearchPage} />
          <Route exact path='/' component={Home} />
+         <Route exact path="/help" render={()=>{return <NotFound/>}} />
          </div>
          </BrowserRouter>
          <Footer />

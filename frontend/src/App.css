@@ -91,8 +91,22 @@ p{
    font-family: Sans;
 }
 
-.highlighter {
+.api-error-small-text{
+  font-size: 20px;
+  color: var(--charcoal) !important;
+  font-weight: bold;
+}
 
+.api-error-medium-text{
+  font-size: 35px;
+  color: var(--charcoal) !important;
+  font-weight: bold;
+}
+
+.api-error-large-text{
+  font-size: 45px;
+  color: var(--charcoal) !important;
+  font-weight: bold;
 }
 
 
@@ -511,10 +525,27 @@ a:hover {
 
 .loading-icon-large{
     animation: loading-spin infinite 5s linear;
-    height: 900px;
-    width: 900px;
+    height: 800px;
+    width: 800px;
 
 }
+
+.error-logo-small{
+    height: 250px;
+    width: 250px;
+}
+
+.error-logo-medium{
+    height: 400px;
+    width: 400px;
+}
+
+.error-logo-large{
+    height: 600px;
+    width: 600px;
+}
+
+
 
 @keyframes loading-spin {
    from { transform: rotate(0deg); }

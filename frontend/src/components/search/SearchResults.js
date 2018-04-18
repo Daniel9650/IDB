@@ -4,6 +4,7 @@ import CardMod from '../model/CardMod.js';
 import Loading from '../global/Loading.js';
 import APIError from '../global/APIError.js';
 import Pagination from '../model/Pagination.js';
+import NoResults from '../global/NoResults.js';
 
 class SearchResults extends Component {
 
@@ -119,6 +120,9 @@ class SearchResults extends Component {
       }
       else if (!isLoaded) {
         return <Loading />;
+      }
+      else if(data.num_results < 1){
+        return <NoResults size="large"/>;
       }
       else {
          return (

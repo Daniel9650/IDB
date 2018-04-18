@@ -10,14 +10,15 @@ class Sort extends Component {
          selectedOption:'',
          suggestions: this.props.options
       };
-      var list = this.state.suggestions;
+      var list = this.props.options;
+      console.log(list);
       var args = new URLSearchParams(this.props.location.search);
       var query = args.get('sort');
       for (var k in list){
          if (list.hasOwnProperty(k)) {
             if(query === list[k].value){
                this.setState({selectedOption: list[k]},
-               this.props.setFilter(this.state.selectedOption, true));
+               this.props.setFilter(list[k], true));
             }
          }
       }

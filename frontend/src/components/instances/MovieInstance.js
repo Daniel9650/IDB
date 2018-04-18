@@ -61,9 +61,7 @@ class MovieInstance extends Component {
         }
         else{
           return(
-            <Container className='spacing-div'>
             <APIError/>
-            </Container>
             );
         }
       }

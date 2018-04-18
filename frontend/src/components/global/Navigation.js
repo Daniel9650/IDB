@@ -27,7 +27,7 @@ class Navigation extends Component {
       return (
       	<div>
           <a href="/home">
-            <img  name="home-logo-link" className="brand-logo" alt="brand logo" src={require('../../logo.png')} />
+            <img  name="home-logo-link" className="brand-logo" alt="brand logo" src={require('../../images/logo.png')} />
           </a>
       		<Navbar className="navbar navbar-expand-md fixed-top navbar-dark">
             <NavbarBrand href="/home">

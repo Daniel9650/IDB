@@ -26,6 +26,7 @@ class GeneralFilter extends Component {
       });
       this.setState({suggestions: list});
       var args = new URLSearchParams(this.props.location.search);
+      console.log(args);
       var query = args.get(this.props.arg);
       for (var k in list){
          if (list.hasOwnProperty(k)) {
@@ -68,6 +69,7 @@ class GeneralFilter extends Component {
       this.setState({selectedOption: selectedOption},
       this.props.setFilter(selectedOption));
       var args = new URLSearchParams(this.props.location.search);
+      console.log(args);
       if(selectedOption != null)
          args.set(this.props.arg, selectedOption.value);
       else
