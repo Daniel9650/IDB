@@ -4,7 +4,6 @@ import CardMod from '../model/CardMod.js';
 import Loading from '../global/Loading.js';
 import APIError from '../global/APIError.js';
 import Pagination from '../model/Pagination.js';
-import SearchBar from '../search/SearchBar.js';
 
 class SearchResults extends Component {
 

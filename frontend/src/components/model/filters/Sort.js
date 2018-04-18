@@ -15,7 +15,7 @@ class Sort extends Component {
       var query = args.get('sort');
       for (var k in list){
          if (list.hasOwnProperty(k)) {
-            if(query == list[k].value){
+            if(query === list[k].value){
                this.setState({selectedOption: list[k]},
                this.props.setFilter(this.state.selectedOption, true));
             }

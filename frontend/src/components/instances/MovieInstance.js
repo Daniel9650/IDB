@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios'
 import RelatedGrid from './RelatedGrid.js';
 import NotFound from '../global/NotFound.js';
 import APIError from '../global/APIError.js';
@@ -7,17 +6,9 @@ import Loading from '../global/Loading.js';
 
 import {
   Container,
-  Jumbotron,
-  Button,
   Row,
-  Col,
-  Card,
-  CardImg,
-  CardTitle,
-  CardText,
-  CardDeck,
- CardSubtitle,
- CardBody} from 'reactstrap';
+  Col
+} from 'reactstrap';
 
 
 
@@ -89,11 +80,6 @@ class MovieInstance extends Component {
         var video = "https://www.youtube.com/embed/"+data.trailer_url+"?origin=http://poptopic.org";
         var desc = data.description;
         var date = data.release_date;
-        var tronbg = { backgroundImage: "url("+data.poster_url+")"};
-        var bookCards = [];
-        var songCards = [];
-        var topics = [];
-        var first = true;
         var cast = data.cast.join(", ");
         var director = data.director;
         var movieDBLink = "https://www.themoviedb.org/movie/" + data.movie_id;
@@ -108,7 +94,7 @@ class MovieInstance extends Component {
                  <hr className="divider"/>
                  <Row>
                     <Col xs="auto">
-                       <img className="poster" src={data.poster_url} />
+                       <img alt="movie poster" className="poster" src={data.poster_url} />
                     </Col>
                     <Col>
                        <div className="youtube-holder">

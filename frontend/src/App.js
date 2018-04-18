@@ -6,14 +6,13 @@ import MovieInstance from './components/instances/MovieInstance.js';
 import MusicInstance from './components/instances/MusicInstance.js';
 import BookInstance from './components/instances/BookInstance.js';
 import TopicInstance from './components/instances/TopicInstance.js';
-import NotFound from './components/global/NotFound.js';
 import Navigation from './components/global/Navigation.js';
 import Home from './components/home/Home.js';
 import About from './components/about/About.js';
 import Model from './components/model/Model.js';
 import SearchPage from './components/search/SearchPage.js';
 import Footer from './components/global/Footer.js';
-import { Router, Route, Link, IndexRoute } from 'react-router';
+import { Route } from 'react-router';
 import { BrowserRouter } from 'react-router-dom'
 
 class App extends Component {

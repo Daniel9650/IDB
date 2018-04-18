@@ -4,19 +4,7 @@ import RelatedGrid from './RelatedGrid.js';
 import APIError from '../global/APIError.js';
 import Loading from '../global/Loading.js';
 
-import {
-  Container,
-  Jumbotron,
-  Button,
-  Row,
-  Col,
-  Card,
-  CardImg,
-  CardTitle,
-  CardText,
-  CardDeck,
- CardSubtitle,
- CardBody} from 'reactstrap';
+import { Container } from 'reactstrap';
 
 
 
@@ -92,7 +80,7 @@ class TopicInstance extends Component {
                <Container>
                   <h1 name="topic-instance-name" className="general-title">{name}</h1>
                   <hr className="divider"/>
-                  <img className="topic-poster" src={data.poster_url} />
+                  <img className="topic-poster" alt="topic poster" src={data.poster_url} />
                   <br/>
                   <br/>
                   <h6 className="instance-sub">Find on Wikipedia</h6>

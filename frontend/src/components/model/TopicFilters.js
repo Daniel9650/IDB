@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import Select from 'react-select';
 import { Row, Col } from 'reactstrap';
 import NameFilter from './filters/NameFilter.js';
 import Sort from './filters/Sort.js';
-import topicDict from '../../data/topic_dictionary.json';
 
 class TopicFilters extends Component {
 

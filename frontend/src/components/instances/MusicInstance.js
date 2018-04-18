@@ -6,17 +6,9 @@ import Loading from '../global/Loading.js';
 
 import {
   Container,
-  Jumbotron,
-  Button,
   Row,
-  Col,
-  Card,
-  CardImg,
-  CardTitle,
-  CardText,
-  CardDeck,
- CardSubtitle,
- CardBody} from 'reactstrap';
+  Col
+} from 'reactstrap';
 
 
 
@@ -95,11 +87,11 @@ class MusicInstance extends Component {
                <hr className="divider"/>
                <Row>
                   <Col xs="auto">
-                     <img className="poster" src={data.poster_url} />
+                     <img className="poster" alt="album artwork" src={data.poster_url} />
                   </Col>
                   <Col>
                      <div className="youtube-holder">
-                        <iframe className="youtube-player" type="text/html" width="100%" height="auto" src={video} frameBorder="0"/>
+                        <iframe title="youtube video" className="youtube-player" type="text/html" width="100%" height="auto" src={video} frameBorder="0"/>
                      </div>
                   </Col>
                </Row>

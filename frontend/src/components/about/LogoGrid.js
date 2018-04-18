@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col } from 'reactstrap';
+import { Row } from 'reactstrap';
 import about from '../../data/about-info.json';
 import Logo from './Logo.js';
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Select from 'react-select';
+
 import { Row, Col } from 'reactstrap';
 import MultiFilter from './filters/MultiFilter.js';
 import NameFilter from './filters/NameFilter.js';
@@ -75,7 +75,7 @@ class BookFilters extends Component {
          allFilters.push(this.state.authorFilter);
       if(this.state.dateFilter.filter != null)
          allFilters.push(this.state.dateFilter);
-      if(this.state.topicFilters.length != 0){
+      if(this.state.topicFilters.length !== 0){
          for(var i = 0; i < this.state.topicFilters.length; i++)
            allFilters.push(this.state.topicFilters[i]);
       }

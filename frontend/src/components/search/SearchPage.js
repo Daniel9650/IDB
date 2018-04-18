@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Container, Col, Row } from 'reactstrap';
-import SearchBar from './SearchBar.js';
 import SearchResults from './SearchResults.js';
 import { withRouter } from "react-router-dom";
 
@@ -13,9 +12,9 @@ class SearchPage extends Component {
       var args = new URLSearchParams(this.props.location.search);
       var pageArg = args.get('page');
       var qArg = args.get('q');
-      if(qArg != null && qArg != "")
+      if(qArg != null && qArg !== "")
          this.state.query = args.get('q');
-      if(pageArg != null && pageArg != ""){
+      if(pageArg != null && pageArg !== ""){
          try{ this.state.page = eval(args.get('page')); }
          catch(e){}
       }

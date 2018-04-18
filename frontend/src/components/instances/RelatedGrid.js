@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, CardDeck } from 'reactstrap';
+import { Container, CardDeck } from 'reactstrap';
 import Pagination from '../model/Pagination.js';
 import CardMod from '../model/CardMod.js';
 import Loading from '../global/Loading.js';
@@ -36,7 +36,7 @@ class RelatedGrid extends Component {
       else {
          request_type = this.props.request_type.toLowerCase();
       }
-      if(this.props.request_type != "Topics")
+      if(this.props.request_type !== "Topics")
          request_type = "similar_" + request_type;
 
      fetch("http://api.poptopic.org/" + this.props.caller_type + "/"+this.props.id+"/"+ request_type + "?page=" + this.state.currentPage)

@@ -29,7 +29,7 @@ class GeneralFilter extends Component {
       var query = args.get(this.props.arg);
       for (var k in list){
          if (list.hasOwnProperty(k)) {
-            if(query == list[k].value){
+            if(query === list[k].value){
                this.setState({selectedOption: list[k]},
                this.props.setFilter(this.state.selectedOption, true));
             }

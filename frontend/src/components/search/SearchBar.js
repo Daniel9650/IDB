@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Label, Input, Button, InputGroupAddon, InputGroup } from 'reactstrap';
+import { Form, Input, Button, InputGroupAddon, InputGroup } from 'reactstrap';
 import { withRouter } from "react-router-dom";
 
 
@@ -9,7 +9,7 @@ class SearchBar extends Component {
       this.state = {value: '', urlVal: ''};
       this.handleChange = this.handleChange.bind(this);
       var args = new URLSearchParams(this.props.location.search);
-      if(this.props.location.pathname == '/search'){
+      if(this.props.location.pathname === '/search'){
          this.state.value = args.get('q');
       }
    }
@@ -36,7 +36,7 @@ class SearchBar extends Component {
                   </Button>
                </InputGroupAddon>
                </InputGroup>
-               
+
          </Form>
       );
    }

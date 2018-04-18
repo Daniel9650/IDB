@@ -17,7 +17,7 @@ class MultiFilter extends Component {
       var allTopics =[];
       for (var k in list){
          if (list.hasOwnProperty(k)) {
-            if(query == list[k].value){
+            if(query === list[k].value){
                allTopics.push(list[k]);
             }
          }

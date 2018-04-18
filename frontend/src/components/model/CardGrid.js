@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, CardDeck } from 'reactstrap';
+import { Container, CardDeck } from 'reactstrap';
 import CardMod from './CardMod.js';
 import Loading from '../global/Loading.js';
 import APIError from '../global/APIError.js';
@@ -53,7 +53,7 @@ class CardGrid extends Component {
 
    fetchData(){
       var stringQuery = "";
-      if(this.state.filters.length != 0){
+      if(this.state.filters.length !== 0){
          var filters = this.state.filters.map(function(filter){
             return "filter=" + filter.filter + "&q=" + filter.query;
          });

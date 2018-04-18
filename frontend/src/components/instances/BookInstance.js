@@ -6,17 +6,9 @@ import RelatedGrid from './RelatedGrid.js';
 
 import {
   Container,
-  Jumbotron,
-  Button,
   Row,
-  Col,
-  Card,
-  CardImg,
-  CardTitle,
-  CardText,
-  CardDeck,
- CardSubtitle,
- CardBody} from 'reactstrap';
+  Col
+} from 'reactstrap';
 
 
 
@@ -92,7 +84,7 @@ class BookInstance extends Component {
                   <hr className="divider"/>
                   <Row>
                      <Col xs="auto">
-                        <img className="book-poster" src={data.poster_url} />
+                        <img className="book-poster" alt="book poster" src={data.poster_url} />
                      </Col>
                      <Col>
                         <h6 className="instance-sub">Description</h6>

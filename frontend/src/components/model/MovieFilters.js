@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Select from 'react-select';
+
 import { Row, Col } from 'reactstrap';
 import GeneralFilter from './filters/GeneralFilter.js';
 import NameFilter from './filters/NameFilter.js';
@@ -127,7 +127,7 @@ class MovieFilters extends Component {
          allFilters.push(this.state.directorFilter);
       if(this.state.dateFilter.filter != null)
          allFilters.push(this.state.dateFilter);
-      if(this.state.topicFilters.length != 0){
+      if(this.state.topicFilters.length !== 0){
           for(var i = 0; i < this.state.topicFilters.length; i++)
             allFilters.push(this.state.topicFilters[i]);
        }
@@ -159,7 +159,6 @@ class MovieFilters extends Component {
                   </Col>
                </Row>
                <Row>
-
                   <Col xs="4">
                      <h5 className="filter-label">Acting:</h5>
                      <GeneralFilter setFilter={this.setCastFilter} arg="acting" apiCall="actors" />

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Row, Container } from 'reactstrap';
-import TrendingTopic from './TrendingTopic.js';
 import Loading from '../global/Loading.js';
 import CardMod from '../model/CardMod.js';
 import APIError from '../global/APIError.js';

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col } from 'reactstrap';
+import { Container } from 'reactstrap';
 import LogoGrid from './LogoGrid.js'
 import BioGrid from './BioGrid.js';
 import NotFound from '../global/NotFound.js';

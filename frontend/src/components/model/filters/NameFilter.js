@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
-import { Redirect } from 'react-router-dom';
+import { Form, FormGroup, Input } from 'reactstrap';
 import { withRouter } from "react-router-dom";
 
 class SearchBar extends Component {

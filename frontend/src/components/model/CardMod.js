@@ -3,9 +3,7 @@ import { Card,
    CardImg,
    CardText,
    CardBody,
-   CardTitle,
-   CardSubtitle,
-   Button } from 'reactstrap';
+   CardTitle } from 'reactstrap';
 import topicDict from '../../data/topic_dictionary.json';
 
 class CardMod extends Component {
@@ -159,6 +157,9 @@ class CardMod extends Component {
               </div>
             );
 
+        default:
+          return null;
+
       }
    }
 
@@ -175,7 +176,7 @@ class CardMod extends Component {
        var index = this.props.description.indexOf(this.props.highlight);
        if(index < 0)
         index = this.props.description.indexOf(this.props.highlight.toLowerCase());
-        
+
        if(index >= 0){
 
           var starting  = 0;

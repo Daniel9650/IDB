@@ -11,21 +11,21 @@ class Loading extends Component {
         case "medium":
           return(
              <div className="text-center">
-                <img className="loading-icon-medium" src={loadingSymbol} />
+                <img className="loading-icon-medium" alt="loading symbol" src={loadingSymbol} />
              </div>
           );
 
         case "small":
           return(
              <div className="text-center">
-                <img className="loading-icon-small" src={loadingSymbol} />
+                <img className="loading-icon-small" alt="loading symbol" src={loadingSymbol} />
              </div>
           );
 
         default:
           return(
              <div className="text-center">
-                <img className="loading-icon-large" src={loadingSymbol} />
+                <img className="loading-icon-large" alt="loading symbol" src={loadingSymbol} />
              </div>
           );
       }
