@@ -173,9 +173,7 @@ class CardGrid extends Component {
       }
       else if (!isLoaded) {
         return (
-          <Container className='spacing-div'>
-          <Loading/>
-          </Container>
+          <Loading size="medium"/>
           );
       }
       else {

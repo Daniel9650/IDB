@@ -475,10 +475,22 @@ a:hover {
    box-shadow: 0px 20vh 0px 0vh var(--footer)
 }
 
-.loading-icon {
-   animation: loading-spin infinite 5s linear;
-   width: 40%;
-   height: 40%;
+.loading-icon-small{
+    animation: loading-spin infinite 5s linear;
+    height: 350px;
+    width: 350px;
+}
+
+.loading-icon-medium{
+    animation: loading-spin infinite 5s linear;
+    height: 600px;
+    width: 600px;
+}
+
+.loading-icon-large{
+    animation: loading-spin infinite 5s linear;
+    height: 900px;
+    width: 900px;
 
 }
 

@@ -84,9 +84,7 @@ class TrendingTopicsGrid extends Component {
      }
      else if (!isLoaded) {
        return (
-         <Container className='spacing-div'>
-         <Loading/>
-         </Container>
+         <Loading size="small"/>
          );
      }
       else {
