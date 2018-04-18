@@ -157,7 +157,6 @@ a:hover {
 
 .carousel-caption {
   bottom: 30% !important;
-  top: 10% !important;
 }
 
 .slide-caption {
@@ -175,6 +174,12 @@ a:hover {
    font-size: 80px;
    font-family: Accent;
    text-shadow: 2px 2px var(--charcoal);
+}
+
+@media screen and (max-width: 691px){
+  .carousel-caption {
+    top: 10% !important;
+  }
 }
 
 @media screen and (max-width: 737px){
