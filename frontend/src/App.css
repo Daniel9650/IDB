@@ -170,7 +170,10 @@ a:hover {
 }
 
 .carousel-caption {
-  bottom: 30% !important;
+  bottom: 30px !important;
+  top: 60px !important;
+  right: 15% !important;
+  left: 15% !important;
 }
 
 .carousel-btn{
@@ -195,27 +198,21 @@ a:hover {
    text-shadow: 2px 2px var(--charcoal);
 }
 
-@media screen and (max-width: 691px){
-  .carousel-caption {
-    top: 10% !important;
-  }
-}
-
 @media screen and (max-width: 737px){
   .slide-header {
-    font-size: 75px;
-  }
-}
-
-@media screen and (max-width: 610px){
-  .slide-caption{
-    font-size: 18px;
-  }
-}
-
-@media screen and (max-width: 402px){
-  .slide-header {
     font-size: 60px;
+  }
+  .slide-caption{
+    font-size: 25px;
+  }
+}
+
+@media screen and (max-width: 425px){
+  .slide-header {
+    font-size: 45px;
+  }
+  .slide-caption{
+    font-size: 20px;
   }
 }
 
