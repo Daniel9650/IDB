@@ -11,18 +11,22 @@ from math import ceil
 from cred import getUser
 from flask_cors import CORS
 
+#Setup Flask Routers
 app = Flask(__name__, template_folder='.', static_folder='static')
 app.config['SERVER_NAME'] = 'poptopic.org'
-app.url_map.strict_slashes = False
-CORS(app)
-api = Blueprint('api', 'api', subdomain='api')
+app.url_map.strict_slashes = False 
+CORS(app) #allow cross-site-access
+api = Blueprint('api', 'api', subdomain='api') #setup api subdomain blueprint
 
+
+#Establish Connection to Database
 con_str = "mysql+pymysql://"+getUser()+"@pt-db-instance.cden9ozljt61.us-west-1.rds.amazonaws.com:3306/poptopic_db"
 engine = create_engine(con_str, pool_size=500, max_overflow=500, convert_unicode=True)
 Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 Base.metadata.bind = engine
 
+#SQLAlchemy Tables
 class Movies(Base):
     __tablename__ = 'Movies'
 
@@ -275,6 +279,8 @@ class Topics(Base):
 
 # create database tables
 Base.metadata.create_all(engine)
+
+#Setup Default Information for each model
 default_items_per_page = 9
 default_items_per_instance_page = 3
 movie_sorts = {
@@ -310,6 +316,11 @@ all_sorts = [
     "type"
 ]
 
+'''
+GET SIMILAR BOOKS
+gets a json object containing all the books related to the given instance.
+sort, page, items per page, filters, and queries must be passed in as parameters.
+'''
 def get_similar_books(mysession, attr_object, page, sort, items_per_page, query_request, filter_request):
     filter_request = ["book_name"] if (len(filter_request) <= 0) else filter_request
     min_instance = items_per_page * (page - 1)
@@ -337,6 +348,11 @@ def get_similar_books(mysession, attr_object, page, sort, items_per_page, query_
     mysession.close()
     return jsonify(page_return)
 
+'''
+GET SIMILAR SONGS
+gets a json object containing all the songs related to the given instance.
+sort, page, items per page, filters, and queries must be passed in as parameters.
+'''
 def get_similar_songs(mysession, attr_object, page, sort, items_per_page, query_request, filter_request):
     filter_request = ["song_name"] if (len(filter_request) <= 0) else filter_request
     min_instance = items_per_page * (page - 1)
@@ -364,6 +380,11 @@ def get_similar_songs(mysession, attr_object, page, sort, items_per_page, query_
     mysession.close()
     return jsonify(page_return)
 
+'''
+GET SIMILAR MOVIES
+gets a json object containing all the movies related to the given instance.
+sort, page, items per page, filters, and queries must be passed in as parameters.
+'''
 def get_similar_movies(mysession, attr_object, page, sort, items_per_page, query_request, filter_request):
     filter_request = ["movie_name"] if (len(filter_request) <= 0) else filter_request
     min_instance = items_per_page * (page - 1)
@@ -391,6 +412,11 @@ def get_similar_movies(mysession, attr_object, page, sort, items_per_page, query
     mysession.close()
     return jsonify(page_return)
 
+'''
+GET INSTANCE TOPICS
+gets a json object containing all the topics related to the given instance.
+sort, page, items per page, filters, and queries must be passed in as parameters.
+'''
 def get_instance_topics(mysession, attr_object, page, sort, items_per_page, query_request, filter_request):
     filter_request = ["topic_name"] if (len(filter_request) <= 0) else filter_request
     min_instance = items_per_page * (page - 1)
@@ -418,12 +444,13 @@ def get_instance_topics(mysession, attr_object, page, sort, items_per_page, quer
     mysession.close()
     return jsonify(page_return)
 
-# Splash page
+# Splash page route
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def app_index(path):
     return render_template("index.html")
 
+#Handle tailing slashes
 @api.before_request
 def clear_trailing():
     rp = request.full_path.split("?")
@@ -433,10 +460,22 @@ def clear_trailing():
         else:
             return redirect(rp[0][:-1])
 
+#Redirect to API Documentation
 @api.route('/')
 def api_index():
     return redirect("https://daniel9650.gitbooks.io/poptopic-api-documentation/content/", code=302)
 
+'''
+GET MOVIES
+gets a json object containing all the movies in the database.
+If a movie id is provided in the path, the instance's object is returned.
+If "related_books","related_songs", or "topics" is provided in the path after
+the instance's id, then a json object containing those related media will
+be retuened.
+
+page number, items per page, sorting options, filter options, and query options can
+be provided via url args for requests that return more than one instance object.
+'''
 @api.route('/movies/', defaults={'path': ''})
 @api.route("/movies/<path:path>", methods=['GET'])
 def get_movies(path):
@@ -512,6 +551,17 @@ def get_movies(path):
         mysession.close()
         abort(400)
 
+'''
+GET SONGS
+gets a json object containing all the songs in the database.
+If a song id is provided in the path, the instance's object is returned.
+If "related_books","related_movies", or "topics" is provided in the path after
+the instance's id, then a json object containing those related media will
+be retuened.
+
+page number, items per page, sorting options, filter options, and query options can
+be provided via url args for requests that return more than one instance object.
+'''
 @api.route('/songs/', defaults={'path': ''})
 @api.route("/songs/<path:path>", methods=['GET'])
 def get_songs(path):
@@ -587,6 +637,17 @@ def get_songs(path):
         mysession.close()
         abort(400)
 
+'''
+GET BOOKS
+gets a json object containing all the books in the database.
+If a book id is provided in the path, the instance's object is returned.
+If "related_songs","related_movies", or "topics" is provided in the path after
+the instance's id, then a json object containing those related media will
+be retuened.
+
+page number, items per page, sorting options, filter options, and query options can
+be provided via url args for requests that return more than one instance object.
+'''
 @api.route('/books/', defaults={'path': ''})
 @api.route("/books/<path:path>", methods=['GET'])
 def get_books(path):
@@ -662,6 +723,17 @@ def get_books(path):
         mysession.close()
         abort(400)
 
+'''
+GET TOPICS
+gets a json object containing all the topics in the database.
+If a topic id is provided in the path, the instance's object is returned.
+If "related_songs","related_movies", or "related_books" is provided in the path after
+the instance's id, then a json object containing those related media will
+be retuened.
+
+page number, items per page, sorting options, filter options, and query options can
+be provided via url args for requests that return more than one instance object.
+'''
 @api.route('/topics/', defaults={'path': ''})
 @api.route("/topics/<path:path>", methods=['GET'])
 def get_topics(path):
@@ -737,6 +809,13 @@ def get_topics(path):
         mysession.close()
         abort(400)
 
+'''
+GET ALL INSTANCES
+gets a json object containing all the topics in the database.
+
+page number, items per page, sorting options, filter options, and query options can
+be provided via url args.
+'''
 @api.route('/all/', defaults={'path': ''})
 @api.route("/all/<path:path>", methods=['GET'])
 def get_all(path):
@@ -806,6 +885,7 @@ def get_all(path):
         mysession.close()
         abort(400)
 
+#Returns all actors in the database
 @api.route("/all_actors/", methods=['GET'])
 def get_all_actors():
     mysession = scoped_session(Session)
@@ -818,6 +898,7 @@ def get_all_actors():
     mysession.close()
     return jsonify(sorted(list(actor_set)))
 
+#Returns all directors in the database
 @api.route("/all_directors/", methods=['GET'])
 def get_all_directors():
     mysession = scoped_session(Session)
@@ -828,6 +909,7 @@ def get_all_directors():
     mysession.close()
     return jsonify(sorted(list(director_set)))
 
+#Returns all years in the database
 @api.route("/all_movie_years/", methods=['GET'])
 def get_all_movie_years():
     mysession = scoped_session(Session)
@@ -839,6 +921,7 @@ def get_all_movie_years():
     mysession.close()
     return jsonify(sorted(list(movie_years), reverse=True))
 
+#Returns all actors in the database
 @api.route("/all_artists/", methods=['GET'])
 def get_all_artists():
     mysession = scoped_session(Session)
@@ -851,6 +934,7 @@ def get_all_artists():
     mysession.close()
     return jsonify(sorted(list(artist_set)))
 
+#Returns all albums in the database
 @api.route("/all_albums/", methods=['GET'])
 def get_all_albums():
     mysession = scoped_session(Session)
@@ -861,6 +945,7 @@ def get_all_albums():
     mysession.close()
     return jsonify(sorted(list(albums_set)))
 
+#Returns all song years in the database
 @api.route("/all_song_years/", methods=['GET'])
 def get_all_song_years():
     mysession = scoped_session(Session)
@@ -872,6 +957,7 @@ def get_all_song_years():
     mysession.close()
     return jsonify(sorted(list(song_years), reverse=True))
 
+#Returns all authors in the database
 @api.route("/all_authors/", methods=['GET'])
 def get_all_authors():
     mysession = scoped_session(Session)
@@ -884,6 +970,7 @@ def get_all_authors():
     mysession.close()
     return jsonify(sorted(list(author_set)))
 
+#Returns all book years in the database
 @api.route("/all_book_years/", methods=['GET'])
 def get_all_book_years():
     mysession = scoped_session(Session)
