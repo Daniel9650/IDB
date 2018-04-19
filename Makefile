@@ -56,8 +56,8 @@ apidoc:
 
 # make self     - prints link to self critique
 self:
-	@echo "https://github.com/${GithubID}/${RepoName}/blob/master/self-critique.md"
+	@echo "https://daniel9650.gitbooks.io/idb-phase-1/content/self-critique.html"
 
 # make other    - prints link to other critique
 other:
-	@echo "https://github.com/${GithubID}/${RepoName}/blob/master/other-critique.md"
+	@echo "https://daniel9650.gitbooks.io/idb-phase-1/content/other-critique.html"
