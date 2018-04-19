@@ -25,7 +25,7 @@
     "test": "mocha tests.js --require ./test/test-ignore.js --compilers js:babel-register --require ./test/helpers.js --require ./test/dom.js",
     "tdd": "npm test -- --watch",
     "dev": "webpack-dev-server --port 3000 --devtool eval --progress --colors --hot --content-base dist",
-    "build": "webpack -p",
+    "build": "react-scripts build",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
