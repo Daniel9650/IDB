@@ -8,12 +8,11 @@ class PopTopicGUITests(unittest.TestCase):
     def setUp (self):
         # get path of ChromeDriverServer
         dir = os.path.dirname(__file__)
-        chrome_driver_path = dir + "/chromedriver"
+        chrome_driver_path = dir + "./chromedriver"
         # create a new Chrome session
         self.driver = webdriver.Chrome(chrome_driver_path)
         self.driver.implicitly_wait(100)
-        self.driver.maximize_window()
-        self.driver.get("http://www.poptopic.org")
+        self.driver.get("http://localhost:3000")
 
 ########################### Helper Functions ###################################
 
@@ -75,9 +74,7 @@ class PopTopicGUITests(unittest.TestCase):
 
     def related_media (self, type, lower):
         driver = self.driver
-
-        x = 1
-        name = type + str(x)
+        name = type + str(1)
         card = driver.find_element_by_name(name)
         card.click()
         driver.implicitly_wait(100)
@@ -90,60 +87,54 @@ class PopTopicGUITests(unittest.TestCase):
 
     def topic_instance (self, num):
         driver = self.driver
-        topic_name = "card" + str(num)
+        topic_name = "topics" + str(num + 10)
         topic_instance = driver.find_element_by_name(topic_name)
         topic_instance.click()
         driver.implicitly_wait(100)
-        driver.refresh()
+
         driver.implicitly_wait(20)
         instance_success = driver.find_element_by_name("topic-instance-name")
         self.assertNotEqual(instance_success, None)
-        self.related_media("Movies", "movie")
-        self.related_media("Books", "book")
-        self.related_media("Music", "music")
+        self.related_media("movies", "movie")
+        self.related_media("books", "book")
+        self.related_media("music", "music")
 
     def movie_instance (self, num):
         driver = self.driver
-        movie_name = "card" + str(num)
+        movie_name = "movies" + str(num)
         movie_instance = driver.find_element_by_name(movie_name)
         movie_instance.click()
         driver.implicitly_wait(100)
-        driver.refresh()
-        driver.implicitly_wait(20)
         instance_success = driver.find_element_by_name("movie-instance-name")
         self.assertNotEqual(instance_success, None)
-        self.related_media("Books", "book")
-        self.related_media("Topics", "topic")
-        self.related_media("Music", "music")
+        self.related_media("books", "book")
+        self.related_media("topics", "topic")
+        self.related_media("music", "music")
 
 
     def music_instance (self, num):
         driver = self.driver
-        music_name = "card" + str(num)
+        music_name = "music" + str(num)
         music_instance = driver.find_element_by_name(music_name)
         music_instance.click()
         driver.implicitly_wait(100)
-        driver.refresh()
-        driver.implicitly_wait(20)
         instance_success = driver.find_element_by_name("music-instance-name")
         self.assertNotEqual(instance_success, None)
-        self.related_media("Books", "book")
-        self.related_media("Topics", "topic")
-        self.related_media("Movies", "movie")
+        self.related_media("books", "book")
+        self.related_media("topics", "topic")
+        self.related_media("movies", "movie")
 
     def book_instance (self, num):
         driver = self.driver
-        book_name = "card" + str(num)
+        book_name = "books" + str(num)
         book_instance = driver.find_element_by_name(book_name)
         book_instance.click()
         driver.implicitly_wait(100)
-        driver.refresh()
-        driver.implicitly_wait(20)
         instance_success = driver.find_element_by_name("book-instance-name")
         self.assertNotEqual(instance_success, None)
-        self.related_media("Music", "music")
-        self.related_media("Topics", "topic")
-        self.related_media("Movies", "movie")
+        self.related_media("music", "music")
+        self.related_media("topics", "topic")
+        self.related_media("movies", "movie")
 
 
 ########################### Navigation Tests ###################################
@@ -193,7 +184,7 @@ class PopTopicGUITests(unittest.TestCase):
         driver = self.driver
         success = 1;
         for x in range(1, 4):
-            name = "trending" + str(x)
+            name = "topics" + str(x)
             trending_topic = driver.find_element_by_name(name)
             trending_topic.click()
             driver.implicitly_wait(100)
@@ -226,7 +217,7 @@ class PopTopicGUITests(unittest.TestCase):
     def test_title (self):
         # able to access poptopic.org
         driver = self.driver
-        self.assertEqual(driver.title, 'Pop Topic')
+        self.assertEqual(driver.title, 'PopTopic')
 
     def tearDown (self):
         self.driver.close()

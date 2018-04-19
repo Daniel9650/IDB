@@ -218,7 +218,8 @@ class CardMod extends Component {
    render() {
 
       var url_model = "/" + this.props.type.toLowerCase() + "/" + this.props.id;
-      var name = "card" + this.props.number;
+      var name = this.props.type.toLowerCase() + this.props.number;
+      console.log(name);
 
 
       return (

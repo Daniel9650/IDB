@@ -66,7 +66,7 @@ class CardGrid extends Component {
       }
       stringQuery = "sort=" + this.state.sort + "&" + stringQuery;
 
-      var stringURL = "http://api.poptopic.org/" + this.state.queryType + "?" + stringQuery + "&page=" + this.state.currentPage;
+      var stringURL = "http://api.poptopic.org/" + this.state.queryType + "?" + stringQuery + "&page=" + this.state.currentPage + "&items_per_page=9";
 
       $.ajax({
         url: stringURL,
@@ -149,6 +149,7 @@ class CardGrid extends Component {
          relatedMedia = instance.similar_books.length + instance.similar_movies.length + instance.similar_songs.length;
 
       }
+      console.log(this.count);
 
       this.count ++;
       return <CardMod

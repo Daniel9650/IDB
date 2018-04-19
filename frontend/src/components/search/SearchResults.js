@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { CardDeck } from 'reactstrap';
+import { CardDeck, Row, Col } from 'reactstrap';
 import CardMod from '../model/CardMod.js';
 import Loading from '../global/Loading.js';
 import APIError from '../global/APIError.js';
 import Pagination from '../model/Pagination.js';
 import NoResults from '../global/NoResults.js';
+import Sort from '../model/filters/Sort.js';
 import $ from "jquery";
 
 class SearchResults extends Component {
@@ -16,13 +17,17 @@ class SearchResults extends Component {
          error: null,
          isLoaded: false,
          data: [],
-         currentPage: this.props.pageNum
+         currentPage: this.props.pageNum,
+         sort: "relevance",
+         isPreLoading: false,
+         sortSent: false
     	};
 
       this.createCard = this.createCard.bind(this);
       this.createCards = this.createCards.bind(this);
       this.fetchData = this.fetchData.bind(this);
       this.setPage = this.setPage.bind(this);
+      this.setSort = this.setSort.bind(this);
    }
 
    setPage(pageNum){
@@ -31,12 +36,13 @@ class SearchResults extends Component {
    }
 
    componentDidMount(){
+     console.log(this.state.sort);
       this.fetchData(5);
    }
 
    fetchData(max_attempts){
       $.ajax({
-        url: "http://api.poptopic.org/all?q=" + this.props.query +"&page=" + this.state.currentPage,
+        url: "http://api.poptopic.org/all?q=" + this.props.query +"&page=" + this.state.currentPage + "&sort=" + this.state.sort,
         method: "GET",
         success: (data, textStatus, jqXHR)=>{
           console.log("success");
@@ -115,6 +121,14 @@ class SearchResults extends Component {
          />;
    }
 
+   setSort(option, isPreLoading = false){
+     console.log(option);
+      var sort = "relevance";
+      if(option != null)
+         sort = option.value;
+      this.setState({sort: sort, isPreLoading: isPreLoading, sortSent: true}, this.fetchData);
+   }
+
    createCards(instances) {
       return instances.objects.map(this.createCard);
    }
@@ -132,20 +146,44 @@ class SearchResults extends Component {
         return <NoResults size="large"/>;
       }
       else {
+        var sortOptions = [
+          {value: 'relevance', label: 'Relevance'},
+          {value: 'type', label: 'Media Type'},
+          {value: 'title_asc', label: 'Title A-Z'},
+          {value: 'title_desc', label: 'Title Z-A'}
+        ];
          return (
-            <div>
-               <CardDeck>
-                  {this.createCards(data)}
-               </CardDeck>
-               <div className="text-center">
-               <Pagination
-                  totalPages={data.total_pages}
-                  onClick={this.setPage}
-                  currentPage={this.state.currentPage}
-                  changeURL={true}
-               />
-               </div>
-            </div>
+           <div>
+           <Row>
+             <Col>
+                <h1 className="search-title">Search Results for "{this.props.query}"</h1>
+            </Col>
+            <Col xs="3">
+               <h5 className="filter-label">Sort By:</h5>
+               <Sort setFilter={this.setSort} options={sortOptions}/>
+            </Col>
+
+          </Row>
+          <hr className = "divider"/>
+
+           <Row>
+            <Col>
+              <div>
+                 <CardDeck>
+                    {this.createCards(data)}
+                 </CardDeck>
+                 <div className="text-center">
+                   <Pagination
+                      totalPages={data.total_pages}
+                      onClick={this.setPage}
+                      currentPage={this.state.currentPage}
+                      changeURL={true}
+                   />
+                 </div>
+              </div>
+            </Col>
+          </Row>
+          </div>
             );
       }
    }

@@ -2,13 +2,17 @@ import React, { Component } from 'react';
 import { Container, Col, Row } from 'reactstrap';
 import SearchResults from './SearchResults.js';
 import { withRouter } from "react-router-dom";
+import Sort from '../model/filters/Sort.js';
 
 
 class SearchPage extends Component {
 
    constructor(props){
       super(props);
-      this.state = {query: '', page: 1};
+      this.state = {
+        query: '',
+        page: 1,
+      };
       var args = new URLSearchParams(this.props.location.search);
       var pageArg = args.get('page');
       var qArg = args.get('q');
@@ -18,21 +22,18 @@ class SearchPage extends Component {
          try{ this.state.page = eval(args.get('page')); }
          catch(e){}
       }
+
+
    }
 
+
+
    render(){
-      var query = this.state.query;
-      var page = this.state.page;
+
       return(
          <div className="spacing-div">
             <Container>
-               <h1 className="search-title">Search Results for "{query}"</h1>
-               <hr className = "divider"/>
-               <Row>
-                  <Col>
-                     <SearchResults query={query} pageNum={page} />
-                  </Col>
-               </Row>
+              <SearchResults query={this.state.query} pageNum={this.state.page} />
             </Container>
          </div>
       );
