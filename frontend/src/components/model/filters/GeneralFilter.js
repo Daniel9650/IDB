@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
 import { withRouter } from "react-router-dom";
+import $ from "jquery"
 
 class GeneralFilter extends Component {
 
@@ -12,7 +13,8 @@ class GeneralFilter extends Component {
          suggestions: [],
          isLoaded: false,
          isOpen: false,
-         error: null
+         error: null,
+         load_attempts: 0
       };
 
       this.getSuggestions = this.getSuggestions.bind(this);
@@ -25,48 +27,62 @@ class GeneralFilter extends Component {
          return {value: item, label: item};
       });
       this.setState({suggestions: list});
+      var select = null;
       var args = new URLSearchParams(this.props.location.search);
       var query = args.get(this.props.arg);
       for (var k in list){
          if (list.hasOwnProperty(k)) {
             if(query === list[k].value){
-               this.setState({selectedOption: list[k]},
-               this.props.setFilter(this.state.selectedOption, true));
+               select = list[k];
             }
          }
       }
+      if(select != null)
+        this.setState({selectedOption: select});
+      this.props.setFilter(select, true);
    }
 
    componentDidMount(){
-      this.fetchData();
+      this.fetchData(5);
    }
 
-   fetchData(){
-      fetch("http://api.poptopic.org/all_" + this.props.apiCall)
-      .then(res => res.json())
-      .then(
-       (result) => {
-          this.setState({
+   fetchData(max_attempts){
+      var self = this;
+      this.setState({load_attempts: this.state.load_attempts + 1});
+      $.ajax({
+        url: "http://api.poptopic.org/all_" + this.props.apiCall,
+        method: "GET",
+        success: function(data, textStatus, jqXHR){
+          console.log("success");
+          self.setState({
             isLoaded: true,
-            data: result
-         }, this.getSuggestions);
-       },
-       // Note: it's important to handle errors here
-       // instead of a catch() block so that we don't swallow
-       // exceptions from actual bugs in components.
-       (error) => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-       }
-      )
+            data: data
+          }, self.getSuggestions);
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+          console.log("all_"+self.props.apiCall+" in error");
+          console.log("status: "+textStatus);
+          if(self.state.load_attempts >= max_attempts){
+            console.log("all_"+self.props.apiCall + "at max attempts. failed.");
+            self.setState({
+              isLoaded: true,
+              error: errorThrown
+            });
+            self.props.setError();
+          }
+          else{
+            self.setState({load_attempts: self.state.load_attempts + 1});
+            self.fetchData(max_attempts);
+          }
+        },
+        timeout: 2500
+      });
 
    }
 
    handleChange(selectedOption) {
-      this.setState({selectedOption: selectedOption},
-      this.props.setFilter(selectedOption));
+      this.setState({selectedOption: selectedOption});
+      this.props.setFilter(selectedOption);
       var args = new URLSearchParams(this.props.location.search);
       if(selectedOption != null)
          args.set(this.props.arg, selectedOption.value);

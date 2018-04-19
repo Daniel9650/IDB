@@ -9,6 +9,7 @@ class Pagination extends Component{
          currentPage: this.props.currentPage,
          totalPages: this.props.totalPages
       };
+
       this.createButtons = this.createButtons.bind(this);
       this.createButton = this.createButton.bind(this);
       this.handlePageChange = this.handlePageChange.bind(this);
@@ -19,9 +20,11 @@ class Pagination extends Component{
    handlePageChange(num){
       console.log("hhi");
       this.setState({currentPage: num}, this.props.onClick(num));
-      var args = new URLSearchParams(this.props.location.search);
-      args.set("page", num);
-      this.props.history.push('?'+args.toString());
+      if(this.props.changeURL){
+         var args = new URLSearchParams(this.props.location.search);
+         args.set("page", num);
+         this.props.history.push('?'+args.toString());
+      }
    }
 
    createButton(num){

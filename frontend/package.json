@@ -6,7 +6,6 @@
     "axios": "^0.18.0",
     "bootstrap": "^4.0.0",
     "font-awesome": "^4.7.0",
-    "jquery": "^3.3.1",
     "react": "^16.2.0",
     "react-autosuggest": "^9.3.4",
     "react-bootstrap": "^0.32.1",
@@ -26,7 +25,7 @@
     "test": "mocha tests.js --require ./test/test-ignore.js --compilers js:babel-register --require ./test/helpers.js --require ./test/dom.js",
     "tdd": "npm test -- --watch",
     "dev": "webpack-dev-server --port 3000 --devtool eval --progress --colors --hot --content-base dist",
-    "build": "webpack -p",
+    "build": "react-scripts build",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
@@ -35,6 +34,7 @@
     "chai": "^4.1.2",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
+    "jquery": "^3.3.1",
     "mocha": "^5.1.0",
     "react-addons-test-utils": "^15.6.2",
     "react-highlighter": "^0.4.2",

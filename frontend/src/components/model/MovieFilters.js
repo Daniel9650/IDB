@@ -22,7 +22,13 @@ class MovieFilters extends Component {
          nameFilter:{},
          sort: 'title_asc',
          isLoaded: true,
-         isPreLoading: false
+         isPreLoading: false,
+         castSent: false,
+         directorSent: false,
+         topicSent: false,
+         dateSent: false,
+         nameSent: false,
+         sortSent: false
       }
 
       this.setCurrentFilters(this.props.currentFilters, this.props.currentSort);
@@ -36,6 +42,7 @@ class MovieFilters extends Component {
       this.combineFilters = this.combineFilters.bind(this);
       this.setSort = this.setSort.bind(this);
       this.setNameFilter = this.setNameFilter.bind(this);
+      this.allFiltersSent = this.allFiltersSent.bind(this);
 
    }
 
@@ -66,39 +73,41 @@ class MovieFilters extends Component {
          dateFilter: date,
          nameFilter: name,
          sort: sort,
-         isLoaded: true
+         isLoaded: false,
       }, this.combineFilters);
 
+   }
+
+   componentDidMount(){
+      this.setState({isLoaded: true});
    }
 
    setNameFilter(query, isPreLoading = false){
       var filter = {};
       if(query != null)
          filter = {filter:"movie_name", query:query};
-      this.setState({nameFilter: filter, isPreLoading: isPreLoading}, this.combineFilters);
+      this.setState({nameFilter: filter, isPreLoading: isPreLoading, nameSent: true}, this.combineFilters);
    }
 
    setSort(option, isPreLoading = false){
       var sort = "title_asc";
       if(option != null)
          sort = option.value;
-      this.setState({sort: sort, isPreLoading: isPreLoading}, this.combineFilters);
+      this.setState({sort: sort, isPreLoading: isPreLoading, sortSent: true}, this.combineFilters);
    }
 
    setCastFilter(option, isPreLoading = false){
-      console.log(option);
       var filter = {};
       if(option != null)
          filter = {filter:"cast", query:option.value};
-      this.setState({castFilter: filter, isPreLoading: isPreLoading}, this.combineFilters);
+      this.setState({castFilter: filter, isPreLoading: isPreLoading, castSent: true}, this.combineFilters);
    }
 
    setDirectorFilter(option, isPreLoading = false){
-      console.log(option);
       var filter = {};
       if(option != null)
          filter = {filter:"director", query:option.value};
-      this.setState({directorFilter: filter, isPreLoading: isPreLoading}, this.combineFilters);
+      this.setState({directorFilter: filter, isPreLoading: isPreLoading, directorSent: true}, this.combineFilters);
    }
 
    setTopicFilter(option, isPreLoading = false){
@@ -108,34 +117,44 @@ class MovieFilters extends Component {
             filters.push({filter:"topics", query:option[i].value});
           }
       }
-      this.setState({topicFilters: filters, isPreLoading: isPreLoading}, this.combineFilters);
+      this.setState({topicFilters: filters, isPreLoading: isPreLoading, topicSent: true}, this.combineFilters);
    }
 
    setDateFilter(option, isPreLoading = false){
       var filter = {};
       if(option != null)
          filter = {filter:"release_date", query:option.value};
-      this.setState({dateFilter: filter, isPreLoading: isPreLoading}, this.combineFilters);
+      this.setState({dateFilter: filter, isPreLoading: isPreLoading, dateSent: true}, this.combineFilters);
    }
 
    combineFilters(){
-      console.log(this.state.topicFilters);
-      var allFilters = [];
-      if(this.state.castFilter.filter != null)
-         allFilters.push(this.state.castFilter);
-      if(this.state.directorFilter.filter != null)
-         allFilters.push(this.state.directorFilter);
-      if(this.state.dateFilter.filter != null)
-         allFilters.push(this.state.dateFilter);
-      if(this.state.topicFilters.length !== 0){
-          for(var i = 0; i < this.state.topicFilters.length; i++)
-            allFilters.push(this.state.topicFilters[i]);
-       }
-      if(this.state.nameFilter.filter != null)
-         allFilters.push(this.state.nameFilter);
+      
+      if(this.allFiltersSent()){
+         console.log("help");
+         console.log(this.state.topicFilters);
+         var allFilters = [];
+         if(this.state.castFilter.filter != null)
+            allFilters.push(this.state.castFilter);
+         if(this.state.directorFilter.filter != null)
+            allFilters.push(this.state.directorFilter);
+         if(this.state.dateFilter.filter != null)
+            allFilters.push(this.state.dateFilter);
+         if(this.state.topicFilters.length !== 0){
+             for(var i = 0; i < this.state.topicFilters.length; i++)
+               allFilters.push(this.state.topicFilters[i]);
+          }
+         if(this.state.nameFilter.filter != null)
+            allFilters.push(this.state.nameFilter);
 
-      this.props.setFilters(allFilters, this.state.sort, this.state.isPreLoading);
+         this.props.setFilters(allFilters, this.state.sort, this.state.isPreLoading);
+      }
+
       this.setState({isPreLoading: false});
+   }
+
+   allFiltersSent(){
+      const { nameSent, sortSent, castSent, directorSent, topicSent, dateSent } = this.state;
+      return nameSent && sortSent && castSent && directorSent && topicSent && dateSent;
    }
 
    render(){
@@ -161,18 +180,18 @@ class MovieFilters extends Component {
                <Row>
                   <Col xs="4">
                      <h5 className="filter-label">Acting:</h5>
-                     <GeneralFilter setFilter={this.setCastFilter} arg="acting" apiCall="actors" />
+                     <GeneralFilter setError={this.props.setError} setFilter={this.setCastFilter} arg="acting" apiCall="actors" />
                   </Col>
                   <Col xs="4">
                      <h5 className="filter-label">Directing:</h5>
-                     <GeneralFilter setFilter={this.setDirectorFilter} arg="director" apiCall="directors"/>
+                     <GeneralFilter setError={this.props.setError} setFilter={this.setDirectorFilter} arg="director" apiCall="directors"/>
                   </Col>
                   <Col xs="2">
                      <h5 className="filter-label">Release Year:</h5>
-                     <GeneralFilter setFilter={this.setDateFilter} arg="year" apiCall="movie_years"/>
+                     <GeneralFilter setError={this.props.setError} setFilter={this.setDateFilter} arg="year" apiCall="movie_years"/>
                   </Col>
                   <Col xs="2">
-                     <h5 classLabel="filter-label">Sort By:</h5>
+                     <h5 className="filter-label">Sort By:</h5>
                      <Sort setFilter={this.setSort} options={sortOptions}/>
                   </Col>
                </Row>

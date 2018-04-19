@@ -46,7 +46,8 @@ describe('Test Model Component', () => {
         <Model type="Movies"/>
       </BrowserRouter>,
     );
+  
   it('exists', () => {
-    expect(wrapper.find('.spacing-div').exists()).to.eql(true);
+    expect(wrapper.find('.spacing-div-model').exists()).to.eql(true);
   });
 });

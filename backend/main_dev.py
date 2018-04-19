@@ -19,7 +19,7 @@ CORS(app)
 #api = Blueprint('api', 'api', subdomain='api')
 
 con_str = "mysql+pymysql://"+getUser()+"@pt-db-instance.cden9ozljt61.us-west-1.rds.amazonaws.com:3306/poptopic_db"
-engine = create_engine(con_str, convert_unicode=True)
+engine = create_engine(con_str, pool_size=500, max_overflow=500, convert_unicode=True)
 Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 Base.metadata.bind = engine
@@ -333,6 +333,7 @@ def get_similar_books(mysession, attr_object, page, sort, items_per_page, query_
     for instance in query[min_instance:max_instance]:
         page_return["num_results"] += 1
         page_return["objects"].append(instance.as_dict())
+    mysession.close()
     return jsonify(page_return)
 
 def get_similar_songs(mysession, attr_object, page, sort, items_per_page, query_request, filter_request):
@@ -357,6 +358,7 @@ def get_similar_songs(mysession, attr_object, page, sort, items_per_page, query_
     for instance in query[min_instance:max_instance]:
         page_return["num_results"] += 1
         page_return["objects"].append(instance.as_dict())
+    mysession.close()
     return jsonify(page_return)
 
 def get_similar_movies(mysession, attr_object, page, sort, items_per_page, query_request, filter_request):
@@ -381,6 +383,7 @@ def get_similar_movies(mysession, attr_object, page, sort, items_per_page, query
     for instance in query[min_instance:max_instance]:
         page_return["num_results"] += 1
         page_return["objects"].append(instance.as_dict())
+    mysession.close()
     return jsonify(page_return)
 
 def get_instance_topics(mysession, attr_object, page, sort, items_per_page, query_request, filter_request):
@@ -405,6 +408,7 @@ def get_instance_topics(mysession, attr_object, page, sort, items_per_page, quer
     for instance in query[min_instance:max_instance]:
         page_return["num_results"] += 1
         page_return["objects"].append(instance.as_dict())
+    mysession.close()
     return jsonify(page_return)
 
 @app.before_request
@@ -458,6 +462,7 @@ def get_movies(path):
             for instance in query[min_instance:max_instance]:
                 page_return["num_results"] += 1
                 page_return["objects"].append(instance.as_dict())
+            mysession.close()
             return jsonify(page_return)
         abort(400)
     else:
@@ -479,9 +484,11 @@ def get_movies(path):
                         if(sort in topics_sorts):
                             return get_instance_topics(mysession, ast.literal_eval(instance.topics), page, sort, items_per_page, query_request, filter_request)
                     elif(hasattr(instance, attr_focus)):
+                        mysession.close()
                         return jsonify(getattr(instance, attr_focus))
                     abort(400)
                 else:
+                    mysession.close()
                     return jsonify(instance.as_dict())
             abort(404)
         abort(400)
@@ -524,6 +531,7 @@ def get_songs(path):
             for instance in query[min_instance:max_instance]:
                 page_return["num_results"] += 1
                 page_return["objects"].append(instance.as_dict())
+            mysession.close()
             return jsonify(page_return)
         abort(400)
     else:
@@ -545,9 +553,11 @@ def get_songs(path):
                         if(sort in topics_sorts):
                             return get_instance_topics(mysession, ast.literal_eval(instance.topics), page, sort, items_per_page, query_request, filter_request)
                     elif(hasattr(instance, attr_focus)):
+                        mysession.close()
                         return jsonify(getattr(instance, attr_focus))
                     abort(400)
                 else:
+                    mysession.close()
                     return jsonify(instance.as_dict())
             abort(404)
         abort(400)
@@ -590,6 +600,7 @@ def get_books(path):
             for instance in query[min_instance:max_instance]:
                 page_return["num_results"] += 1
                 page_return["objects"].append(instance.as_dict())
+            mysession.close()
             return jsonify(page_return)
         abort(400)
     else:
@@ -611,9 +622,11 @@ def get_books(path):
                         if(sort in topics_sorts):
                             return get_instance_topics(mysession, ast.literal_eval(instance.topics), page, sort, items_per_page, query_request, filter_request)
                     elif(hasattr(instance, attr_focus)):
+                        mysession.close()
                         return jsonify(getattr(instance, attr_focus))
                     abort(400)
                 else:
+                    mysession.close()
                     return jsonify(instance.as_dict())
             abort(404)
         abort(400)
@@ -656,6 +669,7 @@ def get_topics(path):
             for instance in query[min_instance:max_instance]:
                 page_return["num_results"] += 1
                 page_return["objects"].append(instance.as_dict())
+            mysession.close()
             return jsonify(page_return)
         abort(400)
     else:
@@ -677,9 +691,11 @@ def get_topics(path):
                         if(sort in book_sorts):
                             return get_similar_books(mysession, ast.literal_eval(instance.similar_books), page, sort, items_per_page, query_request, filter_request)
                     elif(hasattr(instance, attr_focus)):
+                        mysession.close()
                         return jsonify(getattr(instance, attr_focus))
                     abort(400)
                 else:
+                    mysession.close()
                     return jsonify(instance.as_dict())
             abort(404)
         abort(400)
@@ -745,6 +761,7 @@ def get_all(path):
             for instance_obj in instance_objects[min_instance:max_instance]:
                 page_return["num_results"] += 1
                 page_return["objects"].append(instance_obj["instance"].as_dict())
+            mysession.close()
             return jsonify(page_return)
         abort(400)
     else:
@@ -759,6 +776,7 @@ def get_all_actors():
         instance_cast = ast.literal_eval(instance.cast)
         for actor in instance_cast:
             actor_set.add(actor)
+    mysession.close()
     return jsonify(sorted(list(actor_set)))
 
 @app.route("/all_directors/", methods=['GET'])
@@ -768,6 +786,7 @@ def get_all_directors():
     query = mysession.query(Movies)
     for instance in query:
         director_set.add(instance.director)
+    mysession.close()
     return jsonify(sorted(list(director_set)))
 
 @app.route("/all_movie_years/", methods=['GET'])
@@ -778,6 +797,7 @@ def get_all_movie_years():
     for instance in query:
         year = instance.release_date.split("-")[0]
         movie_years.add(year)
+    mysession.close()
     return jsonify(sorted(list(movie_years), reverse=True))
 
 @app.route("/all_artists/", methods=['GET'])
@@ -789,6 +809,7 @@ def get_all_artists():
         instance_artists = ast.literal_eval(instance.artists)
         for artist in instance_artists:
             artist_set.add(artist)
+    mysession.close()
     return jsonify(sorted(list(artist_set)))
 
 @app.route("/all_albums/", methods=['GET'])
@@ -798,6 +819,7 @@ def get_all_albums():
     query = mysession.query(Songs)
     for instance in query:
         albums_set.add(instance.album)
+    mysession.close()
     return jsonify(sorted(list(albums_set)))
 
 @app.route("/all_song_years/", methods=['GET'])
@@ -808,6 +830,7 @@ def get_all_song_years():
     for instance in query:
         year = instance.release_date.split("-")[0]
         song_years.add(year)
+    mysession.close()
     return jsonify(sorted(list(song_years), reverse=True))
 
 @app.route("/all_authors/", methods=['GET'])
@@ -819,6 +842,7 @@ def get_all_authors():
         instance_authors = ast.literal_eval(instance.authors)
         for author in instance_authors:
             author_set.add(author)
+    mysession.close()
     return jsonify(sorted(list(author_set)))
 
 @app.route("/all_book_years/", methods=['GET'])
@@ -829,6 +853,7 @@ def get_all_book_years():
     for instance in query:
         year = instance.release_date.split("-")[0]
         book_years.add(year)
+    mysession.close()
     return jsonify(sorted(list(book_years), reverse=True))
 
 @app.route("/git_info/", methods=['GET'])

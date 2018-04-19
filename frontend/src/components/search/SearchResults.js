@@ -5,6 +5,7 @@ import Loading from '../global/Loading.js';
 import APIError from '../global/APIError.js';
 import Pagination from '../model/Pagination.js';
 import NoResults from '../global/NoResults.js';
+import $ from "jquery";
 
 class SearchResults extends Component {
 
@@ -30,29 +31,35 @@ class SearchResults extends Component {
    }
 
    componentDidMount(){
-      this.fetchData();
+      this.fetchData(5);
    }
 
-   fetchData(){
-        fetch("http://api.poptopic.org/all?q=" + this.props.query +"&page=" + this.state.currentPage)
-        .then(res => res.json())
-        .then(
-         (result) => {
+   fetchData(max_attempts){
+      $.ajax({
+        url: "http://api.poptopic.org/all?q=" + this.props.query +"&page=" + this.state.currentPage,
+        method: "GET",
+        success: (data, textStatus, jqXHR)=>{
+          console.log("success");
+          this.setState({
+            isLoaded: true,
+            data: data
+          });
+        },
+        error: (jqXHR, textStatus, errorThrown)=>{
+          console.log("in error" + max_attempts);
+          if(this.state.load_attempts >= max_attempts){
             this.setState({
               isLoaded: true,
-              data: result
+              error: errorThrown
             });
-         },
-         // Note: it's important to handle errors here
-         // instead of a catch() block so that we don't swallow
-         // exceptions from actual bugs in components.
-         (error) => {
-            this.setState({
-              isLoaded: true,
-              error
-            });
-         }
-        )
+          }
+          else{
+            this.setState({load_attempts: this.state.load_attempts + 1});
+            this.fetchData(max_attempts);
+          }
+        },
+        timeout: 3000
+      });
    }
 
    createCard(instance) {
@@ -135,6 +142,7 @@ class SearchResults extends Component {
                   totalPages={data.total_pages}
                   onClick={this.setPage}
                   currentPage={this.state.currentPage}
+                  changeURL={true}
                />
                </div>
             </div>

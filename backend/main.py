@@ -18,7 +18,7 @@ CORS(app)
 api = Blueprint('api', 'api', subdomain='api')
 
 con_str = "mysql+pymysql://"+getUser()+"@pt-db-instance.cden9ozljt61.us-west-1.rds.amazonaws.com:3306/poptopic_db"
-engine = create_engine(con_str, convert_unicode=True)
+engine = create_engine(con_str, pool_size=500, max_overflow=500, convert_unicode=True)
 Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 Base.metadata.bind = engine
