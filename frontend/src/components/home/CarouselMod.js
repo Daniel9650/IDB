@@ -84,7 +84,7 @@ class CarouselMod extends Component {
           <div className="carousel-caption">
             <h1 className="slide-header">{item.header}</h1>
             <h3 className="slide-caption">{item.caption}</h3>
-            <hr/>
+            <br />
             <a href={item.href}><button type="button" class="carousel-btn btn btn-primary btn-lg">{item.button}</button></a>
           </div>
         </CarouselItem>
