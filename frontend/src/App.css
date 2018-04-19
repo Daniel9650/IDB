@@ -173,6 +173,11 @@ a:hover {
   bottom: 30% !important;
 }
 
+.carousel-btn{
+  background-color: var(--charcoal) !important;
+  border-color: #000000 !important;
+}
+
 .slide-caption {
    text-align:center;
    font-weight: bold;
@@ -199,6 +204,12 @@ a:hover {
 @media screen and (max-width: 737px){
   .slide-header {
     font-size: 75px;
+  }
+}
+
+@media screen and (max-width: 610px){
+  .slide-caption{
+    font-size: 18px;
   }
 }
 

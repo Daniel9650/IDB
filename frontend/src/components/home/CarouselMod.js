@@ -11,19 +11,25 @@ const items = [
     src: require('../../images/books.jpg'),
     altText: 'Slide 1',
     header: 'Write the Next Bestseller',
-    caption: 'Influence society with the power of words.'
+    caption: 'Influence society with the power of words.',
+    href: '/books',
+    button: 'View Books'
   },
   {
     src: require('../../images/music.jpeg'),
     altText: 'Slide 2',
     header: 'Call Out to Audiophiles',
-    caption: 'Find out which messages are being listened to.'
+    caption: 'Find out which messages are being listened to.',
+    href: '/music',
+    button: 'View Songs'
   },
   {
     src: require('../../images/movie_reel.jpg'),
     altText: 'Slide 3',
     header: 'Target Movie Lovers',
-    caption: 'Get to know your audience before your next project.'
+    caption: 'Get to know your audience before your next project.',
+    href: '/movies',
+    button: 'View Movies'
   }
 ];
 
@@ -78,6 +84,8 @@ class CarouselMod extends Component {
           <div className="carousel-caption">
             <h1 className="slide-header">{item.header}</h1>
             <h3 className="slide-caption">{item.caption}</h3>
+            <hr/>
+            <a href={item.href}><button type="button" class="carousel-btn btn btn-primary btn-lg">{item.button}</button></a>
           </div>
         </CarouselItem>
       );
