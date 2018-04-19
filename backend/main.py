@@ -323,8 +323,10 @@ def get_similar_books(mysession, attr_object, page, sort, items_per_page, query_
                 for i,f in enumerate(filter_request):
                     query = query.filter(getattr(Books, f).like("%"+query_request[i]+"%"))
             else:
+                mysession.close()
                 abort(400)
     except:
+        mysession.close()
         abort(400)
     num_related = query.count()
     max_pages = max(int(ceil(num_related/items_per_page)),1)
@@ -332,6 +334,7 @@ def get_similar_books(mysession, attr_object, page, sort, items_per_page, query_
     for instance in query[min_instance:max_instance]:
         page_return["num_results"] += 1
         page_return["objects"].append(instance.as_dict())
+    mysession.close()
     return jsonify(page_return)
 
 def get_similar_songs(mysession, attr_object, page, sort, items_per_page, query_request, filter_request):
@@ -347,8 +350,10 @@ def get_similar_songs(mysession, attr_object, page, sort, items_per_page, query_
                 for i,f in enumerate(filter_request):
                     query = query.filter(getattr(Songs, f).like("%"+query_request[i]+"%"))
             else:
+                mysession.close()
                 abort(400)
     except:
+        mysession.close()
         abort(400)
     num_related = query.count()
     max_pages = max(int(ceil(num_related/items_per_page)),1)
@@ -356,6 +361,7 @@ def get_similar_songs(mysession, attr_object, page, sort, items_per_page, query_
     for instance in query[min_instance:max_instance]:
         page_return["num_results"] += 1
         page_return["objects"].append(instance.as_dict())
+    mysession.close()
     return jsonify(page_return)
 
 def get_similar_movies(mysession, attr_object, page, sort, items_per_page, query_request, filter_request):
@@ -371,8 +377,10 @@ def get_similar_movies(mysession, attr_object, page, sort, items_per_page, query
                 for i,f in enumerate(filter_request):
                     query = query.filter(getattr(Movies, f).like("%"+query_request[i]+"%"))
             else:
+                mysession.close()
                 abort(400)
     except:
+        mysession.close()
         abort(400)
     num_related = query.count()
     max_pages = max(int(ceil(num_related/items_per_page)),1)
@@ -380,6 +388,7 @@ def get_similar_movies(mysession, attr_object, page, sort, items_per_page, query
     for instance in query[min_instance:max_instance]:
         page_return["num_results"] += 1
         page_return["objects"].append(instance.as_dict())
+    mysession.close()
     return jsonify(page_return)
 
 def get_instance_topics(mysession, attr_object, page, sort, items_per_page, query_request, filter_request):
@@ -395,8 +404,10 @@ def get_instance_topics(mysession, attr_object, page, sort, items_per_page, quer
                 for i,f in enumerate(filter_request):
                     query = query.filter(getattr(Topics, f).like("%"+query_request[i]+"%"))
             else:
+                mysession.close()
                 abort(400)
     except:
+        mysession.close()
         abort(400)
     num_related = query.count()
     max_pages = max(int(ceil(num_related/items_per_page)),1)
@@ -404,6 +415,7 @@ def get_instance_topics(mysession, attr_object, page, sort, items_per_page, quer
     for instance in query[min_instance:max_instance]:
         page_return["num_results"] += 1
         page_return["objects"].append(instance.as_dict())
+    mysession.close()
     return jsonify(page_return)
 
 # Splash page
@@ -454,8 +466,10 @@ def get_movies(path):
                         for i,f in enumerate(filter_request):
                             query = query.filter(getattr(Movies, f).like("%"+query_request[i]+"%"))
                     else:
+                        mysession.close()
                         abort(400)
             except:
+                mysession.close()
                 abort(400)
             num_rows = query.count()
             max_pages = max(int(ceil(num_rows/items_per_page)),1)
@@ -463,7 +477,9 @@ def get_movies(path):
             for instance in query[min_instance:max_instance]:
                 page_return["num_results"] += 1
                 page_return["objects"].append(instance.as_dict())
+            mysession.close()
             return jsonify(page_return)
+        mysession.close()
         abort(400)
     else:
         attr_focus = params[1] if (num_params > 1 and len(params[1]) > 0) else ""
@@ -484,11 +500,16 @@ def get_movies(path):
                         if(sort in topics_sorts):
                             return get_instance_topics(mysession, ast.literal_eval(instance.topics), page, sort, items_per_page, query_request, filter_request)
                     elif(hasattr(instance, attr_focus)):
+                        mysession.close()
                         return jsonify(getattr(instance, attr_focus))
+                    mysession.close()
                     abort(400)
                 else:
+                    mysession.close()
                     return jsonify(instance.as_dict())
+            mysession.close()
             abort(404)
+        mysession.close()
         abort(400)
 
 @api.route('/songs/', defaults={'path': ''})
@@ -520,8 +541,10 @@ def get_songs(path):
                         for i,f in enumerate(filter_request):
                             query = query.filter(getattr(Songs, f).like("%"+query_request[i]+"%"))
                     else:
+                        mysession.close()
                         abort(400)
             except:
+                mysession.close()
                 abort(400)
             num_rows = query.count()
             max_pages = max(int(ceil(num_rows/items_per_page)),1)
@@ -529,7 +552,9 @@ def get_songs(path):
             for instance in query[min_instance:max_instance]:
                 page_return["num_results"] += 1
                 page_return["objects"].append(instance.as_dict())
+            mysession.close()
             return jsonify(page_return)
+        mysession.close()
         abort(400)
     else:
         attr_focus = params[1] if (num_params > 1 and len(params[1]) > 0) else ""
@@ -550,11 +575,16 @@ def get_songs(path):
                         if(sort in topics_sorts):
                             return get_instance_topics(mysession, ast.literal_eval(instance.topics), page, sort, items_per_page, query_request, filter_request)
                     elif(hasattr(instance, attr_focus)):
+                        mysession.close()
                         return jsonify(getattr(instance, attr_focus))
+                    mysession.close()
                     abort(400)
                 else:
+                    mysession.close()
                     return jsonify(instance.as_dict())
+            mysession.close()
             abort(404)
+        mysession.close()
         abort(400)
 
 @api.route('/books/', defaults={'path': ''})
@@ -586,8 +616,10 @@ def get_books(path):
                         for i,f in enumerate(filter_request):
                             query = query.filter(getattr(Books, f).like("%"+query_request[i]+"%"))
                     else:
+                        mysession.close()
                         abort(400)
             except:
+                mysession.close()
                 abort(400)
             num_rows = query.count()
             max_pages = max(int(ceil(num_rows/items_per_page)),1)
@@ -595,7 +627,9 @@ def get_books(path):
             for instance in query[min_instance:max_instance]:
                 page_return["num_results"] += 1
                 page_return["objects"].append(instance.as_dict())
+            mysession.close()
             return jsonify(page_return)
+        mysession.close()
         abort(400)
     else:
         attr_focus = params[1] if (num_params > 1 and len(params[1]) > 0) else ""
@@ -616,11 +650,16 @@ def get_books(path):
                         if(sort in topics_sorts):
                             return get_instance_topics(mysession, ast.literal_eval(instance.topics), page, sort, items_per_page, query_request, filter_request)
                     elif(hasattr(instance, attr_focus)):
+                        mysession.close()
                         return jsonify(getattr(instance, attr_focus))
+                    mysession.close()
                     abort(400)
                 else:
+                    mysession.close()
                     return jsonify(instance.as_dict())
+            mysession.close()
             abort(404)
+        mysession.close()
         abort(400)
 
 @api.route('/topics/', defaults={'path': ''})
@@ -652,8 +691,10 @@ def get_topics(path):
                         for i,f in enumerate(filter_request):
                             query = query.filter(getattr(Topics, f).like("%"+query_request[i]+"%"))
                     else:
+                        mysession.close()
                         abort(400)
             except:
+                mysession.close()
                 abort(400)
             num_rows = query.count()
             max_pages = max(int(ceil(num_rows/items_per_page)),1)
@@ -661,7 +702,9 @@ def get_topics(path):
             for instance in query[min_instance:max_instance]:
                 page_return["num_results"] += 1
                 page_return["objects"].append(instance.as_dict())
+            mysession.close()
             return jsonify(page_return)
+        mysession.close()
         abort(400)
     else:
         attr_focus = params[1] if (num_params > 1 and len(params[1]) > 0) else ""
@@ -682,11 +725,16 @@ def get_topics(path):
                         if(sort in book_sorts):
                             return get_similar_books(mysession, ast.literal_eval(instance.similar_books), page, sort, items_per_page, query_request, filter_request)
                     elif(hasattr(instance, attr_focus)):
+                        mysession.close()
                         return jsonify(getattr(instance, attr_focus))
+                    mysession.close()
                     abort(400)
                 else:
+                    mysession.close()
                     return jsonify(instance.as_dict())
+            mysession.close()
             abort(404)
+        mysession.close()
         abort(400)
 
 @api.route('/all/', defaults={'path': ''})
@@ -750,9 +798,12 @@ def get_all(path):
             for instance_obj in instance_objects[min_instance:max_instance]:
                 page_return["num_results"] += 1
                 page_return["objects"].append(instance_obj["instance"].as_dict())
+            mysession.close()
             return jsonify(page_return)
+        mysession.close()
         abort(400)
     else:
+        mysession.close()
         abort(400)
 
 @api.route("/all_actors/", methods=['GET'])
@@ -764,6 +815,7 @@ def get_all_actors():
         instance_cast = ast.literal_eval(instance.cast)
         for actor in instance_cast:
             actor_set.add(actor)
+    mysession.close()
     return jsonify(sorted(list(actor_set)))
 
 @api.route("/all_directors/", methods=['GET'])
@@ -773,6 +825,7 @@ def get_all_directors():
     query = mysession.query(Movies)
     for instance in query:
         director_set.add(instance.director)
+    mysession.close()
     return jsonify(sorted(list(director_set)))
 
 @api.route("/all_movie_years/", methods=['GET'])
@@ -783,6 +836,7 @@ def get_all_movie_years():
     for instance in query:
         year = instance.release_date.split("-")[0]
         movie_years.add(year)
+    mysession.close()
     return jsonify(sorted(list(movie_years), reverse=True))
 
 @api.route("/all_artists/", methods=['GET'])
@@ -794,6 +848,7 @@ def get_all_artists():
         instance_artists = ast.literal_eval(instance.artists)
         for artist in instance_artists:
             artist_set.add(artist)
+    mysession.close()
     return jsonify(sorted(list(artist_set)))
 
 @api.route("/all_albums/", methods=['GET'])
@@ -803,6 +858,7 @@ def get_all_albums():
     query = mysession.query(Songs)
     for instance in query:
         albums_set.add(instance.album)
+    mysession.close()
     return jsonify(sorted(list(albums_set)))
 
 @api.route("/all_song_years/", methods=['GET'])
@@ -813,6 +869,7 @@ def get_all_song_years():
     for instance in query:
         year = instance.release_date.split("-")[0]
         song_years.add(year)
+    mysession.close()
     return jsonify(sorted(list(song_years), reverse=True))
 
 @api.route("/all_authors/", methods=['GET'])
@@ -824,6 +881,7 @@ def get_all_authors():
         instance_authors = ast.literal_eval(instance.authors)
         for author in instance_authors:
             author_set.add(author)
+    mysession.close()
     return jsonify(sorted(list(author_set)))
 
 @api.route("/all_book_years/", methods=['GET'])
@@ -834,6 +892,7 @@ def get_all_book_years():
     for instance in query:
         year = instance.release_date.split("-")[0]
         book_years.add(year)
+    mysession.close()
     return jsonify(sorted(list(book_years), reverse=True))
 
 @api.route("/git_info/", methods=['GET'])

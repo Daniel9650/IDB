@@ -324,8 +324,10 @@ def get_similar_books(mysession, attr_object, page, sort, items_per_page, query_
                 for i,f in enumerate(filter_request):
                     query = query.filter(getattr(Books, f).like("%"+query_request[i]+"%"))
             else:
+                mysession.close()
                 abort(400)
     except:
+        mysession.close()
         abort(400)
     num_related = query.count()
     max_pages = max(int(ceil(num_related/items_per_page)),1)
@@ -349,8 +351,10 @@ def get_similar_songs(mysession, attr_object, page, sort, items_per_page, query_
                 for i,f in enumerate(filter_request):
                     query = query.filter(getattr(Songs, f).like("%"+query_request[i]+"%"))
             else:
+                mysession.close()
                 abort(400)
     except:
+        mysession.close()
         abort(400)
     num_related = query.count()
     max_pages = max(int(ceil(num_related/items_per_page)),1)
@@ -374,8 +378,10 @@ def get_similar_movies(mysession, attr_object, page, sort, items_per_page, query
                 for i,f in enumerate(filter_request):
                     query = query.filter(getattr(Movies, f).like("%"+query_request[i]+"%"))
             else:
+                mysession.close()
                 abort(400)
     except:
+        mysession.close()
         abort(400)
     num_related = query.count()
     max_pages = max(int(ceil(num_related/items_per_page)),1)
@@ -399,8 +405,10 @@ def get_instance_topics(mysession, attr_object, page, sort, items_per_page, quer
                 for i,f in enumerate(filter_request):
                     query = query.filter(getattr(Topics, f).like("%"+query_request[i]+"%"))
             else:
+                mysession.close()
                 abort(400)
     except:
+        mysession.close()
         abort(400)
     num_related = query.count()
     max_pages = max(int(ceil(num_related/items_per_page)),1)
@@ -453,8 +461,10 @@ def get_movies(path):
                         for i,f in enumerate(filter_request):
                             query = query.filter(getattr(Movies, f).like("%"+query_request[i]+"%"))
                     else:
+                        mysession.close()
                         abort(400)
             except:
+                mysession.close()
                 abort(400)
             num_rows = query.count()
             max_pages = max(int(ceil(num_rows/items_per_page)),1)
@@ -464,6 +474,7 @@ def get_movies(path):
                 page_return["objects"].append(instance.as_dict())
             mysession.close()
             return jsonify(page_return)
+        mysession.close()
         abort(400)
     else:
         attr_focus = params[1] if (num_params > 1 and len(params[1]) > 0) else ""
@@ -486,11 +497,14 @@ def get_movies(path):
                     elif(hasattr(instance, attr_focus)):
                         mysession.close()
                         return jsonify(getattr(instance, attr_focus))
+                    mysession.close()
                     abort(400)
                 else:
                     mysession.close()
                     return jsonify(instance.as_dict())
+            mysession.close()
             abort(404)
+        mysession.close()
         abort(400)
 
 @app.route('/songs/', defaults={'path': ''})
@@ -522,8 +536,10 @@ def get_songs(path):
                         for i,f in enumerate(filter_request):
                             query = query.filter(getattr(Songs, f).like("%"+query_request[i]+"%"))
                     else:
+                        mysession.close()
                         abort(400)
             except:
+                mysession.close()
                 abort(400)
             num_rows = query.count()
             max_pages = max(int(ceil(num_rows/items_per_page)),1)
@@ -533,6 +549,7 @@ def get_songs(path):
                 page_return["objects"].append(instance.as_dict())
             mysession.close()
             return jsonify(page_return)
+        mysession.close()
         abort(400)
     else:
         attr_focus = params[1] if (num_params > 1 and len(params[1]) > 0) else ""
@@ -555,11 +572,14 @@ def get_songs(path):
                     elif(hasattr(instance, attr_focus)):
                         mysession.close()
                         return jsonify(getattr(instance, attr_focus))
+                    mysession.close()
                     abort(400)
                 else:
                     mysession.close()
                     return jsonify(instance.as_dict())
+            mysession.close()
             abort(404)
+        mysession.close()
         abort(400)
 
 @app.route('/books/', defaults={'path': ''})
@@ -591,8 +611,10 @@ def get_books(path):
                         for i,f in enumerate(filter_request):
                             query = query.filter(getattr(Books, f).like("%"+query_request[i]+"%"))
                     else:
+                        mysession.close()
                         abort(400)
             except:
+                mysession.close()
                 abort(400)
             num_rows = query.count()
             max_pages = max(int(ceil(num_rows/items_per_page)),1)
@@ -602,6 +624,7 @@ def get_books(path):
                 page_return["objects"].append(instance.as_dict())
             mysession.close()
             return jsonify(page_return)
+        mysession.close()
         abort(400)
     else:
         attr_focus = params[1] if (num_params > 1 and len(params[1]) > 0) else ""
@@ -624,11 +647,14 @@ def get_books(path):
                     elif(hasattr(instance, attr_focus)):
                         mysession.close()
                         return jsonify(getattr(instance, attr_focus))
+                    mysession.close()
                     abort(400)
                 else:
                     mysession.close()
                     return jsonify(instance.as_dict())
+            mysession.close()
             abort(404)
+        mysession.close()
         abort(400)
 
 @app.route('/topics/', defaults={'path': ''})
@@ -660,8 +686,10 @@ def get_topics(path):
                         for i,f in enumerate(filter_request):
                             query = query.filter(getattr(Topics, f).like("%"+query_request[i]+"%"))
                     else:
+                        mysession.close()
                         abort(400)
             except:
+                mysession.close()
                 abort(400)
             num_rows = query.count()
             max_pages = max(int(ceil(num_rows/items_per_page)),1)
@@ -671,6 +699,7 @@ def get_topics(path):
                 page_return["objects"].append(instance.as_dict())
             mysession.close()
             return jsonify(page_return)
+        mysession.close()
         abort(400)
     else:
         attr_focus = params[1] if (num_params > 1 and len(params[1]) > 0) else ""
@@ -693,11 +722,14 @@ def get_topics(path):
                     elif(hasattr(instance, attr_focus)):
                         mysession.close()
                         return jsonify(getattr(instance, attr_focus))
+                    mysession.close()
                     abort(400)
                 else:
                     mysession.close()
                     return jsonify(instance.as_dict())
+            mysession.close()
             abort(404)
+        mysession.close()
         abort(400)
 
 @app.route('/all/', defaults={'path': ''})
@@ -763,8 +795,10 @@ def get_all(path):
                 page_return["objects"].append(instance_obj["instance"].as_dict())
             mysession.close()
             return jsonify(page_return)
+        mysession.close()
         abort(400)
     else:
+        mysession.close()
         abort(400)
 
 @app.route("/all_actors/", methods=['GET'])
