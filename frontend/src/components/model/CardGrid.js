@@ -10,6 +10,7 @@ import MusicFilters from './MusicFilters.js';
 import BookFilters from './BookFilters.js';
 import TopicsFilters from './TopicFilters.js';
 import Pagination from './Pagination.js';
+import $ from "jquery";
 
 class CardGrid extends Component {
 
@@ -21,6 +22,7 @@ class CardGrid extends Component {
       this.fetchData = this.fetchData.bind(this);
       this.setFilters = this.setFilters.bind(this);
       this.setPage = this.setPage.bind(this);
+      this.setError = this.setError.bind(this);
 
       var qType = "";
       if(this.props.type === "Music")
@@ -37,7 +39,8 @@ class CardGrid extends Component {
          filters: [],
          type: this.props.type,
          queryType: qType,
-         currentPage: this.props.pageNum
+         currentPage: this.props.pageNum,
+         load_attempts: 0
     	};
 
    }
@@ -45,14 +48,15 @@ class CardGrid extends Component {
    setFilters(filters, sort, isPreLoading = false){
       console.log("PreLoading: "+isPreLoading);
       if(!isPreLoading){
-        this.setState({filters: filters, sort: sort, currentPage: 1}, this.fetchData);
+        this.setState({filters: filters, sort: sort, currentPage: 1, load_attempts: 0}, function(){this.fetchData(5)});
       }
       else{
-        this.setState({filters: filters, sort: sort}, this.fetchData);
+        this.setState({filters: filters, sort: sort, load_attempts: 0}, function(){this.fetchData(5)});
       }
    }
 
-   fetchData(){
+   fetchData(max_attempts){
+      this.setState({error: null, isLoaded: false});
       var stringQuery = "";
       if(this.state.filters.length !== 0){
          var filters = this.state.filters.map(function(filter){
@@ -62,28 +66,40 @@ class CardGrid extends Component {
       }
       stringQuery = "sort=" + this.state.sort + "&" + stringQuery;
 
-        fetch("http://api.poptopic.org/" + this.state.queryType + "?" + stringQuery + "&page=" + this.state.currentPage)
-        .then(res => res.json())
-        .then(
-         (result) => {
+      var stringURL = "http://api.poptopic.org/" + this.state.queryType + "?" + stringQuery + "&page=" + this.state.currentPage;
+
+      $.ajax({
+        url: stringURL,
+        method: "GET",
+        success: (data, textStatus, jqXHR) => {
+          console.log("success");
+          this.setState({
+            isLoaded: true,
+            data: data
+          });
+        },
+        error: (jqXHR, textStatus, errorThrown) =>{
+          console.log("Cardgrid in error" + (this.state.load_attempts + 1));
+          console.log("Cardgrid url:"+ stringURL);
+          console.log("status: " + textStatus);
+          if(this.state.load_attempts >= max_attempts){
+            console.log(errorThrown);
             this.setState({
               isLoaded: true,
-              data: result
+              error: errorThrown
             });
-         },
-         // Note: it's important to handle errors here
-         // instead of a catch() block so that we don't swallow
-         // exceptions from actual bugs in components.
-         (error) => {
-            this.setState({
-              isLoaded: true,
-              error
-            });
-         }
-        )
+          }
+          else{
+            this.setState({load_attempts: this.state.load_attempts + 1});
+            this.fetchData(max_attempts);
+          }
+        },
+        timeout: 3000
+      });
    }
-   componentDidMount() {
-      this.fetchData();
+
+   setError(){
+    this.setState({isLoaded: true, error: new Error("failed to load generalFilter")});
    }
 
    setPage(pageNum) {
@@ -92,13 +108,13 @@ class CardGrid extends Component {
 
    addFilters(){
       if(this.props.type === "Movies")
-         return <MovieFilters currentFilters={this.state.filters} setFilters={this.setFilters}/>;
+         return <MovieFilters currentFilters={this.state.filters} setError={this.setError} setFilters={this.setFilters}/>;
       else if(this.props.type === "Music")
-         return <MusicFilters currentFilters={this.state.filters} setFilters={this.setFilters}/>;
+         return <MusicFilters currentFilters={this.state.filters} setError={this.setError} setFilters={this.setFilters}/>;
       else if(this.props.type === "Books")
-         return <BookFilters currentFilters={this.state.filters} setFilters={this.setFilters}/>;
+         return <BookFilters currentFilters={this.state.filters} setError={this.setError} setFilters={this.setFilters}/>;
       else
-         return <TopicsFilters currentFilters={this.state.filters} setFilters={this.setFilters}/>;
+         return <TopicsFilters currentFilters={this.state.filters} setError={this.setError} setFilters={this.setFilters}/>;
    }
 
    createCard(instance) {
@@ -157,43 +173,36 @@ class CardGrid extends Component {
    }
 
    render(props) {
+      var render_list = [];
       const { error, isLoaded, data } = this.state;
+      render_list.push(this.addFilters());
+
 
       if (error) {
         const status = error.response ? error.response.status : 500
         if(status === 404){
-          return <NotFound />;
+          render_list.push(<NotFound />);
         }
         else{
-          return(
-            <APIError size="medium"/>
-            );
+          render_list.push(<APIError size="medium"/>);
         }
       }
       else if (!isLoaded) {
-        return (
-          <Loading size="medium"/>
-          );
+        render_list.push (<Loading size="medium"/>);
       }
       else if(data.num_results < 1){
-        return (
+        render_list.push(
           <div>
-            {this.addFilters()}
-            <NoResults size="medium" />)
+            <NoResults size="medium" />
           </div>
         );
       }
       else {
-         return (
+         render_list.push(
             <div>
-                  {this.addFilters()}
-
                <CardDeck>
-
-                  {this.createCards(data)}
-
+                   {this.createCards(data)}
                </CardDeck>
-
                <div className="text-center">
                   <Pagination
                      totalPages={data.total_pages}
@@ -205,6 +214,8 @@ class CardGrid extends Component {
             </div>
             );
       }
+
+      return(render_list);
    }
 }
 

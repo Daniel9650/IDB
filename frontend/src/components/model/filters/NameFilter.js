@@ -9,12 +9,14 @@ class NameFilter extends Component {
       var args = new URLSearchParams(this.props.location.search);
       var query = args.get('q');
       if(query == null || query.length <= 0){
-        query = "";
+        this.props.setFilter(null, true);
+        this.state = {value: ""};
       }
-
-      this.props.setFilter(query, true);
-      this.state = {value: query};
-
+      else{
+         this.props.setFilter(query, true);
+         this.state = {value: query};
+      }
+      
       this.handleChange = this.handleChange.bind(this);
       this.handleFormSubmit = this.handleFormSubmit.bind(this);
    }

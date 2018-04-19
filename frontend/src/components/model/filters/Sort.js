@@ -9,20 +9,21 @@ class Sort extends Component {
       var list = this.props.options;
       var args = new URLSearchParams(this.props.location.search);
       var query = args.get('sort');
-      if(query != null){
-        var select = '';
+      var select = '';
+      if(query == null || query.length <= 0){
+        this.props.setFilter(null , true);
+      }
+      else{
         for (var k in list){
            if (list.hasOwnProperty(k)) {
               if(query === list[k].value){
                 select=list[k];
-
               }
            }
         }
-
         this.props.setFilter(select , true);
       }
-
+      
       this.state ={
          selectedOption: select,
          suggestions: this.props.options
@@ -32,8 +33,8 @@ class Sort extends Component {
    }
 
    handleChange(selectedOption) {
-      this.setState({selectedOption: selectedOption},
-      this.props.setFilter(selectedOption));
+      this.setState({selectedOption: selectedOption});
+      this.props.setFilter(selectedOption);
       var args = new URLSearchParams(this.props.location.search);
       if(selectedOption != null)
          args.set("sort", selectedOption.value);

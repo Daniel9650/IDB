@@ -18,7 +18,12 @@ class BookFilters extends Component {
          dateFilter: {},
          nameFilter: {},
          sort: 'title_asc',
-         isPreLoading: false
+         isPreLoading: false,
+         sortSent: false,
+         authorSent: false,
+         topicSent: false,
+         dateSent: false,
+         nameSent: false
       }
 
       this.setAuthorFilter = this.setAuthorFilter.bind(this);
@@ -27,6 +32,7 @@ class BookFilters extends Component {
       this.combineFilters = this.combineFilters.bind(this);
       this.setSort = this.setSort.bind(this);
       this.setNameFilter = this.setNameFilter.bind(this);
+      this.allFiltersSent = this.allFiltersSent.bind(this);
 
    }
 
@@ -34,7 +40,7 @@ class BookFilters extends Component {
       var sort = "title_asc";
       if(option != null)
          sort = option.value;
-      this.setState({sort: sort, isPreLoading: isPreLoading}, this.combineFilters);
+      this.setState({sort: sort, isPreLoading: isPreLoading, sortSent: true}, this.combineFilters);
    }
 
    setAuthorFilter(option, isPreLoading = false){
@@ -42,7 +48,7 @@ class BookFilters extends Component {
       var filter = {};
       if(option != null)
          filter = {filter:"authors", query:option.value};
-      this.setState({authorFilter: filter, isPreLoading: isPreLoading}, this.combineFilters);
+      this.setState({authorFilter: filter, isPreLoading: isPreLoading, authorSent: true}, this.combineFilters);
    }
 
    setTopicFilter(option, isPreLoading = false){
@@ -53,37 +59,44 @@ class BookFilters extends Component {
             filters.push({filter:"topics", query:option[i].value});
           }
       }
-      this.setState({topicFilters: filters, isPreLoading: isPreLoading}, this.combineFilters);
+      this.setState({topicFilters: filters, isPreLoading: isPreLoading, topicSent: true}, this.combineFilters);
    }
 
    setDateFilter(option, isPreLoading = false){
       var filter = {};
       if(option != null)
          filter = {filter:"release_date", query:option.value};
-      this.setState({dateFilter: filter, isPreLoading: isPreLoading}, this.combineFilters);
+      this.setState({dateFilter: filter, isPreLoading: isPreLoading, dateSent: true}, this.combineFilters);
    }
 
    setNameFilter(query, isPreLoading = false){
       var filter = {};
       if(query != null)
          filter = {filter:"book_name", query:query};
-      this.setState({nameFilter: filter, isPreLoading: isPreLoading}, this.combineFilters);
+      this.setState({nameFilter: filter, isPreLoading: isPreLoading, nameSent: true}, this.combineFilters);
    }
    combineFilters(){
-      var allFilters = [];
-      if(this.state.authorFilter.filter != null)
-         allFilters.push(this.state.authorFilter);
-      if(this.state.dateFilter.filter != null)
-         allFilters.push(this.state.dateFilter);
-      if(this.state.topicFilters.length !== 0){
-         for(var i = 0; i < this.state.topicFilters.length; i++)
-           allFilters.push(this.state.topicFilters[i]);
-      }
-      if(this.state.nameFilter.filter != null)
-         allFilters.push(this.state.nameFilter);
+      if(this.allFiltersSent()){
+         var allFilters = [];
+         if(this.state.authorFilter.filter != null)
+            allFilters.push(this.state.authorFilter);
+         if(this.state.dateFilter.filter != null)
+            allFilters.push(this.state.dateFilter);
+         if(this.state.topicFilters.length !== 0){
+            for(var i = 0; i < this.state.topicFilters.length; i++)
+              allFilters.push(this.state.topicFilters[i]);
+         }
+         if(this.state.nameFilter.filter != null)
+            allFilters.push(this.state.nameFilter);
 
-      this.props.setFilters(allFilters, this.state.sort, this.state.isPreLoading);
+         this.props.setFilters(allFilters, this.state.sort, this.state.isPreLoading);
+      }
       this.setState({isPreLoading: false});
+   }
+
+   allFiltersSent(){
+      const { sortSent, authorSent, topicSent, dateSent, nameSent } = this.state;
+      return sortSent && authorSent && topicSent && dateSent && nameSent;
    }
 
    render(){
@@ -109,11 +122,11 @@ class BookFilters extends Component {
 
                <Col xs="5">
                   <h5 className="filter-label">Author:</h5>
-                  <GeneralFilter setFilter={this.setAuthorFilter} arg="author" apiCall="authors"/>
+                  <GeneralFilter setError= {this.props.setError} setFilter={this.setAuthorFilter} arg="author" apiCall="authors"/>
                </Col>
                <Col xs="5">
                   <h5 className="filter-label">Release Year:</h5>
-                  <GeneralFilter setFilter={this.setDateFilter} arg="year" apiCall="book_years"/>
+                  <GeneralFilter setError= {this.props.setError} setFilter={this.setDateFilter} arg="year" apiCall="book_years"/>
                </Col>
                <Col xs="2">
                   <h5 className="filter-label">Sort By:</h5>

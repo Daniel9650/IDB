@@ -32,7 +32,7 @@ class MovieInstance extends Component {
     	});
   	}
     componentDidMount() {
-      this.request_data(2);
+      this.request_data(5);
     }
 
     request_data(max_attempts){
@@ -57,16 +57,12 @@ class MovieInstance extends Component {
               error: errorThrown
             });
           }
-        },
-        timeout: 1500,
-        complete: function(jqXHR, textStatus){
-          if(textStatus == "timeout"){
-            if(self.state.load_attempts < max_attempts){
-              self.setState({load_attempts: self.state.load_attempts + 1});
-              self.request_data(max_attempts);
-            }
+          else{
+            self.setState({load_attempts: self.state.load_attempts + 1});
+            self.request_data(max_attempts);
           }
-        }
+        },
+        timeout: 1500
       });
     }
 

@@ -11,11 +11,14 @@ class TopicFilters extends Component {
       this.state={
          nameFilter:{},
          sort: 'title_asc',
-         isPreLoading: false
+         isPreLoading: false,
+         nameSent: false,
+         sortSent: false
       }
 
       this.setSort = this.setSort.bind(this);
       this.setNameFilter = this.setNameFilter.bind(this);
+      this.allFiltersSent = this.allFiltersSent.bind(this);
 
    }
 
@@ -23,24 +26,31 @@ class TopicFilters extends Component {
       var filter = {};
       if(query != null)
          filter = {filter:"topic_name", query:query};
-      this.setState({nameFilter: filter, isPreLoading: isPreLoading}, this.combineFilters);
+      this.setState({nameFilter: filter, isPreLoading: isPreLoading, nameSent: true}, this.combineFilters);
    }
 
    setSort(option, isPreLoading = false){
       var sort = "title_asc";
       if(option != null)
          sort = option.value;
-      this.setState({sort: sort, isPreLoading: isPreLoading}, this.combineFilters);
+      this.setState({sort: sort, isPreLoading: isPreLoading, sortSent: true}, this.combineFilters);
    }
 
 
    combineFilters(){
-      var allFilters = [];
-      if(this.state.nameFilter.filter != null)
-         allFilters.push(this.state.nameFilter);
+      if(this.allFiltersSent()){
+         var allFilters = [];
+         if(this.state.nameFilter.filter != null)
+            allFilters.push(this.state.nameFilter);
 
-      this.props.setFilters(allFilters, this.state.sort, this.state.isPreLoading);
+         this.props.setFilters(allFilters, this.state.sort, this.state.isPreLoading);
+      }
       this.setState({isPreLoading: false});
+   }
+
+   allFiltersSent(){
+      const { nameSent, sortSent } = this.state;
+      return nameSent && sortSent;
    }
 
    render(){
