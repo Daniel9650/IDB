@@ -37,6 +37,7 @@ class CardMod extends Component {
        opacity: 0.75,
        fontWeight: "bold",
      };
+
       switch (this.props.type) {
          case "Movies":
             var actors = this.props.actors.join(", ");
@@ -176,6 +177,10 @@ class CardMod extends Component {
        var index = this.props.description.indexOf(this.props.highlight);
        if(index < 0)
         index = this.props.description.indexOf(this.props.highlight.toLowerCase());
+      if(index < 0)
+        index = this.props.description.indexOf(this.props.highlight.charAt(0).toUpperCase() + this.props.highlight.substr(1))
+      if(index < 0)
+        index = this.props.description.indexOf(this.props.highlight.toUpperCase());
 
        if(index >= 0){
 

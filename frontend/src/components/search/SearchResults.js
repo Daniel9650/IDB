@@ -22,7 +22,7 @@ class SearchResults extends Component {
          isPreLoading: false,
          sortSent: false
     	};
-
+      this.count = 0;
       this.createCard = this.createCard.bind(this);
       this.createCards = this.createCards.bind(this);
       this.fetchData = this.fetchData.bind(this);

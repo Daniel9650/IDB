@@ -94,14 +94,15 @@ class GeneralFilter extends Component {
 
      var name = this.props.arg + "-filter";
       return(
+        <div name={name}>
          <Select
-            name={name}
             value={this.state.selectedOption}
             onChange={this.handleChange}
             clearable={true}
             searchable={true}
             options={this.state.suggestions}
          />
+         </div>
       );
    }
 }

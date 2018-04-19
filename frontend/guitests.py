@@ -136,6 +136,52 @@ class PopTopicGUITests(unittest.TestCase):
         self.related_media("topics", "topic")
         self.related_media("movies", "movie")
 
+    def name_filter (self, query, resultText):
+        driver = self.driver;
+        nameInput = driver.find_element_by_name("name-filter")
+        nameInput.send_keys(query)
+        success = driver.find_elements_by_xpath("//*[contains(text(), resultText)]")
+        length = len(query)
+        for x in range(0, length):
+            nameInput.send_keys(Keys.BACKSPACE);
+        self.assertNotEqual(success, None)
+
+    def general_filter (self, filterType, query, resultText):
+        driver = self.driver
+        name = filterType + "-filter"
+        filter = driver.find_element_by_name(name)
+        filter.click()
+        options = driver.find_element_by_class_name("Select-menu-outer")
+        options.click()
+        success = driver.find_elements_by_xpath("//*[contains(text(), resultText)]")
+        cancel = driver.find_element_by_class_name("Select-clear")
+        cancel.click()
+        self.assertNotEqual(success, None)
+
+    def double_filter (self, queryA, filterType, queryB, resultText):
+        driver = self.driver;
+        nameInput = driver.find_element_by_name("name-filter")
+        nameInput.send_keys(queryA)
+        name = filterType + "-filter"
+        filter = driver.find_element_by_name(name)
+        filter.click()
+        options = driver.find_element_by_class_name("Select-menu-outer")
+        options.click()
+        success = driver.find_elements_by_xpath("//*[contains(text(), resultText)]")
+        self.assertNotEqual(success, None)
+
+    def global_search (self, query, resultText):
+        driver = self.driver
+        searchBar = driver.find_element_by_name("q")
+        searchBar.send_keys(query)
+        searchBar.send_keys(Keys.ENTER)
+        driver.implicitly_wait(100)
+        success = driver.find_elements_by_xpath("//*[contains(text(), resultText)]")
+        length = len(query)
+        self.assertNotEqual(success, None)
+
+
+
 
 ########################### Navigation Tests ###################################
     def test_nav (self):
@@ -218,6 +264,48 @@ class PopTopicGUITests(unittest.TestCase):
         # able to access poptopic.org
         driver = self.driver
         self.assertEqual(driver.title, 'PopTopic')
+
+    def test_movie_filters (self):
+        driver = self.driver
+        self.nav_movies()
+        self.name_filter("avengers", "Avengers: Age of Ultron")
+        self.general_filter("acting", "Alanna Ubach", "Coco")
+        self.general_filter("director", "Alex Garland", "Annihilation")
+        self.general_filter("year", "2016", "Zootopia")
+        self.double_filter("zoo", "year", "2016", "Zootopia")
+
+    def test_music_filters (self):
+        driver = self.driver
+        self.nav_music()
+        self.name_filter("love", "Love Never Felt So Good")
+        self.general_filter("artist", "Adira", "Ombak Rindu")
+        self.general_filter("album", "2001 (Explicit Version)", "The Next Episode")
+        self.general_filter("year", "2016", "ALWAYS")
+        self.double_filter("party", "year", "2016", "Bachelor Party")
+
+    def test_book_filters (self):
+        driver = self.driver
+        self.nav_books()
+        self.name_filter("life", "Music in Everyday Life")
+        self.general_filter("author", "Alexander Leggatt", "The Cambridge Companion to Shakespearean Comedy")
+        self.general_filter("year", "2016", "Kalahari")
+        self.double_filter("royal", "year", "2016", "Royal Tour")
+
+    def test_topic_filters (self):
+        driver = self.driver
+        self.nav_topics()
+        self.name_filter("t", "Thriller")
+
+    def test_global_search (self):
+        driver = self.driver
+        self.global_search("texas", "Little Town Lies")
+        self.global_search("state", "Created Equal")
+        self.nav_about()
+        self.global_search("heart", "Fury")
+        self.nav_movies()
+        self.global_search("fox", "Zootopia")
+        self.nav_books()
+        self.global_search("fox", "Teenage Mutant Ninja Turtles")
 
     def tearDown (self):
         self.driver.close()

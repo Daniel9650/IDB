@@ -28,10 +28,12 @@ class Pagination extends Component{
    }
 
    createButton(num){
+     var name = "page-button-" + num;
       if(num === this.state.currentPage){
          return (
             <Button
-            className="page-button-active"
+              className="page-button-active"
+              name={name}
                active
                onClick={this.handlePageChange.bind(this, num)}
             >
@@ -43,6 +45,7 @@ class Pagination extends Component{
          return (
             <Button
                className="page-button"
+               name={name}
                onClick={this.handlePageChange.bind(this, num)}
             >
                {num}
