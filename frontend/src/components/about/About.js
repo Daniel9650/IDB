@@ -5,6 +5,7 @@ import BioGrid from './BioGrid.js';
 import NotFound from '../global/NotFound.js';
 import Loading from '../global/Loading.js';
 import APIError from '../global/APIError.js';
+import $ from "jquery";
 
 class About extends Component {
    constructor(props) {
@@ -14,8 +15,10 @@ class About extends Component {
       		isOpen: false,
           error: null,
           isLoaded: false,
-          data: []
+          data: [],
+          load_attempts: 0
     	};
+      this.request_data = this.request_data.bind(this);
   	}
   	toggle() {
     	this.setState({
@@ -24,25 +27,35 @@ class About extends Component {
   	}
 
    componentDidMount() {
-     fetch("http://api.poptopic.org/git_info")
-     .then(res => res.json())
-     .then(
-      (result) => {
-         this.setState({
-           isLoaded: true,
-           data: result
-         });
-      },
-      // Note: it's important to handle errors here
-      // instead of a catch() block so that we don't swallow
-      // exceptions from actual bugs in components.
-      (error) => {
-         this.setState({
-           isLoaded: true,
-           error
-         });
-      }
-     )
+    this.request_data(5);
+   }
+
+   request_data(max_attempts){
+      $.ajax({
+        url: "http://api.poptopic.org/git_info",
+        method: "GET",
+        success: (data, textStatus, jqXHR)=>{
+          console.log("success");
+          this.setState({
+            isLoaded: true,
+            data: data
+          });
+        },
+        error: (jqXHR, textStatus, errorThrown)=>{
+          console.log("in error" + max_attempts);
+          if(this.state.load_attempts >= max_attempts){
+            this.setState({
+              isLoaded: true,
+              error: errorThrown
+            });
+          }
+          else{
+            this.setState({load_attempts: this.state.load_attempts + 1});
+            this.request_data(max_attempts);
+          }
+        },
+        timeout: 1500
+      });
    }
 
    render () {
