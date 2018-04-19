@@ -179,8 +179,7 @@ class CardGrid extends Component {
 
 
       if (error) {
-        const status = error.response ? error.response.status : 500
-        if(status === 404){
+        if(error === "NOT FOUND"){
           render_list.push(<NotFound />);
         }
         else{

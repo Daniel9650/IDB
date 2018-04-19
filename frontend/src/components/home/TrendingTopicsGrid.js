@@ -82,8 +82,7 @@ class TrendingTopicsGrid extends Component {
      const { error, isLoaded, data } = this.state;
 
      if (error) {
-       const status = error.response ? error.response.status : 500
-       if(status === 404){
+       if(error === "NOT FOUND"){
          return <NotFound />;
        }
        else{
