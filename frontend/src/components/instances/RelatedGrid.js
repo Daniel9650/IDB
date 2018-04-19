@@ -5,6 +5,7 @@ import CardMod from '../model/CardMod.js';
 import Loading from '../global/Loading.js';
 import NotFound from '../global/NotFound.js';
 import APIError from '../global/APIError.js';
+import $ from "jquery";
 
 class RelatedGrid extends Component {
 
@@ -22,14 +23,15 @@ class RelatedGrid extends Component {
          isLoaded: false,
          data: [],
          currentPage: 1,
+         load_attempts: 0
     	};
    }
 
    setPage(pageNum) {
-      this.setState({currentPage: pageNum, isLoaded: false}, this.fetchData);
+      this.setState({currentPage: pageNum, isLoaded: false, load_attempts:0}, ()=>{this.fetchData(5)});
    }
 
-   fetchData(){
+   fetchData(max_attempts){
       var request_type = "";
       if(this.props.request_type === "Music")
          request_type = "songs";
@@ -38,30 +40,37 @@ class RelatedGrid extends Component {
       }
       if(this.props.request_type !== "Topics")
          request_type = "similar_" + request_type;
+      var stringURL = "http://api.poptopic.org/" + this.props.caller_type + "/"+this.props.id+"/"+ request_type + "?page=" + this.state.currentPage;
 
-     fetch("http://api.poptopic.org/" + this.props.caller_type + "/"+this.props.id+"/"+ request_type + "?page=" + this.state.currentPage)
-     .then(res => res.json())
-     .then(
-      (result) => {
-         this.setState({
-           isLoaded: true,
-           data: result
-         });
-      },
-      // Note: it's important to handle errors here
-      // instead of a catch() block so that we don't swallow
-      // exceptions from actual bugs in components.
-      (error) => {
-         this.setState({
-           isLoaded: true,
-           error
-         });
-      }
-     )
+      $.ajax({
+        url: stringURL,
+        method: "GET",
+        success: (data, textStatus, jqXHR)=>{
+          console.log("success");
+          this.setState({
+            isLoaded: true,
+            data: data
+          });
+        },
+        error: (jqXHR, textStatus, errorThrown)=>{
+          console.log("in error" + max_attempts);
+          if(this.state.load_attempts >= max_attempts){
+            this.setState({
+              isLoaded: true,
+              error: errorThrown
+            });
+          }
+          else{
+            this.setState({load_attempts: this.state.load_attempts + 1});
+            this.fetchData(max_attempts);
+          }
+        },
+        timeout: 1500
+      });
    }
 
    componentDidMount() {
-      this.fetchData();
+      this.fetchData(5);
    }
 
    createCard(instance) {
@@ -128,15 +137,17 @@ class RelatedGrid extends Component {
         }
         else{
           return(
+            <div className="text-center">
             <APIError size="small"/>
+            </div>
             );
         }
       }
       else if (!isLoaded) {
         return (
-          <Container className='spacing-div'>
-          <Loading/>
-          </Container>
+          <div className="text-center">
+          <Loading size="small"/>
+          </div>
           );
       }
       else {
@@ -151,6 +162,7 @@ class RelatedGrid extends Component {
                   totalPages={data.total_pages}
                   onClick={this.setPage}
                   currentPage={this.state.currentPage}
+                  changeURL={false}
                />
                </div>
             </div>

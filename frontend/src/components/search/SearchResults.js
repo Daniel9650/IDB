@@ -135,6 +135,7 @@ class SearchResults extends Component {
                   totalPages={data.total_pages}
                   onClick={this.setPage}
                   currentPage={this.state.currentPage}
+                  changeURL={true}
                />
                </div>
             </div>

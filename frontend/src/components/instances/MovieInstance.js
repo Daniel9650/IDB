@@ -37,29 +37,28 @@ class MovieInstance extends Component {
 
     request_data(max_attempts){
       const { id } = this.props.match.params
-      var self = this;
       this.setState({load_attempts: this.state.load_attempts + 1});
       $.ajax({
         url: "http://api.poptopic.org/movies/"+id,
         method: "GET",
-        success: function(data, textStatus, jqXHR){
+        success: (data, textStatus, jqXHR)=>{
           console.log("success");
-          self.setState({
+          this.setState({
             isLoaded: true,
             data: data
           });
         },
-        error: function(jqXHR, textStatus, errorThrown){
+        error: (jqXHR, textStatus, errorThrown)=>{
           console.log("in error" + max_attempts);
-          if(self.state.load_attempts >= max_attempts){
-            self.setState({
+          if(this.state.load_attempts >= max_attempts){
+            this.setState({
               isLoaded: true,
               error: errorThrown
             });
           }
           else{
-            self.setState({load_attempts: self.state.load_attempts + 1});
-            self.request_data(max_attempts);
+            this.setState({load_attempts: this.state.load_attempts + 1});
+            this.request_data(max_attempts);
           }
         },
         timeout: 1500

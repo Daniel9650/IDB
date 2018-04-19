@@ -209,6 +209,7 @@ class CardGrid extends Component {
                      type={this.props.type}
                      onClick={this.setPage}
                      currentPage={this.state.currentPage}
+                     changeURL={true}
                   />
                </div>
             </div>
