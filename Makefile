@@ -31,15 +31,15 @@ uml:
 	@echo "https://github.com/${GithubID}/${RepoName}/blob/master/assets/UML%20Diagram.png"
 
 # make selenium - runs selenium tests
-selenium:
+selenium: FORCE
 	python3 frontend/guitests.py
 
 # make frontend - runs frontend tests
-frontend:
+frontend: FORCE
 	@(cd frontend; npm test)
 
 # make backend  - runs backend tests
-backend:
+backend: FORCE
 	python3 backend/tests.py
 
 # make website  - prints link to a website
@@ -61,3 +61,5 @@ self:
 # make other    - prints link to other critique
 other:
 	@echo "https://daniel9650.gitbooks.io/idb-phase-1/content/other-critique.html"
+
+FORCE: ;
