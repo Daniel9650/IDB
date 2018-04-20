@@ -12,17 +12,16 @@ import TopicsFilters from './TopicFilters.js';
 import Pagination from './Pagination.js';
 import $ from "jquery";
 
+/* Renders grid of cards shown on each model page.
+
+   Props:
+      type: one of "Movies", "Music", "Topics", or "Books"
+      pageNum: current page number
+*/
 class CardGrid extends Component {
 
    constructor(props) {
       super(props);
-      this.createCard = this.createCard.bind(this);
-      this.createCards = this.createCards.bind(this);
-      this.count = 0;
-      this.fetchData = this.fetchData.bind(this);
-      this.setFilters = this.setFilters.bind(this);
-      this.setPage = this.setPage.bind(this);
-      this.setError = this.setError.bind(this);
 
       var qType = "";
       if(this.props.type === "Music")
@@ -30,6 +29,7 @@ class CardGrid extends Component {
       else
          qType= this.props.type.toLowerCase();
 
+      //sets initial state
       this.state = {
       	isOpen: false,
          error: null,
@@ -43,58 +43,72 @@ class CardGrid extends Component {
          load_attempts: 0
     	};
 
+      this.createCard = this.createCard.bind(this);
+      this.createCards = this.createCards.bind(this);
+      this.count = 0;
+      this.fetchData = this.fetchData.bind(this);
+      this.setFilters = this.setFilters.bind(this);
+      this.setPage = this.setPage.bind(this);
+      this.setError = this.setError.bind(this);
    }
 
    setFilters(filters, sort, isPreLoading = false){
-      console.log("PreLoading: "+isPreLoading);
       if(!isPreLoading){
-        this.setState({filters: filters, sort: sort, currentPage: 1, load_attempts: 0}, function(){this.fetchData(5)});
+         this.setState({
+            filters: filters,
+            sort: sort,
+            currentPage: 1,
+            load_attempts: 0},
+            function(){this.fetchData(5)});
       }
       else{
-        this.setState({filters: filters, sort: sort, load_attempts: 0}, function(){this.fetchData(5)});
+         this.setState({
+            filters: filters,
+            sort: sort,
+            load_attempts: 0},
+            function(){this.fetchData(5)});
       }
    }
 
    fetchData(max_attempts){
       this.setState({error: null, isLoaded: false});
+
+      //creates string for any applied filters
       var stringQuery = "";
       if(this.state.filters.length !== 0){
          var filters = this.state.filters.map(function(filter){
             return "filter=" + filter.filter + "&q=" + filter.query;
          });
-      stringQuery = filters.join("&");
+         stringQuery = filters.join("&");
       }
       stringQuery = "sort=" + this.state.sort + "&" + stringQuery;
 
-      var stringURL = "http://api.poptopic.org/" + this.state.queryType + "?" + stringQuery + "&page=" + this.state.currentPage + "&items_per_page=9";
+      var stringURL = "http://api.poptopic.org/" + this.state.queryType +
+         "?" + stringQuery + "&page=" + this.state.currentPage;
 
+      //make api call for data to create cards within grid
       $.ajax({
-        url: stringURL,
-        method: "GET",
-        success: (data, textStatus, jqXHR) => {
-          console.log("success");
-          this.setState({
-            isLoaded: true,
-            data: data
-          });
-        },
-        error: (jqXHR, textStatus, errorThrown) =>{
-          console.log("Cardgrid in error" + (this.state.load_attempts + 1));
-          console.log("Cardgrid url:"+ stringURL);
-          console.log("status: " + textStatus);
-          if(this.state.load_attempts >= max_attempts){
-            console.log(errorThrown);
+         url: stringURL,
+         method: "GET",
+         success: (data, textStatus, jqXHR) => {
             this.setState({
-              isLoaded: true,
-              error: errorThrown
+               isLoaded: true,
+               data: data
             });
-          }
-          else{
-            this.setState({load_attempts: this.state.load_attempts + 1});
-            this.fetchData(max_attempts);
-          }
-        },
-        timeout: 3000
+         },
+         error: (jqXHR, textStatus, errorThrown) =>{
+            if(this.state.load_attempts >= max_attempts){
+            this.setState({
+               isLoaded: true,
+               error: errorThrown
+            });
+            }
+            else{
+               this.setState({load_attempts: this.state.load_attempts + 1});
+               this.fetchData(max_attempts);
+            }
+         },
+         timeout: 3000
       });
    }
 
@@ -108,13 +122,29 @@ class CardGrid extends Component {
 
    addFilters(){
       if(this.props.type === "Movies")
-         return <MovieFilters currentFilters={this.state.filters} setError={this.setError} setFilters={this.setFilters}/>;
+         return <MovieFilters
+            currentFilters={this.state.filters}
+            setError={this.setError}
+            setFilters={this.setFilters}
+         />;
       else if(this.props.type === "Music")
-         return <MusicFilters currentFilters={this.state.filters} setError={this.setError} setFilters={this.setFilters}/>;
+         return <MusicFilters
+            currentFilters={this.state.filters}
+            setError={this.setError}
+            setFilters={this.setFilters}
+         />;
       else if(this.props.type === "Books")
-         return <BookFilters currentFilters={this.state.filters} setError={this.setError} setFilters={this.setFilters}/>;
+         return <BookFilters
+            currentFilters={this.state.filters}
+            setError={this.setError}
+            setFilters={this.setFilters}
+            />;
       else
-         return <TopicsFilters currentFilters={this.state.filters} setError={this.setError} setFilters={this.setFilters}/>;
+         return <TopicsFilters
+            currentFilters={this.state.filters}
+            setError={this.setError}
+            setFilters={this.setFilters}
+         />;
    }
 
    createCard(instance) {
@@ -126,6 +156,7 @@ class CardGrid extends Component {
       var album = "";
       var artists = [];
       var relatedMedia = 0;
+
       if (this.props.type === "Movies") {
          name= instance.movie_name;
          id= instance.movie_id;
@@ -149,7 +180,6 @@ class CardGrid extends Component {
          relatedMedia = instance.similar_books.length + instance.similar_movies.length + instance.similar_songs.length;
 
       }
-      console.log(this.count);
 
       this.count ++;
       return <CardMod
@@ -166,7 +196,7 @@ class CardGrid extends Component {
          album = {album}
          authors = {authors}
          relatedMedia = {relatedMedia}
-         />;
+      />;
    }
 
    createCards(instances) {
@@ -178,30 +208,29 @@ class CardGrid extends Component {
       const { error, isLoaded, data } = this.state;
       render_list.push(this.addFilters());
 
-
       if (error) {
-        if(error === "NOT FOUND"){
-          render_list.push(<NotFound />);
-        }
-        else{
-          render_list.push(<APIError size="medium"/>);
-        }
+         if(error === "NOT FOUND"){
+            render_list.push(<NotFound />);
+         }
+         else{
+            render_list.push(<APIError size="medium"/>);
+         }
       }
       else if (!isLoaded) {
-        render_list.push (<Loading size="medium"/>);
+         render_list.push (<Loading size="medium"/>);
       }
       else if(data.num_results < 1){
-        render_list.push(
-          <div>
-            <NoResults size="medium" />
-          </div>
-        );
+         render_list.push(
+            <div>
+               <NoResults size="medium" />
+            </div>
+         );
       }
       else {
          render_list.push(
             <div>
                <CardDeck>
-                   {this.createCards(data)}
+                  {this.createCards(data)}
                </CardDeck>
                <div className="text-center">
                   <Pagination
@@ -213,9 +242,8 @@ class CardGrid extends Component {
                   />
                </div>
             </div>
-            );
+         );
       }
-
       return(render_list);
    }
 }

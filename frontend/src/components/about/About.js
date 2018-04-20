@@ -35,14 +35,12 @@ class About extends Component {
         url: "http://api.poptopic.org/git_info",
         method: "GET",
         success: (data, textStatus, jqXHR)=>{
-          console.log("success");
           this.setState({
             isLoaded: true,
             data: data
           });
         },
         error: (jqXHR, textStatus, errorThrown)=>{
-          console.log("in error" + max_attempts);
           if(this.state.load_attempts >= max_attempts){
             this.setState({
               isLoaded: true,

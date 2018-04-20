@@ -41,8 +41,8 @@ class NameFilter extends Component {
          <Form onSubmit={this.handleFormSubmit}>
             <FormGroup >
                <Input
-                  name="name-filter"
                   type="text"
+                  required
                   placeholder="Search..."
                   value={this.state.value}
                   onChange={this.handleChange}/>

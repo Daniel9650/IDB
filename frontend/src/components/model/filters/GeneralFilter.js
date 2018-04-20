@@ -53,17 +53,13 @@ class GeneralFilter extends Component {
         url: "http://api.poptopic.org/all_" + this.props.apiCall,
         method: "GET",
         success: function(data, textStatus, jqXHR){
-          console.log("success");
           self.setState({
             isLoaded: true,
             data: data
           }, self.getSuggestions);
         },
         error: function(jqXHR, textStatus, errorThrown){
-          console.log("all_"+self.props.apiCall+" in error");
-          console.log("status: "+textStatus);
           if(self.state.load_attempts >= max_attempts){
-            console.log("all_"+self.props.apiCall + "at max attempts. failed.");
             self.setState({
               isLoaded: true,
               error: errorThrown
@@ -94,15 +90,14 @@ class GeneralFilter extends Component {
 
      var name = this.props.arg + "-filter";
       return(
-        <div name={name}>
          <Select
+            name={name}
             value={this.state.selectedOption}
             onChange={this.handleChange}
             clearable={true}
             searchable={true}
             options={this.state.suggestions}
          />
-         </div>
       );
    }
 }

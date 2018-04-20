@@ -18,7 +18,6 @@ class Pagination extends Component{
    }
 
    handlePageChange(num){
-      console.log("hhi");
       this.setState({currentPage: num}, this.props.onClick(num));
       if(this.props.changeURL){
          var args = new URLSearchParams(this.props.location.search);

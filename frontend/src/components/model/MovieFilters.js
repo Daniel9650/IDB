@@ -128,10 +128,8 @@ class MovieFilters extends Component {
    }
 
    combineFilters(){
-      
+
       if(this.allFiltersSent()){
-         console.log("help");
-         console.log(this.state.topicFilters);
          var allFilters = [];
          if(this.state.castFilter.filter != null)
             allFilters.push(this.state.castFilter);

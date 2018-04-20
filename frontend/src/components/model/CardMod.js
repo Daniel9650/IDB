@@ -7,13 +7,13 @@ import { Card,
 import topicDict from '../../data/topic_dictionary.json';
 
 class CardMod extends Component {
+
    constructor(props){
       super(props);
+
       this.render = this.render.bind(this);
       this.textContent = this.textContent.bind(this);
       this.getTopicNames = this.getTopicNames.bind(this);
-
-
    }
 
    getTopicNames(topics){
@@ -201,7 +201,6 @@ class CardMod extends Component {
           }
        }
        else{
-         console.log(this.props.description.includes(this.props.highlight));
          desc = this.props.description.slice(0, 101) + "...";
        }
        return(
@@ -224,7 +223,6 @@ class CardMod extends Component {
 
       var url_model = "/" + this.props.type.toLowerCase() + "/" + this.props.id;
       var name = this.props.type.toLowerCase() + this.props.number;
-      console.log(name);
 
 
       return (

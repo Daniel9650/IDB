@@ -2,14 +2,27 @@ import React, { Component } from 'react';
 import Select from 'react-select';
 import { withRouter } from "react-router-dom";
 
+/* Renders sort component with dropown option menu that is searchable using
+   text input and selectable.
+
+   Props:
+      options: list of options to show in dropdown
+         -each option is an object with value and label
+      setFilter: function taking list of selected options and true/false
+         variable for loading behavior
+      arg: filter name shown in url
+
+*/
 class Sort extends Component {
 
    constructor(props){
       super(props);
+
+      //sets sort filter in accordance with any existing URL parameters
       var list = this.props.options;
       var args = new URLSearchParams(this.props.location.search);
-      var query = args.get('sort');
-      var select = '';
+      var query = args.get("sort");
+      var select = "";
       if(query == null || query.length <= 0){
         this.props.setFilter(null , true);
       }
@@ -23,7 +36,8 @@ class Sort extends Component {
         }
         this.props.setFilter(select , true);
       }
-      
+
+      //sets initial state
       this.state ={
          selectedOption: select,
          suggestions: this.props.options
@@ -33,8 +47,11 @@ class Sort extends Component {
    }
 
    handleChange(selectedOption) {
+      //sets sort filter for API queries for results
       this.setState({selectedOption: selectedOption});
-      this.props.setFilter(selectedOption);
+         this.props.setFilter(selectedOption);
+
+      //adds selected option to filters specified in URL paramaters
       var args = new URLSearchParams(this.props.location.search);
       if(selectedOption != null)
          args.set("sort", selectedOption.value);
@@ -42,6 +59,7 @@ class Sort extends Component {
          args.delete("sort");
       this.props.history.push('?'+args.toString());
    }
+
    render(){
       return(
          <Select

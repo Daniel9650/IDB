@@ -42,7 +42,6 @@ class MovieInstance extends Component {
         url: "http://api.poptopic.org/movies/"+id,
         method: "GET",
         success: (data, textStatus, jqXHR)=>{
-          console.log("success");
           this.setState({
             isLoaded: true,
             data: data
