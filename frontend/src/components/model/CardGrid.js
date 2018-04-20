@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, CardDeck } from 'reactstrap';
+import { CardDeck } from 'reactstrap';
 import CardMod from './CardMod.js';
 import Loading from '../global/Loading.js';
 import APIError from '../global/APIError.js';

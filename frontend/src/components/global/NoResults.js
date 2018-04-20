@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import { Container } from 'reactstrap';
 import noResults from '../../images/no-results.png';
 
 class NoResults extends Component {

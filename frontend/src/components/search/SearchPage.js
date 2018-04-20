@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Container, Col, Row } from 'reactstrap';
+import { Container } from 'reactstrap';
 import SearchResults from './SearchResults.js';
 import { withRouter } from "react-router-dom";
-import Sort from '../model/filters/Sort.js';
 
 
 class SearchPage extends Component {
