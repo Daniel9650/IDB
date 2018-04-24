@@ -47,15 +47,6 @@ var svg = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height);
 
-    var usData = [];
-    for(let x = 1; x < 30; x++){
-      var data = fetchData(x);
-      data.list.map(function(item){
-         if(item.country === "United States" && item.webcams.length != 0)
-            usData.push(item);
-      });
-      }
-      console.log(usData);
 
 
 svg.append("rect")
@@ -66,21 +57,30 @@ svg.append("rect")
 
     var g = svg.append("g");
 
-      d3.json("us.json", function(error, us) {
+    d3.json("us.json", function(error, us) {
          if (error) throw error;
 
-      g.append("g")
-      .attr("id", "states")
-      .selectAll("path")
-         .data(topojson.feature(us, us.objects.states).features)
-      .enter().append("path")
-         .attr("d", path)
-         .on("click", clicked);
+         var data = topojson.feature(us, us.objects.states).features;
 
-      g.append("path")
-         .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
-         .attr("id", "state-borders")
-         .attr("d", path);
+         
+         g.append("g")
+         .attr("id", "states")
+         .selectAll("path")
+            .data(data)
+         .enter().append("path")
+            .attr("d", path)
+            .attr("id", function(d){return d.id;})
+            .on("click", function(d){
+
+               fetchData(d);
+                              clicked(d);
+            });
+
+
+         g.append("path")
+            .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
+            .attr("id", "state-borders")
+            .attr("d", path);
    });
    function clicked(d) {
   var x, y, k;
@@ -107,9 +107,10 @@ svg.append("rect")
       .style("stroke-width", 1.5 / k + "px");
 }
 
-function fetchData(pageNum){
+function fetchData(d){
+   console.log(d.id);
    var returnVal;
-   var stringURL = "http://api.projectrunway.me/cities?limit=100&page=" + pageNum;
+   var stringURL = "http://api.projectrunway.me/cities?filter=country,United%20States&limit=100";
    $.ajax({
          url: stringURL,
          method: "GET",
