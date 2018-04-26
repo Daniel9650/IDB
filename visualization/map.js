@@ -132,7 +132,25 @@ d3.json("us.json", function(error, us) {
 });
 
 function clicked(d) {
-    fetchData(state_list[d.id]);
+   var cityData;
+   var cityWebcamList = [];
+   fetchCityData(state_list[d.id],function(data){
+      cityData = data;
+      for(var i = 0; i < cityData.list.length; i ++){
+         var item = cityData.list[i];
+         var webcamLink;
+         var object;
+         fetchWebcamData(item.webcams[0], item.name, function(data, name){
+            if(data.liveView.length != 0)
+               webcamLink = data.liveView;
+            else {
+               webcamLink = data.timespanView;
+            }
+            cityWebcamList.push({ cityName: name, webcamLink: webcamLink});
+         });
+      }
+      console.log(cityWebcamList);
+   });
     var x, y, k;
     if (d && centered !== d) {
         var centroid = path.centroid(d);
@@ -158,19 +176,33 @@ function clicked(d) {
         .style("stroke-width", 1.5 / k + "px");
 }
 
-function fetchData(state) {
-    var returnVal;
-    var stringURL = "http://api.projectrunway.me/cities?filter=region,"+state.name+"&filter=country,United%20States&limit=100";
+function fetchCityData(state, callback) {
+    var stringURL = "http://api.projectrunway.me/cities?filter=region,"+state.name+"&filter=country,United%20States&limit=10";
     $.ajax({
         url: stringURL,
         method: "GET",
         async: true,
         success: function(data) {
-            console.log(data);
+           callback(data);
         },
         error: function() {
             console.log("error");
         }
     });
-    return returnVal;
+}
+
+function fetchWebcamData(id, name, callback){
+   var stringURL = "http://api.projectrunway.me/webcams/" + id;
+   $.ajax({
+      url: stringURL,
+      method: "GET",
+      async: true,
+      success: function(data) {
+           callback(data, name);
+      },
+      error: function() {
+           console.log("error");
+      }
+   });
+
 }
