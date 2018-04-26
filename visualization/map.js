@@ -4,84 +4,84 @@ var width = 1800,
 
 var state_list = [
 null,
-{"code":"AL","name":"Alabama"},
-{"code":"AK","name":"Alaska"},
+{"code":"AL","name":"Alabama","data": null},
+{"code":"AK","name":"Alaska","data": null},
 null,
-{"code":"AZ","name":"Arizona"},
-{"code":"AR","name":"Arkansas"},
-{"code":"CA","name":"California"},
+{"code":"AZ","name":"Arizona","data": null},
+{"code":"AR","name":"Arkansas","data": null},
+{"code":"CA","name":"California","data": null},
 null,
-{"code":"CO","name":"Colorado"},
-{"code":"CT","name":"Connecticut"},
-{"code":"DE","name":"Delaware"},
-{"code":"DC","name":"District of Columbia"},
-{"code":"FL","name":"Florida"},
-{"code":"GA","name":"Georgia"},
+{"code":"CO","name":"Colorado","data": null},
+{"code":"CT","name":"Connecticut","data": null},
+{"code":"DE","name":"Delaware","data": null},
+{"code":"DC","name":"District of Columbia","data": null},
+{"code":"FL","name":"Florida","data": null},
+{"code":"GA","name":"Georgia","data": null},
 null,
-{"code":"HI","name":"Hawaii"},
-{"code":"ID","name":"Idaho"},
-{"code":"IL","name":"Illinois"},
-{"code":"IN","name":"Indiana"},
-{"code":"IA","name":"Iowa"},
-{"code":"KS","name":"Kansas"},
-{"code":"KY","name":"Kentucky"},
-{"code":"LA","name":"Louisiana"},
-{"code":"ME","name":"Maine"},
-{"code":"MD","name":"Maryland"},
-{"code":"MA","name":"Massachusetts"},
-{"code":"MI","name":"Michigan"},
-{"code":"MN","name":"Minnesota"},
-{"code":"MS","name":"Mississippi"},
-{"code":"MO","name":"Missouri"},
-{"code":"MT","name":"Montana"},
-{"code":"NE","name":"Nebraska"},
-{"code":"NV","name":"Nevada"},
-{"code":"NH","name":"New Hampshire"},
-{"code":"NJ","name":"New Jersey"},
-{"code":"NM","name":"New Mexico"},
-{"code":"NY","name":"New York"},
-{"code":"NC","name":"North Carolina"},
-{"code":"ND","name":"North Dakota"},
-{"code":"OH","name":"Ohio"},
-{"code":"OK","name":"Oklahoma"},
-{"code":"OR","name":"Oregon"},
-{"code":"PA","name":"Pennsylvania"},
+{"code":"HI","name":"Hawaii","data": null},
+{"code":"ID","name":"Idaho","data": null},
+{"code":"IL","name":"Illinois","data": null},
+{"code":"IN","name":"Indiana","data": null},
+{"code":"IA","name":"Iowa","data": null},
+{"code":"KS","name":"Kansas","data": null},
+{"code":"KY","name":"Kentucky","data": null},
+{"code":"LA","name":"Louisiana","data": null},
+{"code":"ME","name":"Maine","data": null},
+{"code":"MD","name":"Maryland","data": null},
+{"code":"MA","name":"Massachusetts","data": null},
+{"code":"MI","name":"Michigan","data": null},
+{"code":"MN","name":"Minnesota","data": null},
+{"code":"MS","name":"Mississippi","data": null},
+{"code":"MO","name":"Missouri","data": null},
+{"code":"MT","name":"Montana","data": null},
+{"code":"NE","name":"Nebraska","data": null},
+{"code":"NV","name":"Nevada","data": null},
+{"code":"NH","name":"New Hampshire","data": null},
+{"code":"NJ","name":"New Jersey","data": null},
+{"code":"NM","name":"New Mexico","data": null},
+{"code":"NY","name":"New York","data": null},
+{"code":"NC","name":"North Carolina","data": null},
+{"code":"ND","name":"North Dakota","data": null},
+{"code":"OH","name":"Ohio","data": null},
+{"code":"OK","name":"Oklahoma","data": null},
+{"code":"OR","name":"Oregon","data": null},
+{"code":"PA","name":"Pennsylvania","data": null},
 null,
-{"code":"RI","name":"Rhode Island"},
-{"code":"SC","name":"South Carolina"},
-{"code":"SD","name":"South Dakota"},
-{"code":"TN","name":"Tennessee"},
-{"code":"TX","name":"Texas"},
-{"code":"UT","name":"Utah"},
-{"code":"VT","name":"Vermont"},
-{"code":"VA","name":"Virginia"},
+{"code":"RI","name":"Rhode Island","data": null},
+{"code":"SC","name":"South Carolina","data": null},
+{"code":"SD","name":"South Dakota","data": null},
+{"code":"TN","name":"Tennessee","data": null},
+{"code":"TX","name":"Texas","data": null},
+{"code":"UT","name":"Utah","data": null},
+{"code":"VT","name":"Vermont","data": null},
+{"code":"VA","name":"Virginia","data": null},
 null,
-{"code":"WA","name":"Washington"},
-{"code":"WV","name":"West Virginia"},
-{"code":"WI","name":"Wisconsin"},
-{"code":"WY","name":"Wyoming"},
-null,
-null,
-null,
-{"code":"AS","name":"America Samoa"},
+{"code":"WA","name":"Washington","data": null},
+{"code":"WV","name":"West Virginia","data": null},
+{"code":"WI","name":"Wisconsin","data": null},
+{"code":"WY","name":"Wyoming","data": null},
 null,
 null,
 null,
-{"code":"FM","name":"Federated States of Micronesia"},
-null,
-{"code":"GU","name":"Guam"},
-null,
-{"code":"MH","name":"Marshall Islands"},
-{"code":"MP","name":"Northern Mariana Islands"},
-{"code":"PW","name":"Palau"},
-null,
-{"code":"PR","name":"Puerto Rico"},
-null,
-{"code":"UM","name":"U.S. Minor Outlying Islands"},
+{"code":"AS","name":"America Samoa","data": null},
 null,
 null,
 null,
-{"code":"VI","name":"Virgin Islands of the United States"}
+{"code":"FM","name":"Federated States of Micronesia","data": null},
+null,
+{"code":"GU","name":"Guam","data": null},
+null,
+{"code":"MH","name":"Marshall Islands","data": null},
+{"code":"MP","name":"Northern Mariana Islands","data": null},
+{"code":"PW","name":"Palau","data": null},
+null,
+{"code":"PR","name":"Puerto Rico","data": null},
+null,
+{"code":"UM","name":"U.S. Minor Outlying Islands","data": null},
+null,
+null,
+null,
+{"code":"VI","name":"Virgin Islands of the United States","data": null}
 ];
 
 var projection = d3.geo.albersUsa()
@@ -122,7 +122,6 @@ d3.json("us.json", function(error, us) {
             clicked(d);
         });
 
-
     g.append("path")
         .datum(topojson.mesh(us, us.objects.states, function(a, b) {
             return a !== b;
@@ -132,25 +131,7 @@ d3.json("us.json", function(error, us) {
 });
 
 function clicked(d) {
-   var cityData;
-   var cityWebcamList = [];
-   fetchCityData(state_list[d.id],function(data){
-      cityData = data;
-      for(var i = 0; i < cityData.list.length; i ++){
-         var item = cityData.list[i];
-         var webcamLink;
-         var object;
-         fetchWebcamData(item.webcams[0], item.name, function(data, name){
-            if(data.liveView.length != 0)
-               webcamLink = data.liveView;
-            else {
-               webcamLink = data.timespanView;
-            }
-            cityWebcamList.push({ cityName: name, webcamLink: webcamLink});
-         });
-      }
-      console.log(cityWebcamList);
-   });
+    g.selectAll("circle.city_dot").remove()
     var x, y, k;
     if (d && centered !== d) {
         var centroid = path.centroid(d);
@@ -158,6 +139,53 @@ function clicked(d) {
         y = centroid[1];
         k = 4;
         centered = d;
+        if(state_list[d.id].data == null){
+            state_list[d.id].data = [];
+            fetchCityData(state_list[d.id], function(data){
+                var state_code = state_list[d.id].code;
+                $.each(data.list, function( index, value ) {
+                    var city_name = value.name;
+                    console.log(city_name);
+                    fetchGeoData(city_name, state_code, function(city_data){
+                        var city_obj = city_data.results[0];
+                        var lat = city_obj.geometry.location.lat;
+                        var lng = city_obj.geometry.location.lng;
+                        var dot_click = function(d) {
+                            var index = Math.floor(Math.random() * (value.webcams.length));
+                            var webcam_id = value.webcams[index];
+                            fetchWebcam(webcam_id, function(data){
+                              var link = data.liveView;
+                              if(link == null || link === "")
+                                  link = data.timespanView;
+                              window.location.href = link;
+                            });
+                        };
+                        g.append("circle")
+                          .attr("r",2)
+                          .attr("fill", "red")
+                          .attr("class", "city_dot")
+                          .attr("stroke", "black")
+                          .attr("stroke-width", 0.5)
+                          .attr("transform", function() {return "translate(" + projection([lng,lat]) + ")";})
+                          .on("click", dot_click);
+                        var city_store = {"obj": value, "lat": lat, "lng": lng, "dot_click": dot_click};
+                        state_list[d.id].data.push(city_store);
+                    });
+                });
+            });
+        }
+        else{
+          $.each(state_list[d.id].data, function( index, value ) {
+            g.append("circle")
+              .attr("r",2)
+              .attr("fill", "red")
+              .attr("class", "city_dot")
+              .attr("stroke", "black")
+              .attr("stroke-width", 0.5)
+              .attr("transform", function() {return "translate(" + projection([value.lng,value.lat]) + ")";})
+              .on("click", value.dot_click);
+          });
+        }
     } else {
         x = width / 2;
         y = height / 2;
@@ -176,14 +204,14 @@ function clicked(d) {
         .style("stroke-width", 1.5 / k + "px");
 }
 
-function fetchCityData(state, callback) {
-    var stringURL = "http://api.projectrunway.me/cities?filter=region,"+state.name+"&filter=country,United%20States&limit=10";
+function fetchGeoData(city_name, state_code, callback){
+    var stringURL = "https://maps.googleapis.com/maps/api/geocode/json?address="+city_name+","+state_code+"&key=AIzaSyAlhktTfmSwdgx77xWf36YGjV6qcbWPogU";
     $.ajax({
         url: stringURL,
         method: "GET",
         async: true,
         success: function(data) {
-           callback(data);
+            callback(data);
         },
         error: function() {
             console.log("error");
@@ -191,18 +219,32 @@ function fetchCityData(state, callback) {
     });
 }
 
-function fetchWebcamData(id, name, callback){
-   var stringURL = "http://api.projectrunway.me/webcams/" + id;
-   $.ajax({
-      url: stringURL,
-      method: "GET",
-      async: true,
-      success: function(data) {
-           callback(data, name);
-      },
-      error: function() {
-           console.log("error");
-      }
-   });
+function fetchWebcam(webcam_id, callback){
+    var stringURL = "http://api.projectrunway.me/webcams/"+webcam_id;
+    $.ajax({
+        url: stringURL,
+        method: "GET",
+        async: true,
+        success: function(data) {
+            callback(data);
+        },
+        error: function() {
+            console.log("error");
+        }
+    });
+}
 
+function fetchCityData(state, callback) {
+    var stringURL = "http://api.projectrunway.me/cities?filter=region,"+state.name+"&filter=country,United%20States&limit=100";
+    $.ajax({
+        url: stringURL,
+        method: "GET",
+        async: true,
+        success: function(data) {
+            callback(data);
+        },
+        error: function() {
+            console.log("error");
+        }
+    });
 }
