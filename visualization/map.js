@@ -131,7 +131,7 @@ d3.json("us.json", function(error, us) {
 });
 
 function clicked(d) {
-    g.selectAll("circle.city_dot").remove()
+    g.selectAll(".city-anchor").remove()
     var x, y, k;
     if (d && centered !== d) {
         var centroid = path.centroid(d);
@@ -157,17 +157,21 @@ function clicked(d) {
                               var link = data.liveView;
                               if(link == null || link === "")
                                   link = data.timespanView;
-                              window.location.href = link;
+                              $("#modal-frame").attr("src", link);
                             });
                         };
-                        g.append("circle")
-                          .attr("r",2)
-                          .attr("fill", "red")
-                          .attr("class", "city_dot")
-                          .attr("stroke", "black")
-                          .attr("stroke-width", 0.5)
-                          .attr("transform", function() {return "translate(" + projection([lng,lat]) + ")";})
-                          .on("click", dot_click);
+                        g.append("svg:a")
+                            .attr("xlink:href", "#ex1")
+                            .attr("rel", "modal:open")
+                            .attr("class", "city-anchor")
+                            .append("circle")
+                                .attr("r",2)
+                                .attr("fill", "red")
+                                .attr("class", "city_dot")
+                                .attr("stroke", "black")
+                                .attr("stroke-width", 0.5)
+                                .attr("transform", function() {return "translate(" + projection([lng,lat]) + ")";})
+                                .on("click", dot_click);
                         var city_store = {"obj": value, "lat": lat, "lng": lng, "dot_click": dot_click};
                         state_list[d.id].data.push(city_store);
                     });
@@ -176,14 +180,18 @@ function clicked(d) {
         }
         else{
           $.each(state_list[d.id].data, function( index, value ) {
-            g.append("circle")
-              .attr("r",2)
-              .attr("fill", "red")
-              .attr("class", "city_dot")
-              .attr("stroke", "black")
-              .attr("stroke-width", 0.5)
-              .attr("transform", function() {return "translate(" + projection([value.lng,value.lat]) + ")";})
-              .on("click", value.dot_click);
+            g.append("svg:a")
+                .attr("xlink:href", "#ex1")
+                .attr("rel", "modal:open")
+                .attr("class", "city-anchor")
+                .append("circle")
+                    .attr("r",2)
+                    .attr("fill", "red")
+                    .attr("class", "city_dot")
+                    .attr("stroke", "black")
+                    .attr("stroke-width", 0.5)
+                    .attr("transform", function() {return "translate(" + projection([value.lng,value.lat]) + ")";})
+                    .on("click", value.dot_click);
           });
         }
     } else {
