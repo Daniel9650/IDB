@@ -87,10 +87,11 @@
 ---
 ###### What they could do better
 
-* We really like their website, hard to come up with things to improve
-* Website is not super beautiful but we understand that's more a difference in preference for design.
+* The filtering could be nicer and easier to use
+* We think their website could be a little more visually appealng
+* The documentation for their API was a bit confusing and unclear. We were also disappointed filtering was only implemented for a handful of features for the webcams.
 
-<br>
+---
 
 ###### What puzzles us about their website
 
