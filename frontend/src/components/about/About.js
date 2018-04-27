@@ -114,6 +114,9 @@ class About extends Component {
                <p>
                   <a name="api-link" href='https://www.gitbook.com/book/daniel9650/poptopic-api-documentation/details'>PopTopic API</a>
                </p>
+               <p>
+                  <a href="/visualization">Visualization of Client Project Data</a>
+               </p>
 
                <h4 className="about-sub">Data</h4>
                <p>
