@@ -32,7 +32,6 @@
 ---
 ### Unit Tests: API
 
-<br> 
 
 ![Logo](https://github.com/Daniel9650/idb/blob/master/postman_tests.png?raw=true)
 
