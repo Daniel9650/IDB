@@ -20,21 +20,21 @@
 
 <br>
 
-![Image](https://github.com/Daniel9650/idb/blob/master/python_tests.png)
+![Logo](https://github.com/Daniel9650/idb/blob/master/python_tests.png)
 
 ---
 ### Unit Tests: Frontend
 
 <br>
 
-![Image](https://github.com/Daniel9650/idb/blob/master/mocha_tests.png)
+![Logo](https://github.com/Daniel9650/idb/blob/master/mocha_tests.png)
 
 ---
 ### Unit Tests: API
 
 <br> 
 
-![Image](https://github.com/Daniel9650/idb/blob/master/postman_tests.png)
+![Logo](https://github.com/Daniel9650/idb/blob/master/postman_tests.png)
 
 ---
 
