@@ -55,7 +55,8 @@
 ###### What can we do better?
 
 * Could have done a better job planning out what time we want to meet by making plans earlier, instead of on the day of so we could prepare more.
-* Sometimes we should probably have started earlier, because we felt very rushed near the deadline.
+* Mocha and and/or filtering for model specific attributes
+* Grid pages could scale better in responsive design
 
 <br>
 
