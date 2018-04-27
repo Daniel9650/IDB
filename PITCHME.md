@@ -67,7 +67,7 @@
 ---
 ###### What they could do better
 
-* We really like theiri website, hard to come up with things to improve
+* We really like their website, hard to come up with things to improve
 * Website is not super beautiful but we understand that's more a difference in preference for design.
 
 <br>
