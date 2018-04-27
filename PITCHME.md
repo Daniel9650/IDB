@@ -24,10 +24,12 @@
 
 * We did a good job choosing a topic early, and we were good about meeting often and coordinating. We believe the website was very user friendly and well-designed.
 
+<br>
 
 ###### What did we learn?
 
-* We learned how to use a lot of new tools we weren't familiar with before, such as React, Docker, and MySQL, just to name a few. We also believe this project was a valuable experience for us to have so we are better prepared to work effectively in other large scale software projects in the future.
+* We learned how to use a lot of new tools we weren't familiar with before 
+* We also believe this project was a valuable experience for us to have
 
 ---
 ###### What can we do better?
@@ -35,10 +37,11 @@
 * Could have done a better job planning out what time we want to meet by making plans earlier, instead of on the day of so we could prepare more.
 * Sometimes we should probably have started earlier, because we felt very rushed near the deadline.
 
+<br>
 
 ###### What puzzles us?
 
-* What puzzled us the most through the course of compling this data and building out site is how so much media falls under so few topics. Before starting this project, we never thought there would be so many relations between these models, but working on this website has given us insight and clarity about how many meaningful connections there are between these types of media.
+* We were puzzled by how much media falls under so few topics; there were a lot more connections that we would've guessed when we first started
 
 ---
 
@@ -52,7 +55,9 @@
 * For their cities page, we like that they have a map for each city
 * As customers, we felt that our feedback was always welcome and appreciated.
 
+<br>
 
+---
 ###### What did we learn?
 
 * Learned about the possible flights to various destinations
@@ -65,6 +70,7 @@
 * We really like theiri website, hard to come up with things to improve
 * Website is not super beautiful but we understand that's more a difference in preference for design.
 
+<br>
 
 ###### What puzzles us about their website
 
