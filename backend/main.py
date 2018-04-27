@@ -450,6 +450,10 @@ def get_instance_topics(mysession, attr_object, page, sort, items_per_page, quer
 def app_index(path):
     return render_template("index.html")
 
+@app.route('/visualization')
+def visualization():
+    return render_template("visualization.html");
+
 #Handle tailing slashes
 @api.before_request
 def clear_trailing():
