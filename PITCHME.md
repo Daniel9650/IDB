@@ -16,6 +16,26 @@
 * Link: http://poptopic.org
 
 ---
+### Unit Tests: Backend
+
+<br>
+
+![Logo](https://github.com/Daniel9650/idb/blob/master/python_tests.png?raw=true)
+
+---
+### Unit Tests: Frontend
+
+<br>
+
+![Logo](https://github.com/Daniel9650/idb/blob/master/mocha_tests.png?raw=true)
+
+---
+### Unit Tests: API
+
+
+![Logo](https://github.com/Daniel9650/idb/blob/master/postman_tests.png?raw=true)
+
+---
 
 ## Self Critique
 
@@ -41,7 +61,7 @@
 
 ###### What puzzles us?
 
-* We were puzzled by how much media falls under so few topics; there were a lot more connections that we would've guessed when we first started
+* We were puzzled by how much media falls under so few topics; there were a lot more connections than we would've guessed when we first started
 
 ---
 
@@ -67,7 +87,7 @@
 ---
 ###### What they could do better
 
-* We really like their website, hard to come up with things to improve
+* We really like theiri website, hard to come up with things to improve
 * Website is not super beautiful but we understand that's more a difference in preference for design.
 
 <br>
