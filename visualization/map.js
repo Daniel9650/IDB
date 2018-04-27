@@ -1,5 +1,5 @@
-var width = 1800,
-    height = 900,
+var height = 725,
+   width = 900,
     centered;
 
 var state_list = [
@@ -91,7 +91,7 @@ var projection = d3.geo.albersUsa()
 var path = d3.geo.path()
     .projection(projection);
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select("div").append("svg")
     .attr("width", width)
     .attr("height", height);
 
@@ -166,10 +166,10 @@ function clicked(d) {
                             .attr("class", "city-anchor")
                             .append("circle")
                                 .attr("r",2)
-                                .attr("fill", "red")
+                                .attr("fill", "#686868")
                                 .attr("class", "city_dot")
-                                .attr("stroke", "black")
-                                .attr("stroke-width", 0.5)
+                                .attr("stroke", "white")
+                                .attr("stroke-width", 0.75)
                                 .attr("transform", function() {return "translate(" + projection([lng,lat]) + ")";})
                                 .on("click", dot_click);
                         var city_store = {"obj": value, "lat": lat, "lng": lng, "dot_click": dot_click};
@@ -186,10 +186,10 @@ function clicked(d) {
                 .attr("class", "city-anchor")
                 .append("circle")
                     .attr("r",2)
-                    .attr("fill", "red")
+                    .attr("fill", "#686868")
                     .attr("class", "city_dot")
-                    .attr("stroke", "black")
-                    .attr("stroke-width", 0.5)
+                    .attr("stroke", "white")
+                    .attr("stroke-width", 0.75)
                     .attr("transform", function() {return "translate(" + projection([value.lng,value.lat]) + ")";})
                     .on("click", value.dot_click);
           });
@@ -243,7 +243,7 @@ function fetchWebcam(webcam_id, callback){
 }
 
 function fetchCityData(state, callback) {
-    var stringURL = "http://api.projectrunway.me/cities?filter=region,"+state.name+"&filter=country,United%20States&limit=100";
+    var stringURL = "http://api.projectrunway.me/cities?filter=region,"+state.name+"&filter=country,United%20States&limit=10";
     $.ajax({
         url: stringURL,
         method: "GET",

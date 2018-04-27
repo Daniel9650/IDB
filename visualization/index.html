@@ -2,10 +2,45 @@
    <head>
       <meta charset="utf-8">
       <title>Hello World</title>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
       <style>
       .background {
         fill: none;
         pointer-events: all;
+      }
+
+      .container-background{
+         background-color: white;
+         color: #424242;
+         padding-top: 30px;
+         padding-bottom: 30px;
+         padding-left: 50px;
+         padding-right: 50px;
+         box-shadow: 0 12px  15px 4px #424242,  0 12px  8px 4px #424242;
+      }
+
+      .container{
+         width: 1000px;
+         text-align: center;
+         height: 100%;
+      }
+
+      a{
+         color: rgb(105, 79, 144);
+         text-decoration: underline;
+      }
+
+      h1{
+         color: rgb(105, 79, 144);
+         font-weight: bold;
+      }
+
+      p{
+         font-size: 20px;
+      }
+
+      .body-background{
+         background-color: #686868;
       }
       .frame-container {
         position: relative;
@@ -22,11 +57,11 @@
         height: 100%;
       }
       #states {
-        fill: #aaa;
+        fill: #686868;
       }
 
       #states .active {
-        fill: orange;
+        fill: rgb(105, 79, 144);
       }
 
       #state-borders {
@@ -47,7 +82,12 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
    </head>
-   <body>
+   <body class="body-background">
+      <div class="container container-background">
+      <h1>Project Runway Data Visualization</h1>
+      <p>This map shows a graphic representation of the city and webcam data for the United States obtained from
+      <a href="http://www.projectrunway.me" > Project Runway</a>. To view a live webcam or time span video of a city,
+         simply click on the state you are interested in and select the point on the map representing the city.</p>
       <div id="ex1" class="modal">
         <div class="frame-container">
           <iframe id="modal-frame" src="#">
@@ -55,5 +95,6 @@
         </div>
       </div>
       <script type="text/javascript" src="map.js"></script>
+   </div>
    </body>
 </html>
