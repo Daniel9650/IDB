@@ -1,5 +1,5 @@
 var height = 725,
-   width = 900,
+    width = 900,
     centered;
 
 var state_list = [
@@ -91,7 +91,7 @@ var projection = d3.geo.albersUsa()
 var path = d3.geo.path()
     .projection(projection);
 
-var svg = d3.select("div").append("svg")
+var svg = d3.select(".container").append("svg")
     .attr("width", width)
     .attr("height", height);
 
@@ -131,7 +131,7 @@ d3.json("us.json", function(error, us) {
 });
 
 function clicked(d) {
-    g.selectAll(".city-anchor").remove()
+    g.selectAll(".city-anchor").remove();
     var x, y, k;
     if (d && centered !== d) {
         var centroid = path.centroid(d);
@@ -160,10 +160,26 @@ function clicked(d) {
                               $("#modal-frame").attr("src", link);
                             });
                         };
+                        var dot_hover = function(d) {
+                            var point = g.append("g")
+                                .attr("transform", function() {return "translate(" + projection([lng,lat]) + ")";})
+                                .attr("class", "point_hover");
+                            point.append("polygon")
+                                .attr("points", "-2.5,-3 0,0, 2.5,-3");
+                            point.append("text")
+                                .text(city_name)
+                                .attr("y", "-4")
+                                .style("text-anchor", "middle")
+                                .style("font-size", "7px");
+                        };
+                        var dot_out = function(d) {
+                            g.selectAll(".point_hover").remove();
+                        };
                         g.append("svg:a")
                             .attr("xlink:href", "#ex1")
                             .attr("rel", "modal:open")
                             .attr("class", "city-anchor")
+                            .on("mouseover", dot_hover)
                             .append("circle")
                                 .attr("r",2)
                                 .attr("fill", "#686868")
@@ -171,15 +187,16 @@ function clicked(d) {
                                 .attr("stroke", "white")
                                 .attr("stroke-width", 0.75)
                                 .attr("transform", function() {return "translate(" + projection([lng,lat]) + ")";})
-                                .on("click", dot_click);
-                        var city_store = {"obj": value, "lat": lat, "lng": lng, "dot_click": dot_click};
+                                .on("click", dot_click)
+                                .on("mouseout", dot_out);
+                        var city_store = {"obj": value, "lat": lat, "lng": lng, "dot_click": dot_click, "dot_hover": dot_hover, "dot_out": dot_out};
                         state_list[d.id].data.push(city_store);
                     });
                 });
             });
         }
         else{
-          $.each(state_list[d.id].data, function( index, value ) {
+            $.each(state_list[d.id].data, function( index, value ) {
             g.append("svg:a")
                 .attr("xlink:href", "#ex1")
                 .attr("rel", "modal:open")
@@ -191,8 +208,10 @@ function clicked(d) {
                     .attr("stroke", "white")
                     .attr("stroke-width", 0.75)
                     .attr("transform", function() {return "translate(" + projection([value.lng,value.lat]) + ")";})
-                    .on("click", value.dot_click);
-          });
+                    .on("click", value.dot_click)
+                    .on("mouseover", value.dot_hover)
+                    .on("mouseout", value.dot_out);
+            });
         }
     } else {
         x = width / 2;
